@@ -1,0 +1,62 @@
+Notas Importantes:
+
+	Sempre que se dá push do github o projeto
+		- php artisan migrate:fresh
+		- php artisan db:seed
+		- composer update 
+		- npm install 
+		
+Feito:
+
+Mount DB
+
+	- php artisan migrate:fresh
+	- php artisan db:seed
+	
+	DB_CONNECTION=mysql
+	DB_HOST=127.0.0.1
+	DB_PORT=3306
+	DB_DATABASE=imagineshirt
+	DB_USERNAME=root
+	DB_PASSWORD=
+	
+Composer install
+
+Instalar telescope
+
+	composer require laravel/telescope --dev
+	php artisan telescope:install
+	php artisan migrate
+	
+	.env:
+		TELESCOPE_ENABLED = TRUE
+
+Instalar framework bootstrap
+
+	composer require laravel/ui
+	php artisan ui bootstrap --auth
+	npm install
+	
+Instalar toolbar telescope
+
+	composer require fruitcake/laravel-telescope-toolbar --dev
+	php artisan vendor:publish --provider="Fruitcake\\TelescopeToolbar\\ToolbarServiceProvider"
+
+	.env:
+		APP_DEBUG=true
+		TELESCOPE_TOOLBAR_ENABLED=true
+		
+Instalar jQuery para o vite funcionar
+
+	npm install jquery --save-dev
+	
+	bootstrap.js:
+		import 'jquery';
+		
+JPopper
+
+npm install bootstrap@latest @popperjs/core --save-dev
+
+	bootstrap.js:
+		import '@popperjs/core';
+	
