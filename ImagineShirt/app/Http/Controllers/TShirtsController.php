@@ -24,14 +24,31 @@ class TShirtsController extends Controller
         }
 
         // ordernar entradas - Padrao: data descendente
-        $ordenarFiltro = $request->ordenar ?? 'padrao';
-        if ($ordenarFiltro === 'padrao'){
-            $tshirtsQuery->orderBy('created_at','DESC');
+        $ordenarFiltro = $request->ordenar ?? 'rec_desc';
+
+        if (str_contains($ordenarFiltro,'rec')){
+            $ordenarArray = preg_split("/[_\s:]/",$ordenarFiltro);
+            $tshirtsQuery->orderBy('created_at',$ordenarArray[1]);
         }elseif(str_contains($ordenarFiltro,'name')){
             $ordenarArray = preg_split("/[_\s:]/",$ordenarFiltro);
             $tshirtsQuery->orderBy($ordenarArray[0],$ordenarArray[1]);
-        }else{
-            // falta fazer para o preço
+        }
+
+        // string pesquisa
+
+        $pesquisaFiltro = $request->pesquisa ?? '';
+
+        if ($pesquisaFiltro !== ''){
+            //primeiro procurar nome -> descrição
+            $pesquisaFiltro = strtoupper($pesquisaFiltro);
+
+            // para adicionar os (query)
+
+            $tshirtsQuery->where(function ($query) use ($pesquisaFiltro){
+                $query->where('name', 'LIKE', "%$pesquisaFiltro%")
+                      ->orWhere('description', 'LIKE', "%$pesquisaFiltro%");
+            });
+
         }
         
         // ordernar alfabeticamente default
@@ -47,7 +64,7 @@ class TShirtsController extends Controller
         Log::debug('Categorias loaded on TShirtController.', ['$categorias' => $categorias]);
         Log::debug('Prices loaded on TShirtController.', ['$precos' => $precos]);
         
-        return view('tshirts.index', compact('tshirts','categorias','precos','categoriaFiltro','ordenarFiltro'));
+        return view('tshirts.index', compact('tshirts','categorias','precos','categoriaFiltro','ordenarFiltro', 'pesquisaFiltro'));
     }
 
     private function getCategoriasValidas (): array {
@@ -57,13 +74,5 @@ class TShirtsController extends Controller
     private function getPrecosTShirts(): array{
         // apenas necessario preco loja e customer - desconto relacionado com nº artigos
         return Precos::select(array('unit_price_catalog', 'unit_price_own'))->first()->toArray();
-    }
-
-    function debug_to_console($data) {
-        $output = $data;
-        if (is_array($output))
-            $output = implode(',', $output);
-    
-        echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
     }
 }

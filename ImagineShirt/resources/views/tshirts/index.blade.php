@@ -30,8 +30,8 @@
                 <div class="col-lg-3">
                     <div class="shop__sidebar">
                         <div class="shop__sidebar__search">
-                            <form action="#">
-                                <input type="text" placeholder="Pesquisar...">
+                            <form method="GET" id="pesquisa-form">
+                                <input type="text" maxlength="50" name="pesquisa" value = "{{old('pesquisa', $pesquisaFiltro)}}" placeholder="Pesquisar...">
                                 <button type="submit"><span class="icon_search"></span></button>
                             </form>
                         </div>
@@ -44,7 +44,7 @@
                                     <div id="collapseOne" class="collapse" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__categories">
-                                                <ul class="nice-scroll">
+                                                <ul style="overflow-y:auto">
                                                     <li><a 
                                                         @if (!str_contains(request()->fullUrl(),'categoria'))
                                                             style = "color:black; font-weight: bold;"
@@ -93,11 +93,10 @@
                                 <div class="shop__product__option__right">
                                     <p>Ordenar: </p>
                                         <select id="ordenar" onchange="updateQuery()" name="ordenar">
-                                            <option {{ old('ordenar', $ordenarFiltro) == 'padrao' ? 'selected' : '' }} value="padrao">Padrão</option>
+                                            <option {{ old('ordenar', $ordenarFiltro) == 'rec_desc' ? 'selected' : '' }} value="rec_desc">Mais Recente</option>
+                                            <option {{ old('ordenar', $ordenarFiltro) == 'rec_asc' ? 'selected' : '' }} value="rec_asc">Mais Antigo</option>
                                             <option {{ old('ordenar', $ordenarFiltro) == 'name_asc' ? 'selected' : '' }} value="name_asc">Nome (Ascendente)</option>
                                             <option {{ old('ordenar', $ordenarFiltro) == 'name_desc' ? 'selected' : '' }} value="name_desc">Nome (Descendente)</option>
-                                            <option {{ old('ordenar', $ordenarFiltro) == 'preco_asc' ? 'selected' : '' }} value="preco_asc">Preço Baixo ao Alto</option>
-                                            <option {{ old('ordenar', $ordenarFiltro) == 'preco_desc' ? 'selected' : '' }} value="preco_desc">Preço Alto ao baixo</option>
                                         </select>
                                     </form>
                                 </div>
@@ -105,22 +104,15 @@
                         </div>
                     </div>
                     <div class="row">
-                        @foreach ($tshirts as $tshirt)
+                        @forelse ($tshirts as $tshirt)
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
                                 <div class="product__item__pic set-bg" data-setbg="/storage/tshirt_images/{{ $tshirt->image_url}}" style = "background-size: contain">
                                 </div>
                                 <div class="product__item__text">
-                                    <h6>{{ empty($tshirt->name) ? 'T-Shirt Sem Nome' : $tshirt->name }}</h6>
-                                    <a href="#" class="add-cart">Adicionar ao Carrinho</a>
-                                    <div class="rating">
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                    </div>
-                                    <h5>
+                                    <h6 style = "font-size: 1.2rem;font-weight: bolder">{{ empty($tshirt->name) ? 'T-Shirt Sem Nome' : $tshirt->name }}</h6>
+                                    <a href="#" class="add-cart" style="font-size: 1.1rem">Adicionar ao Carrinho</a>
+                                    <p style="opacity: 0.8;">{{ empty($tshirt->description) ? 'Sem Descrição' : $tshirt->description }}</p>
                                     @if(is_null($tshirt->customer_id))
                                         {{$precos['unit_price_catalog']}}
                                     @else
@@ -131,7 +123,9 @@
                                 </div>
                             </div>
                         </div>
-                        @endforeach
+                        @empty
+                        <div class="col-lg-9" style="text-align:center"><h6 style = "font-size: 1rem;font-weight: bolder;">Não foi encontrada nenhuma T-Shirt</h6></div>
+                        @endforelse
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
@@ -151,5 +145,21 @@
             parametros.append('ordenar', document.getElementById("ordenar").value); // adicionar ordenação
             document.location.href = "?" + parametros.toString(); // refresh
         }
+
+        document.getElementById('pesquisa-form').addEventListener('submit', function(e) {
+            e.preventDefault(); // Impede o envio do formulário
+
+            var form = this;
+            var url = new URL(window.location.href);
+            var pesquisa = form.elements.pesquisa.value;
+
+            if (pesquisa) {
+                url.searchParams.set('pesquisa', pesquisa);
+            } else {
+                url.searchParams.delete('pesquisa');
+            }
+
+            window.location.href = url.href;
+        });
     </script>
 @endsection
