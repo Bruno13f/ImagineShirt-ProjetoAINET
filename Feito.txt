@@ -59,4 +59,48 @@ npm install bootstrap@latest @popperjs/core --save-dev
 
 	bootstrap.js:
 		import '@popperjs/core';
+
+##################################################################################################################################################
+
+ALTERAR:
+
+	. Para manter opção selecionado quando se filtra por categoria - usado fullUrl() e request query - perguntar stor outras formas
+	. Como mudar linguagem bootstrap navigation bar "Showing ..."
+	. Camisolas User apenas visivel para o user
+
+##################################################################################################################################################
+		
+Template para home page
+
+Criar index para página t-shirts - Modelo - Controlador
+
+Modelo - Controlador: Preco
+					  Categoria
+
+Paginate TShirt Controller
+
+AppServiceProvider alterar o boot para permitir o links do paginator
+
+Obter categorias e preço na página t-shirts
+	
+Relações modelos - (aumentando consoante os modelos)
+
+	. Categoria HasMany T-Shirts - Feito
+	. 
+
+Filtragem T-Shirts
+	
+	View
+		. request()->fullUrlWithQuery(['categoria' => $categoria, 'pagina' => '1']) - reset automatico para 1ª pagina 
+		. select - onchange="updateQuery()" => quando se clica nas opções é dado update à query no parametro ordenar
+
+	Controlador
+
+		. filtro para categorias e ordenação (default = data rec para antiga, nome asc ou desc e preço asc ou desc)
+
+	Notas:
+
+		. p.e se na categoria bebida com preco_asc ao clicar no todas era redirecionado para a rota t-shirts quando apenas era necessario retirar a categoria usada (texcept('categoria'))
+
+	
 	
