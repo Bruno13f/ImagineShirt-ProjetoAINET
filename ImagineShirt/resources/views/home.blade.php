@@ -17,11 +17,11 @@
                     <div class="row">
                         <div class="col-xl-5 col-lg-7 col-md-8">
                             <div class="hero__text">
-                                <h6>Summer Collection</h6>
-                                <h2>Fall - Winter Collections 2030</h2>
-                                <p>A specialist label creating luxury essentials. Ethically crafted with an unwavering
-                                commitment to exceptional quality.</p>
-                                <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
+                                <h6>Nova Coleção!</h6>
+                                <h2>Coleção Primavera - Verão</h2>
+                                <p>Comprometidos em oferecer uma experiência de compra única e inesquecível. 
+                                Com a maior atenção ao detalhe.</p>
+                                <a href="{{ route('t-shirts') }}" class="primary-btn">Catálogo <span class="arrow_right"></span></a>
                             </div>
                         </div>
                     </div>
@@ -32,11 +32,11 @@
                     <div class="row">
                         <div class="col-xl-5 col-lg-7 col-md-8">
                             <div class="hero__text">
-                                <h6>Summer Collection</h6>
-                                <h2>Fall - Winter Collections 2030</h2>
-                                <p>A specialist label creating luxury essentials. Ethically crafted with an unwavering
-                                commitment to exceptional quality.</p>
-                                <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
+                                <h6>Nova Novidade!</h6>
+                                <h2>Poderá personalizar T-Shirts ao seu gosto!</h2>
+                                <p>De modo a providenciar uma interação mais próxima com o cliente.
+                                Nunca colocando os nossos altos padrões de qualidade em causa.</p>
+                                <a href="#" class="primary-btn">Customizar <span class="arrow_right"></span></a>
                             </div>
                         </div>
                     </div>
@@ -56,8 +56,8 @@
                             <img src="img/banner/banner-1.jpg" alt="">
                         </div>
                         <div class="banner__item__text">
-                            <h2>Clothing Collections 2030</h2>
-                            <a href="#">Shop now</a>
+                            <h2>Coleção Verão</h2>
+                            <a href="{{ route('t-shirts') }}">Catálogo</a>
                         </div>
                     </div>
                 </div>
@@ -72,9 +72,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <ul class="filter__controls">
-                        <li class="active" data-filter="*">Best Sellers</li>
-                        <li data-filter=".new-arrivals">New Arrivals</li>
-                        <li data-filter=".hot-sales">Hot Sales</li>
+                        <li class="active" data-filter="*">Mais Vendidos</li>
+                        <li data-filter=".new-arrivals">Recentes</li>
+                        <li data-filter=".hot-sales">Mais vendidos</li>
                     </ul>
                 </div>
             </div>

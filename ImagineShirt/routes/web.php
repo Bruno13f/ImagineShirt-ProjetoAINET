@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TShirtsController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +16,12 @@ use App\Http\Controllers\TShirtsController;
 */
 
 Route::view('/', 'home')->name('root');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('t-shirts', [TShirtsController::class, 'index'])->name('t-shirts');
+//permitir logout com metodo GET no href
+Route::get('logout', function (){
+    auth()->logout();
+    Session()->flush();
+    return Redirect::to('/');
+})->name('logout');
+Auth::routes(['verify' => true]);

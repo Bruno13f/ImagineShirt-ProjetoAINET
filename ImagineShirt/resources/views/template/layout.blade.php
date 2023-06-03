@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
     rel="stylesheet">
 
-    @vite ('resources/css/app.css')
+    @vite(['resources/sass/app.scss', 'resources/css/app.css', 'resources/js/app.js'])
 
     <!-- Css Styles 
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
@@ -36,15 +36,19 @@
     <div class="offcanvas-menu-wrapper">
         <div class="offcanvas__option">
             <div class="offcanvas__links">
-                <a href="#">Login</a>
-                <a href="#">Registar</a>
+            @guest
+                <a href="{{route('login')}}">Login</a>
+                <a href="{{route('register')}}">Registar</a>
+            @else
+            <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle img-responsive" style="margin-left: 10px; max-width: 70px; border: solid #e63334 1px" alt="Avatar"/>
+            @endguest
             </div>
             <div class="offcanvas__top__hover">
                 <span>EUR €</span>
             </div>
         </div>
         <div class="offcanvas__nav__option">
-            <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+            <a href="{{ route('logout') }}"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
             <div class="price">0.00€</div>
         </div>
         <div id="mobile-menu-wrap"></div>
@@ -64,8 +68,12 @@
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right">
                             <div class="header__top__links">
-                                <a href="#">Login</a>
-                                <a href="#">Criar Conta</a>
+                            @guest
+                                <a href="{{route('login')}}">Login</a>
+                                <a href="{{route('register')}}">Registar</a>
+                            @else
+                                <a href="{{route('logout')}}">Logout</a>
+                            @endguest
                             </div>
                             <div class="header__top__hover">
                                 <span>EUR €</span>
@@ -94,8 +102,12 @@
                 </div>
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
-                        <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+                        <a><img src="img/icon/cart.png" alt=""><span>0</span></a>
                         <div class="price">0.00€</div>
+                    @guest
+                    @else
+                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle img-responsive" style="margin-left: 10px; max-width: 60px; border: solid #e63334 1px" alt="Avatar"/>
+                    @endguest
                     </div>
                 </div>
             </div>
@@ -115,7 +127,7 @@
                         <div class="footer__logo">
                             <a href="#"><img src="img/footer-logo.png" alt=""></a>
                         </div>
-                        <p>O cliente é o coração da nossa loja, que inclui o design.</p>
+                        <p>O cliente é o coração da nossa loja</p>
                         <a href="#"><img src="img/payment.png" alt=""></a>
                     </div>
                 </div>
@@ -179,9 +191,6 @@
         </div>
     </div>
     <!-- Search End -->
-    
-    <!-- JavaScript-->
-    @vite('resources/js/app.js')
 </body>
 
 </html>

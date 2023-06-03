@@ -67,6 +67,7 @@ ALTERAR:
 	. Para manter opção selecionado quando se filtra por categoria - usado fullUrl() e request query - perguntar stor outras formas
 	. Como mudar linguagem bootstrap navigation bar "Showing ..."
 	. Camisolas User apenas visivel para o user
+	. T-Shirts mais vendidas = SELECT tshirt_image_id, SUM(qty) AS "Quantidade Vendida" FROM order_items GROUP BY tshirt_image_id ORDER BY SUM(qty) DESC;
 
 ##################################################################################################################################################
 		
@@ -93,14 +94,37 @@ Filtragem T-Shirts
 	View
 		. request()->fullUrlWithQuery(['categoria' => $categoria, 'pagina' => '1']) - reset automatico para 1ª pagina 
 		. select - onchange="updateQuery()" => quando se clica nas opções é dado update à query no parametro ordenar
+		. pesquisar - descrição e nome na mesma search bar
 
 	Controlador
 
 		. filtro para categorias e ordenação (default = data rec para antiga, nome asc ou desc e preço asc ou desc)
+		. procura no nome ou descrição a string do pesquisar
 
 	Notas:
 
 		. p.e se na categoria bebida com preco_asc ao clicar no todas era redirecionado para a rota t-shirts quando apenas era necessario retirar a categoria usada (texcept('categoria'))
 
-	
+Filtragem T-Shirts Pagina Inicial
+
+	. mais vendidos - fazer (falta modelos)
+	. mais recentes
+	. mais popuplas - random
+
+Login & Registo
+
+	- rota logout para aceitar metodo GET
+	- redirect para pagina errado mudado: RouteServiceProvider: public const HOME = '/';
+	- remover mensagem "email nao se encontra nos registos"
+
+Registo
+
+	- overwrite rota depois de registo automatico login para nao dar login
+	- enviar email de verificação no registo : Auth::routes(['verify' => true]); class User extends Authenticatable implements MustVerifyEmail
+	- NAO PERMITIR USER ACESSAR PAGINA UTILIZADOR SEM EMAIL VERIFICADO - FALTA IMPLEMENTAR
+
+Após Login & Registo
+
+	- mudar permissoes de view layout
+
 	
