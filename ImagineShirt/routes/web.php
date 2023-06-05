@@ -26,10 +26,13 @@ Route::resource('t-shirts', TShirtsController::class, [
         // adicionar outro nomnes para rotas
     ]
 ]);
+Route::get('/t-shirts/{tshirt}', [TShirtsController::class, 'show'])->name('t-shirts.show');
 //permitir logout com metodo GET no href
 Route::get('logout', function (){
     auth()->logout();
     Session()->flush();
     return Redirect::to('/');
 })->name('logout');
+Route::view('/contactos', 'contactos.index');
+Route::view('/sobreNos', 'sobrenos.index'); //fazer controlador para atualizar numeross
 Auth::routes(['verify' => true]);

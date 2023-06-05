@@ -48,7 +48,7 @@
             </div>
         </div>
         <div class="offcanvas__nav__option">
-            <a href="{{ route('logout') }}"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+            <a href="#"><img src="{{ asset('img/icon/cart.png') }}" alt=""> <span>0</span></a>
             <div class="price">0.00€</div>
         </div>
         <div id="mobile-menu-wrap"></div>
@@ -87,7 +87,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a href="{{ route('root') }}"><img src="img/logo.png" alt=""></a>
+                        <a href="{{ route('root') }}"><img src="{{ asset('img/logo.png') }}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
@@ -102,11 +102,11 @@
                 </div>
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
-                        <a><img src="img/icon/cart.png" alt=""><span>0</span></a>
+                        <a><img src="{{ asset('img/icon/cart.png') }}" alt=""><span>0</span></a>
                         <div class="price">0.00€</div>
                     @guest
                     @else
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle img-responsive" style="margin-left: 10px; max-width: 60px; border: solid #e63334 1px" alt="Avatar"/>
+                        <img src="{{ Auth::user()->fullPhotoUrl }}" class="rounded-circle img-responsive" style="margin-left: 10px; width: 60px; height: 60px; border: solid #e63334 1px" alt="Imagem Perfil"/>
                     @endguest
                     </div>
                 </div>
@@ -125,10 +125,10 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__logo">
-                            <a href="#"><img src="img/footer-logo.png" alt=""></a>
+                            <a href="#"><img src=" {{ asset('img/footer-logo.png')}}" alt=""></a>
                         </div>
                         <p>O cliente é o coração da nossa loja</p>
-                        <a href="#"><img src="img/payment.png" alt=""></a>
+                        <a href="#"><img src=" {{asset('img/payment.png')}}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">

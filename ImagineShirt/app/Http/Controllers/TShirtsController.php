@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\TShirts;
 use App\Models\Categorias;
 use App\Models\Precos;
+use App\Models\Cores;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Log;
 
@@ -67,10 +68,13 @@ class TShirtsController extends Controller
         return view('tshirts.index', compact('tshirts','categorias','precos','categoriaFiltro','ordenarFiltro', 'pesquisaFiltro'));
     }
 
-    public function show(TShirts $tshirt): View
+    public function show(String $str_tshirt): View
     {
-        $categoria = Categorias::where('id',$tshirt->category_id);
-        return view('tshirts.show', compact('tshirt', 'categoria'));
+        $id = strtok($str_tshirt, '-');
+        $tshirt = TShirts::findOrFail($id);
+        $categoria = Categorias::where('id',$tshirt->category_id)->pluck('name');
+        $cores = Cores::whereNull('deleted_at')->orderBy('name')->get();
+        return view('tshirts.show', compact('tshirt', 'categoria', 'cores'));
     }
 
 }

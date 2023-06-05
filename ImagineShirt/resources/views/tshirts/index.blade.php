@@ -98,6 +98,7 @@
                                             <option {{ old('ordenar', $ordenarFiltro) == 'rec_asc' ? 'selected' : '' }} value="rec_asc">Mais Antigo</option>
                                             <option {{ old('ordenar', $ordenarFiltro) == 'name_asc' ? 'selected' : '' }} value="name_asc">Nome (Ascendente)</option>
                                             <option {{ old('ordenar', $ordenarFiltro) == 'name_desc' ? 'selected' : '' }} value="name_desc">Nome (Descendente)</option>
+
                                         </select>
                                     </form>
                                 </div>
@@ -108,7 +109,7 @@
                         @forelse ($tshirts as $tshirt)
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
-                                <a href="{{ route('t-shirts.show', $tshirt)}}">
+                                <a href="{{ route('t-shirts.show', $tshirt->slug)}}">
                                     <div class="product__item__pic set-bg" data-setbg="/storage/tshirt_images/{{ $tshirt->image_url}}" style = "background-size: contain">   
                                     </div>
                                 </a> 

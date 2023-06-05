@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Categorias;
+use Illuminate\Support\Str;
 
 class TShirts extends Model
 {
@@ -15,6 +16,11 @@ class TShirts extends Model
 
     public function categoria(): BelongsTo{
         return $this->belongsTo(Categorias::class, 'category_id', 'id');
+    }
+
+    public function getSlugAttribute() : String 
+    {
+        return $this->id.'-'.Str::slug($this->name, '-');
     }
     
 }
