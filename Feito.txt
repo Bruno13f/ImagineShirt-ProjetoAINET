@@ -68,6 +68,7 @@ ALTERAR:
 	. Como mudar linguagem bootstrap navigation bar "Showing ..."
 	. Camisolas User apenas visivel para o user
 	. T-Shirts mais vendidas = SELECT tshirt_image_id, SUM(qty) AS "Quantidade Vendida" FROM order_items GROUP BY tshirt_image_id ORDER BY SUM(qty) DESC;
+	. Notificações quando order enviada/cancelada ...
 
 ##################################################################################################################################################
 		

@@ -11,7 +11,7 @@ class Categorias extends Model
 {
     use HasFactory;
     protected $table = 'categories';
-    // pk é id (incrementavel) inteiro - tem deleted_at)
+    // pk é id (incrementavel) inteiro - tem deleted_at
 
     public function tshirts(): HasMany{
         return $this->hasMany(TShirts::class, 'category_id', 'id');

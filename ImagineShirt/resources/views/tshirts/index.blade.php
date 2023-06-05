@@ -1,8 +1,9 @@
-@extends('template.layout', ['dados' => ['titulo' => ' | T-Shirts', 
-                                        'active1' => '',
+@extends('template.layout', ['dados' => ['active1' => '',
                                         'active2' => 'class = active',
                                         'active3' => '',
                                         'active4' => '']]) 
+
+@section('titulo',' | T-Shirts')
 
 @section('main')
     <!-- Breadcrumb Section Begin -->
@@ -107,19 +108,20 @@
                         @forelse ($tshirts as $tshirt)
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="/storage/tshirt_images/{{ $tshirt->image_url}}" style = "background-size: contain">
-                                </div>
+                                <a href="{{ route('t-shirts.show', $tshirt)}}">
+                                    <div class="product__item__pic set-bg" data-setbg="/storage/tshirt_images/{{ $tshirt->image_url}}" style = "background-size: contain">   
+                                    </div>
+                                </a> 
                                 <div class="product__item__text">
                                     <h6 style = "font-size: 1.2rem;font-weight: bolder">{{ empty($tshirt->name) ? 'T-Shirt Sem Nome' : $tshirt->name }}</h6>
-                                    <a href="#" class="add-cart" style="font-size: 1.1rem">Adicionar ao Carrinho</a>
+                                    <a href="#" class="add-cart" style="font-size: 1.1rem">+ Adicionar ao Carrinho</a>
                                     <p style="opacity: 0.8;">{{ empty($tshirt->description) ? 'Sem Descrição' : $tshirt->description }}</p>
-                                    @if(is_null($tshirt->customer_id))
+                                    <h5>@if(is_null($tshirt->customer_id))
                                         {{$precos['unit_price_catalog']}}
                                     @else
                                         {{$precos['unit_price_own']}}
                                     @endif
-                                    €
-                                    </h5>
+                                    €</h5>
                                 </div>
                             </div>
                         </div>
@@ -138,28 +140,20 @@
     </section>
     <!-- Shop Section End -->
     <script>
-        function updateQuery (){
-            let query = window.location.search;  // parametros url
-            let parametros = new URLSearchParams(query);
-            parametros.delete('ordenar');  // se ja existir delete
-            parametros.append('ordenar', document.getElementById("ordenar").value); // adicionar ordenação
-            document.location.href = "?" + parametros.toString(); // refresh
+    document.getElementById('pesquisa-form').addEventListener('submit', function(e) {
+        e.preventDefault(); // Impede o envio do formulário
+
+        var form = this;
+        var url = new URL(window.location.href);
+        var pesquisa = form.elements.pesquisa.value;
+
+        if (pesquisa) {
+            url.searchParams.set('pesquisa', pesquisa);
+        } else {
+            url.searchParams.delete('pesquisa');
         }
 
-        document.getElementById('pesquisa-form').addEventListener('submit', function(e) {
-            e.preventDefault(); // Impede o envio do formulário
-
-            var form = this;
-            var url = new URL(window.location.href);
-            var pesquisa = form.elements.pesquisa.value;
-
-            if (pesquisa) {
-                url.searchParams.set('pesquisa', pesquisa);
-            } else {
-                url.searchParams.delete('pesquisa');
-            }
-
-            window.location.href = url.href;
-        });
+        window.location.href = url.href;
+    });
     </script>
 @endsection

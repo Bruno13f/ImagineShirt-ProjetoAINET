@@ -17,6 +17,7 @@
     $(window).on('load', function () {
         $(".loader").fadeOut();
         $("#preloder").delay(200).fadeOut("slow");
+        $('.product__filter').not('.populares').hide();
 
         /*------------------
             Gallery filter
@@ -24,11 +25,10 @@
         $('.filter__controls li').on('click', function () {
             $('.filter__controls li').removeClass('active');
             $(this).addClass('active');
+            var filterValue = $(this).data('filter');
+            $('.product__filter').hide();
+            $(filterValue).css('opacity', 0).slideDown(200).animate({ opacity: 1 }, 2000);
         });
-        if ($('.product__filter').length > 0) {
-            var containerEl = document.querySelector('.product__filter');
-            var mixer = mixitup(containerEl);
-        }
     });
 
     /*------------------

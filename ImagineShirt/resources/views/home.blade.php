@@ -1,12 +1,7 @@
-@extends('template.layout', ['dados' => ['titulo' => ' | T-Shirts', 
-                                        'active1' => 'class = active',
+@extends('template.layout', ['dados' => ['active1' => 'class = active',
                                         'active2' => '',
                                         'active3' => '',
                                         'active4' => '']]) 
-
-@section('titulo')
-    <title>ImagineShirt</title>
-@endsection
 
 @section('main')
     <!-- Hero Section Begin -->
@@ -71,159 +66,69 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <ul class="filter__controls">
-                        <li class="active" data-filter="*">Mais Vendidos</li>
-                        <li data-filter=".new-arrivals">Recentes</li>
-                        <li data-filter=".hot-sales">Mais vendidos</li>
+                    <ul id = "listaFiltros" name="filtro" class="filter__controls">
+                        <li id="populares" class="active" data-filter=".populares">Populares</li>
+                        <li id="recentes" data-filter=".recentes">Recentes</li>
+                        <li id="maisVendidos" data-filter=".maisVendidos">Mais vendidos</li>
                     </ul>
                 </div>
             </div>
-            <div class="row product__filter">
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
+            <div class="row product__filter populares">
+                <!-- Product Section End Populares-->
+                @forelse ($populares as $popular)
+                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix">
                     <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="">
-                            <span class="label">New</span>
+                        <div class="product__item__pic set-bg" data-setbg="/storage/tshirt_images/{{ $popular->image_url}}" style = "background-size: contain">
+                            <!-- <span class="label">New</span> -->
                         </div>
                         <div class="product__item__text">
-                            <h6>Piqué Biker Jacket</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$67.24</h5>
+                            <h6 style = "font-size: 1.2rem;font-weight: bolder">{{ empty($popular->name) ? 'T-Shirt Sem Nome' : $popular->name }}</h6>
+                            <a href="#" class="add-cart" style="font-size: 1.1rem">+ Adicionar ao Carrinho</a>
+                            <h5>{{$precoLoja->unit_price_catalog}} €</h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
+                @empty
+                    <div class="col-lg-9" style="text-align:center"><h6 style = "font-size: 1rem;font-weight: bolder;">Não foi encontrada nenhuma T-Shirt</h6></div>    
+                @endforelse
+            </div>
+
+            <div class="row product__filter recentes" style="display:none">
+                @forelse ($recentes as $recente)
+                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix">
+                     <div class="product__item">
+                        <div class="product__item__pic set-bg" data-setbg="/storage/tshirt_images/{{ $recente->image_url}}" style = "background-size: contain">
+                            <!-- <span class="label">New</span> -->
+                        </div>
+                        <div class="product__item__text">
+                            <h6 style = "font-size: 1.2rem;font-weight: bolder">{{ empty($recente->name) ? 'T-Shirt Sem Nome' : $recente->name }}</h6>
+                             <a href="#" class="add-cart" style="font-size: 1.1rem">+ Adicionar ao Carrinho</a>
+                            <h5>{{$precoLoja->unit_price_catalog}} €</h5>
+                        </div>
+                    </div>
+                </div>
+                @empty
+                <div class="col-lg-9" style="text-align:center"><h6 style = "font-size: 1rem;font-weight: bolder;">Não foi encontrada nenhuma T-Shirt</h6></div>
+                @endforelse
+            </div>
+
+            <div class="row product__filter maisVendidos" style="display:none">
+                @forelse ($maisVendidos as $maisVendido)
+                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix">
                     <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/product-2.jpg">
+                        <div class="product__item__pic set-bg" data-setbg="/storage/tshirt_images/{{ $maisVendido->image_url}}" style = "background-size: contain">
+                            <!-- <span class="label">New</span> -->
                         </div>
                         <div class="product__item__text">
-                            <h6>Piqué Biker Jacket</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$67.24</h5>
+                            <h6 style = "font-size: 1.2rem;font-weight: bolder">{{ empty($maisVendido->name) ? 'T-Shirt Sem Nome' : $maisVendido->name }}</h6>
+                            <a href="#" class="add-cart" style="font-size: 1.1rem">+ Adicionar ao Carrinho</a>
+                            <h5>{{$precoLoja->unit_price_catalog}} €</h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
-                    <div class="product__item sale">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/product-3.jpg">
-                        </div>
-                        <div class="product__item__text">
-                            <h6>Multi-pocket Chest Bag</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$43.48</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/product-4.jpg">
-                        </div>
-                        <div class="product__item__text">
-                            <h6>Diagonal Textured Cap</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$60.9</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/product-5.jpg">
-                        </div>
-                        <div class="product__item__text">
-                            <h6>Lether Backpack</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$31.37</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
-                    <div class="product__item sale">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/product-6.jpg">
-                        </div>
-                        <div class="product__item__text">
-                            <h6>Ankle Boots</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$98.49</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/product-7.jpg">
-                        </div>
-                        <div class="product__item__text">
-                            <h6>T-shirt Contrast Pocket</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$49.66</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/product-8.jpg">
-                        </div>
-                        <div class="product__item__text">
-                            <h6>Basic Flowing Scarf</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$26.28</h5>
-                        </div>
-                    </div>
-                </div>
+                @empty
+                    <div class="col-lg-9" style="text-align:center"><h6 style = "font-size: 1rem;font-weight: bolder;">Não foi encontrada nenhuma T-Shirt</h6></div>
+                @endforelse
             </div>
         </div>
     </section>

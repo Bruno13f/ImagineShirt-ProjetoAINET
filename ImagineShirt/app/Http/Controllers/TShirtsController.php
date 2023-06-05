@@ -15,6 +15,7 @@ class TShirtsController extends Controller
     {
         //obter tshirts
         $tshirtsQuery = TShirts::query();
+        
         //filtar categoria
         $categoriaFiltro = $request->categoria ?? '';
         
@@ -35,7 +36,6 @@ class TShirtsController extends Controller
         }
 
         // string pesquisa
-
         $pesquisaFiltro = $request->pesquisa ?? '';
 
         if ($pesquisaFiltro !== ''){
@@ -54,10 +54,10 @@ class TShirtsController extends Controller
         // ordernar alfabeticamente default
         $tshirts = $tshirtsQuery->whereNull('deleted_at')->paginate(12, ['*'], 'pagina');
 
-        // obter preços
-        $precos = self::getPrecosTShirts();
+        // obter preços - apenas necessario preco loja e customer - desconto relacionado com nº artigos
+        $precos = Precos::select(array('unit_price_catalog', 'unit_price_own'))->first()->toArray();
         // obter categorias
-        $categorias = self::getCategoriasValidas();
+        $categorias = Categorias::whereNull('deleted_at')->orderBy('name')->pluck('name')->toArray();  
 
         //logs
         Log::debug('TShirts loaded on TShirtController.', ['$tshirts' => $tshirts]);
@@ -67,12 +67,10 @@ class TShirtsController extends Controller
         return view('tshirts.index', compact('tshirts','categorias','precos','categoriaFiltro','ordenarFiltro', 'pesquisaFiltro'));
     }
 
-    private function getCategoriasValidas (): array {
-        return Categorias::whereNull('deleted_at')->orderBy('name')->pluck('name')->toArray();  
+    public function show(TShirts $tshirt): View
+    {
+        $categoria = Categorias::where('id',$tshirt->category_id);
+        return view('tshirts.show', compact('tshirt', 'categoria'));
     }
 
-    private function getPrecosTShirts(): array{
-        // apenas necessario preco loja e customer - desconto relacionado com nº artigos
-        return Precos::select(array('unit_price_catalog', 'unit_price_own'))->first()->toArray();
-    }
 }
