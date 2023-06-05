@@ -147,6 +147,8 @@
         var form = this;
         var url = new URL(window.location.href);
         var pesquisa = form.elements.pesquisa.value;
+        // reset pagina
+        url.searchParams.set('pagina', '1');
 
         if (pesquisa) {
             url.searchParams.set('pesquisa', pesquisa);

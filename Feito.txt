@@ -116,7 +116,9 @@ Login & Registo
 
 	- rota logout para aceitar metodo GET
 	- redirect para pagina errado mudado: RouteServiceProvider: public const HOME = '/';
-	- remover mensagem "email nao se encontra nos registos"
+	- remover mensagem "email nao se encontra nos registos" ??
+	- nao permitir login de quem ta bloqueado ??
+	- alterar mensagens de erro ??
 
 Registo
 

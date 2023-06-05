@@ -39,23 +39,23 @@
                 <div class="row d-flex justify-content-center">
                     <div class="col-lg-8">
                         <div class="product__details__text">
-                            <h4>{{ empty($tshirt->name) ? 'T-Shirt Sem Nome' : $tshirt->name }}</h4>
+                            <h4>{{ empty($tshirt->name) ? 'Sem Nome' : $tshirt->name }}</h4>
                             <div class="rating">
                             </div>
                             <h3>{{$tshirt->price}}<!-- DESCONTO <span>70.00</span>--></h3> 
                             <div class="product__details__option">
                                 <div class="product__details__option__size">
                                     <span>Tamanho:</span>
-                                    <label for="xsm">xs
+                                    <label class="radio" for="xsm">xs
                                         <input type="radio" id="xsm">
                                     </label>
-                                    <label for="sm">s
+                                    <label class="radio" for="sm">s
                                         <input type="radio" id="sm">
                                     </label>
-                                    <label for="m">m
+                                    <label class="radio" for="m">m
                                         <input type="radio" id="m">
                                     </label>
-                                    <label for="l">l
+                                    <label class="radio" for="l">l
                                         <input type="radio" id="l">
                                     </label>
                                     <label class="radio" for="xl">xl
@@ -64,11 +64,11 @@
                                 </div>
                             </div>
                             <div class="product__details__option">
-                                <div class="product__details__option__color" style = "max-width: 550px; overflow-x: auto">
+                                <div class="product__details__option__color" style = "max-width: 550px;">
                                     <span>Cores:</span>
                                     @foreach($cores as $cor)
-                                        <label class = "c-1" for="{{$cor->name}}" style="background-color: #{{$cor->code}}">
-                                            <input type="radio" title="{{$cor->name}}">
+                                        <label onclick="changeOpacity(this)" class="cor-label" title="{{$cor->name}}" for="{{$cor->code}}" style="background-color:#{{$cor->code}}; opacity: 0.4">
+                                            <input type="radio" class ="cor-radio" name="cor" id="{{$cor->code}}">
                                         </label>
                                     @endforeach
                                 </div>
@@ -113,6 +113,18 @@
             </div>
         </div>
     </section>
-    <!-- Shop Details Section End -->
+    <script>
+            function changeOpacity(label) {
+                const labels = document.querySelectorAll('.cor-label');
 
+                labels.forEach(l => {
+                    if (l === label) {
+                        l.style.opacity = 1; // Altera a opacidade da label clicada para 1 (100%)
+                    } else {
+                        l.style.opacity = 0.4; // Redefine a opacidade das outras labels para 0.6 (60%)
+                    }
+                });
+            }
+    </script>
+    <!-- Shop Details Section End -->
 @endsection

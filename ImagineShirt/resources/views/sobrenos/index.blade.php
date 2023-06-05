@@ -38,19 +38,21 @@
                 <div class="col-lg-4 col-md-4 col-sm-6">
                     <div class="about__item">
                         <h4>Quem somos ?</h4>
-                        <p>...</p>
+                        <p>A ImagineShirt é uma empresa localizada na encantadora cidade de Leiria, em Portugal, que está a revolucionar a indústria 
+                            das t-shirts com a sua abordagem criativa e inovadora.</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-6">
                     <div class="about__item">
                         <h4>O que fazemos ?</h4>
-                        <p>...</p>
+                        <p> Através da paixão pelo design e pela qualidade na criação de t-shirts, 
+                            destacamo-nos como uma referência no mercado de vestuário.</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-6">
                     <div class="about__item">
                         <h4>Porque escolher-nos?</h4>
-                        <p>...</p>
+                        <p>Criatividade e Design Excepcionais. Somos conhecidos pela nossa abordagem criativa e as nossas habilidades de design excepcionais</p>
                     </div>
                 </div>
             </div>
@@ -61,11 +63,11 @@
     <!-- Counter Section Begin -->
     <section class="counter spad">
         <div class="container">
-            <div class="row">
+            <div class="row justify-content-center">
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="counter__item">
                         <div class="counter__item__number">
-                            <h2 class="cn_num">102</h2>
+                            <h2 class="cn_num">{{ $totalClientes }}</h2>
                         </div>
                         <span>Total de<br />Clientes</span>
                     </div>
@@ -73,26 +75,17 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="counter__item">
                         <div class="counter__item__number">
-                            <h2 class="cn_num">30</h2>
+                            <h2 class="cn_num">{{ $totalProdutos }}</h2>
+                        </div>
+                        <span>Total de <br />Produtos</span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="counter__item">
+                        <div class="counter__item__number">
+                            <h2 class="cn_num">{{ $totalCategorias }}</h2>
                         </div>
                         <span>Total de <br />Categorias</span>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="counter__item">
-                        <div class="counter__item__number">
-                            <h2 class="cn_num">102</h2>
-                        </div>
-                        <span>No <br />País</span>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="counter__item">
-                        <div class="counter__item__number">
-                            <h2 class="cn_num">98</h2>
-                            <strong>%</strong>
-                        </div>
-                        <span>Clientes <br />Satisfeitos</span>
                     </div>
                 </div>
             </div>

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TShirtsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaginaInicialController;
+use App\Http\Controllers\PaginaSobreNosController;
 use App\Models\TShirts;
 
 /*
@@ -31,8 +32,8 @@ Route::get('/t-shirts/{tshirt}', [TShirtsController::class, 'show'])->name('t-sh
 Route::get('logout', function (){
     auth()->logout();
     Session()->flush();
-    return Redirect::to('/');
+    return Redirect::back();
 })->name('logout');
-Route::view('/contactos', 'contactos.index');
-Route::view('/sobreNos', 'sobrenos.index'); //fazer controlador para atualizar numeross
+Route::view('/contactos', 'contactos.index')->name('contactos');
+Route::get('/sobreNos', [PaginaSobreNosController::class, 'index'])->name('sobreNos'); //fazer controlador para atualizar numeross
 Auth::routes(['verify' => true]);

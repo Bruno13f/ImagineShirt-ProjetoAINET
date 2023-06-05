@@ -70,8 +70,8 @@ class TShirtsController extends Controller
 
     public function show(String $str_tshirt): View
     {
-        $id = strtok($str_tshirt, '-');
-        $tshirt = TShirts::findOrFail($id);
+        $idTShirt = strtok($str_tshirt, '-');
+        $tshirt = TShirts::findOrFail($idTShirt);
         $categoria = Categorias::where('id',$tshirt->category_id)->pluck('name');
         $cores = Cores::whereNull('deleted_at')->orderBy('name')->get();
         return view('tshirts.show', compact('tshirt', 'categoria', 'cores'));

@@ -95,8 +95,8 @@
                         <ul>
                             <li {{ ucfirst($dados['active1'] ?? '') }}><a href="{{ route('root') }}">Página Inicial</a></li>
                             <li {{ ucfirst($dados['active2'] ?? '') }}><a href="{{ route('t-shirts') }}">T-Shirts</a></li>
-                            <li {{ ucfirst($dados['active3'] ?? '') }}><a href="./contactos.html">Contactos</a></li>
-                            <li {{ ucfirst($dados['active4'] ?? '') }}><a href="./about.html">Sobre Nós</a></li>
+                            <li {{ ucfirst($dados['active3'] ?? '') }}><a href="{{route('contactos')}}">Contactos</a></li>
+                            <li {{ ucfirst($dados['active4'] ?? '') }}><a href="{{route('sobreNos')}}">Sobre Nós</a></li>
                         </ul>
                     </nav>
                 </div>
