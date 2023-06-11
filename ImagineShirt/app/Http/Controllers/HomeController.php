@@ -24,8 +24,6 @@ class HomeController extends Controller
      */
     public function index()
     {        
-        // preco sempre 10.00€ - produtos loja
-
         return view('home');
     }
 }
