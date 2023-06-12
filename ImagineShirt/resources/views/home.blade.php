@@ -69,7 +69,7 @@
                     <ul id = "listaFiltros" name="filtro" class="filter__controls">
                         <li id="populares" class="active" data-filter=".populares">Populares</li>
                         <li id="recentes" data-filter=".recentes">Recentes</li>
-                        <li id="maisVendidos" data-filter=".maisVendidos">Mais vendidos</li>
+                        <li id="tshirtsmaisVendidas" data-filter=".tshirtsmaisVendidas">Mais vendidos</li>
                     </ul>
                 </div>
             </div>
@@ -115,8 +115,8 @@
                 @endforelse
             </div>
 
-            <div class="row product__filter maisVendidos" style="display:none">
-                @forelse ($maisVendidos as $maisVendido)
+            <div class="row product__filter tshirtsmaisVendidas" style="display:none">
+                @forelse ($tshirtsmaisVendidas as $maisVendido)
                 <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix">
                     <div class="product__item">
                         <a href="{{ route('t-shirts.show', $maisVendido)}}">

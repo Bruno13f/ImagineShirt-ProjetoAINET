@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Categorias;
 use Illuminate\Support\Str;
+use App\Models\ItemsEncomenda;
 
 class TShirts extends Model
 {
@@ -21,6 +22,10 @@ class TShirts extends Model
     public function getSlugAttribute() : String 
     {
         return $this->id.'-'.Str::slug($this->name, '-');
+    }
+
+    public function itemsEncomenda(): HasMany{
+        return $this->hasMany(ItemsEncomenda::class, 'tshirt_image_id', 'id');
     }
     
 }
