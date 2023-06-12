@@ -23,6 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'user_type',
         'photo_url',
     ];
 
@@ -52,5 +53,9 @@ class User extends Authenticatable implements MustVerifyEmail
                 return $this->photo_url ? asset('storage/photos/' . $this->photo_url) : asset('/img/user-icon.png');
             },
         );
+    }
+
+    public function cliente(): HasOne{
+        return $this->hasOne(Cliente::class);
     }
 }

@@ -12,6 +12,7 @@ class Cores extends Model
     use HasFactory;
     protected $table = 'colors';
     protected $primaryKey  = 'code';
+    protected $keyType = 'string';
     public $incrementing = false;
     protected $keyType = 'string';
 

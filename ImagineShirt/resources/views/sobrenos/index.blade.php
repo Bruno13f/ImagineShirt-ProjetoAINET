@@ -14,7 +14,7 @@
                     <div class="breadcrumb__text">
                         <h4>Sobre nós</h4>
                         <div class="breadcrumb__links">
-                            <a href="./paginaInicial.html">Página Inicial</a>
+                            <a href="{{ route('root') }}">Página Inicial</a>
                             <span>Sobre nós</span>
                         </div>
                     </div>

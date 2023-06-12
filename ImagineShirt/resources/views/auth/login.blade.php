@@ -24,7 +24,7 @@
                                 <i class="fa-solid fa-envelope" style="color: #e63334;"></i>
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>Credenciais erradas!</strong>
                                     </span>
                                 @enderror
                             </div>
@@ -48,7 +48,6 @@
                             <div class="col-md-6 offset-md-3">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
                                     <label class="form-check-label" for="remember">
                                         {{ __('Lembrar-me') }}
                                     </label>

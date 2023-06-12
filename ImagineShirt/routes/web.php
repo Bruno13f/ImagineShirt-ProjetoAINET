@@ -5,6 +5,7 @@ use App\Http\Controllers\TShirtsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaginaInicialController;
 use App\Http\Controllers\PaginaSobreNosController;
+use App\Http\Controllers\PaginaUserController;
 use App\Models\TShirts;
 
 /*
@@ -36,4 +37,5 @@ Route::get('logout', function (){
 })->name('logout');
 Route::view('/contactos', 'contactos.index')->name('contactos');
 Route::get('/sobreNos', [PaginaSobreNosController::class, 'index'])->name('sobreNos'); //fazer controlador para atualizar numeross
+Route::get('/user/{user}', [PaginaUserController::class, 'index'])->name('pagUser');
 Auth::routes(['verify' => true]);

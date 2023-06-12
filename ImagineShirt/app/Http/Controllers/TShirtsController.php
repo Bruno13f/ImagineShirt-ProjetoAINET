@@ -52,8 +52,8 @@ class TShirtsController extends Controller
 
         }
         
-        // ordernar alfabeticamente default
-        $tshirts = $tshirtsQuery->whereNull('deleted_at')->paginate(12, ['*'], 'pagina');
+        // ordernar alfabeticamente default - t-shirts loja
+        $tshirts = $tshirtsQuery->whereNull('deleted_at')->whereNull('customer_id')->paginate(12, ['*'], 'pagina');
 
         // obter preços - apenas necessario preco loja e customer - desconto relacionado com nº artigos
         $precos = Precos::select(array('unit_price_catalog', 'unit_price_own'))->first()->toArray();
@@ -65,7 +65,7 @@ class TShirtsController extends Controller
         Log::debug('Categorias loaded on TShirtController.', ['$categorias' => $categorias]);
         Log::debug('Prices loaded on TShirtController.', ['$precos' => $precos]);
         
-        return view('tshirts.index', compact('tshirts','categorias','precos','categoriaFiltro','ordenarFiltro', 'pesquisaFiltro'));
+        return view('tshirts.index', compact('tshirts','categorias','precos','categoriaFiltro','ordenarFiltro','pesquisaFiltro'));
     }
 
     public function show(String $str_tshirt): View

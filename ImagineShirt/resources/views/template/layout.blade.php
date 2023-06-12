@@ -72,7 +72,8 @@
                                 <a href="{{route('login')}}">Login</a>
                                 <a href="{{route('register')}}">Registar</a>
                             @else
-                                <a href="{{route('logout')}}">Logout</a>
+                                <a href="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
                             @endguest
                             </div>
                             <div class="header__top__hover">
@@ -106,7 +107,9 @@
                         <div class="price">0.00€</div>
                     @guest
                     @else
+                    <a href="{{ route('pagUser', Auth::user()) }}">
                         <img src="{{ Auth::user()->fullPhotoUrl }}" class="rounded-circle img-responsive" style="margin-left: 10px; width: 60px; height: 60px; border: solid #e63334 1px" alt="Imagem Perfil"/>
+                    </a>
                     @endguest
                     </div>
                 </div>

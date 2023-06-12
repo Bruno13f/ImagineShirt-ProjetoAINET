@@ -107,7 +107,7 @@
                     </div>
                     <div class="row">
                         @forelse ($tshirts as $tshirt)
-                        <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="col-lg-4 col-md-6 col-sm-6" style="margin-top: 20px">
                             <div class="product__item">
                                 <a href="{{ route('t-shirts.show', $tshirt->slug)}}">
                                     <div class="product__item__pic set-bg" data-setbg="/storage/tshirt_images/{{ $tshirt->image_url}}" style = "background-size: contain">   
@@ -117,20 +117,19 @@
                                     <h6 style = "font-size: 1.2rem;font-weight: bolder">{{ empty($tshirt->name) ? 'T-Shirt Sem Nome' : $tshirt->name }}</h6>
                                     <a href="#" class="add-cart" style="font-size: 1.1rem">+ Adicionar ao Carrinho</a>
                                     <p style="opacity: 0.8;">{{ empty($tshirt->description) ? 'Sem Descrição' : $tshirt->description }}</p>
-                                    <h5>@if(is_null($tshirt->customer_id))
-                                        {{$precos['unit_price_catalog']}}
-                                    @else
-                                        {{$precos['unit_price_own']}}
-                                    @endif
-                                    €</h5>
+                                    <h5>{{$precos['unit_price_catalog']}} €</h5>
                                 </div>
+                            </div>
+                            <div style = "display: flex; justify-content: space-evenly">
+                                <a href=""><button type="button" class="btn btn-success">Editar</button></a>
+                                <a href="" style = "margin-bottom: 10px"><button type="button" class="btn btn-danger">Eliminar</button></a>
                             </div>
                         </div>
                         @empty
                         <div class="col-lg-9" style="text-align:center"><h6 style = "font-size: 1rem;font-weight: bolder;">Não foi encontrada nenhuma T-Shirt</h6></div>
                         @endforelse
                     </div>
-                    <div class="row">
+                    <div class="row" style = "margin-top: 40px">
                         <div class="col-lg-12">
                         {{ $tshirts->withQueryString()->onEachSide(1)->links() }}
                         </div>
