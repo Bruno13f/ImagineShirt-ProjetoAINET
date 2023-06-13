@@ -37,5 +37,5 @@ Route::get('logout', function (){
 })->name('logout');
 Route::view('/contactos', 'contactos.index')->name('contactos');
 Route::get('/sobreNos', [PaginaSobreNosController::class, 'index'])->name('sobreNos'); //fazer controlador para atualizar numeross
-Route::get('/user/{user}', [PaginaUserController::class, 'index'])->name('pagUser');
+Route::get('/user/{user}', [PaginaUserController::class, 'index'])->name('pagUser')->middleware('verified');;
 Auth::routes(['verify' => true]);

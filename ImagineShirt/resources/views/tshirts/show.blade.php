@@ -67,7 +67,7 @@
                                 <div class="product__details__option__color" style = "max-width: 550px;">
                                     <span>Cores:</span>
                                     @foreach($cores as $cor)
-                                        <label onclick="changeOpacity(this)" class="cor-label" title="{{$cor->name}}" for="{{$cor->code}}" style="background-color:#{{$cor->code}}; opacity: 0.4">
+                                        <label onclick="changeOpacity(this); changeImg(this)" class="cor-label" title="{{$cor->name}}" for="{{$cor->code}}" style="background-color:#{{$cor->code}}; opacity: 0.4">
                                             <input type="radio" class ="cor-radio" name="cor" id="{{$cor->code}}">
                                         </label>
                                     @endforeach
@@ -121,9 +121,13 @@
                     if (l === label) {
                         l.style.opacity = 1; // Altera a opacidade da label clicada para 1 (100%)
                     } else {
-                        l.style.opacity = 0.4; // Redefine a opacidade das outras labels para 0.6 (60%)
+                        l.style.opacity = 0.4; // Redefine a opacidade das outras labels para 0.4 (40%)
                     }
                 });
+            }
+
+            function changeImg(label){
+                console.log(label.htmlFor);
             }
     </script>
     <!-- Shop Details Section End -->

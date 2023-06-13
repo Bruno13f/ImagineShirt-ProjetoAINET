@@ -32,7 +32,7 @@
                     <div class="shop__sidebar">
                         <div class="shop__sidebar__search">
                             <form method="GET" id="pesquisa-form">
-                                <input type="text" maxlength="50" name="pesquisa" value = "{{old('pesquisa', $pesquisaFiltro)}}" placeholder="Pesquisar...">
+                                <input id = "pesquisa" type="text" maxlength="50" name="pesquisa" value = "{{old('pesquisa', $pesquisaFiltro)}}" placeholder="Pesquisar...">
                                 <button type="submit"><span class="icon_search"></span></button>
                             </form>
                         </div>
@@ -52,6 +52,14 @@
                                                         @endif                                                    
                                                         href="{{route('t-shirts',request()->except('categoria'))}}">Todas
                                                     </a></li>
+                                                    @if (!empty(Auth::user()))
+                                                        <li><a 
+                                                        @if (request()->query('categoria') === 'user')
+                                                            style = "color:black; font-weight: bold;"
+                                                        @endif  
+                                                        href="{{request()->fullUrlWithQuery(['categoria' => 'user', 'pagina' => '1'])}}">Próprias T-Shirts</a></li>
+                                                    @endif
+
                                                     @foreach ($categorias as $categoria)
                                                         <li><a 
                                                         @if (request()->query('categoria') === $categoria)
@@ -157,5 +165,14 @@
 
         window.location.href = url.href;
     });
+
+    function updateQuery (){
+        let query = window.location.search;  // parametros url
+        let parametros = new URLSearchParams(query);
+        parametros.delete('ordenar');  // se ja existir delete
+        parametros.append('ordenar', document.getElementById("ordenar").value); // adicionar ordenação
+        document.location.href = "?" + parametros.toString(); // refresh
+    }
+
     </script>
 @endsection

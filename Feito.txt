@@ -66,7 +66,7 @@ ALTERAR:
 
 	. Para manter opção selecionado quando se filtra por categoria - usado fullUrl() e request query - perguntar stor outras formas
 	. Como mudar linguagem bootstrap navigation bar "Showing ..."
-	. Camisolas User apenas visivel para o user
+	. Camisolas User apenas visivel para o user - FEITO (FALTA mostrar imagem)
 	. T-Shirts mais vendidas = SELECT tshirt_image_id, SUM(qty) AS "Quantidade Vendida" FROM order_items GROUP BY tshirt_image_id ORDER BY SUM(qty) DESC;
 	. Notificações quando order enviada/cancelada ...
 
@@ -116,18 +116,21 @@ Login & Registo
 
 	- rota logout para aceitar metodo GET
 	- redirect para pagina errado mudado: RouteServiceProvider: public const HOME = '/';
-	- remover mensagem "email nao se encontra nos registos" ??
-	- nao permitir login de quem ta bloqueado ??
-	- alterar mensagens de erro ??
+	- remover mensagem "email nao se encontra nos registos"
+	- nao permitir login de quem ta bloqueado
+	- alterar mensagens de erro
 
 Registo
 
 	- overwrite rota depois de registo automatico login para nao dar login
 	- enviar email de verificação no registo : Auth::routes(['verify' => true]); class User extends Authenticatable implements MustVerifyEmail
-	- NAO PERMITIR USER ACESSAR PAGINA UTILIZADOR SEM EMAIL VERIFICADO - FALTA IMPLEMENTAR
+	- NAO PERMITIR USER ACESSAR PAGINA UTILIZADOR SEM EMAIL VERIFICADO - FEITO
+	- criar por default cliente (user_type = 'C') e tambem criar customer quando registado novo user
 
 Após Login & Registo
 
 	- mudar permissoes de view layout
+	
+Imagens de T-Shirts overlay
 
 	

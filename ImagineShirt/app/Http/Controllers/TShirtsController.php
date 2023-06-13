@@ -9,6 +9,7 @@ use App\Models\Precos;
 use App\Models\Cores;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Log;
+use Auth;
 
 class TShirtsController extends Controller
 {
@@ -20,7 +21,7 @@ class TShirtsController extends Controller
         //filtar categoria
         $categoriaFiltro = $request->categoria ?? '';
         
-        if ($categoriaFiltro !== ''){
+        if ($categoriaFiltro !== '' && $categoriaFiltro != 'user'){
             $idCategoriaFiltro = Categorias::where('name','LIKE',$categoriaFiltro)->pluck('id');
             $tshirtsQuery->where('category_id',$idCategoriaFiltro);
         }
@@ -52,8 +53,32 @@ class TShirtsController extends Controller
 
         }
         
+        $tshirtsQuery->whereNull('deleted_at');
         // ordernar alfabeticamente default - t-shirts loja
-        $tshirts = $tshirtsQuery->whereNull('deleted_at')->whereNull('customer_id')->paginate(12, ['*'], 'pagina');
+
+        if (empty(Auth::user())){
+            $tshirtsQuery->whereNull('customer_id');
+        }else{
+            $id = Auth::user()->id;
+            $num_tshirts_user = TShirts::query()->where('customer_id', $id)->count();
+
+            if ($categoriaFiltro === 'user'){
+
+                $tshirtsQuery->where('customer_id', Auth::user()->id);
+
+            }elseif ($num_tshirts_user){
+                
+                $tshirtsQuery->where(function ($query) {
+                    $query->where('customer_id', Auth::user()->id)
+                          ->orWhereNull('customer_id');
+                });
+            }else{
+                $tshirtsQuery->whereNull('customer_id');
+            }
+            
+        }
+
+        $tshirts = $tshirtsQuery->paginate(12, ['*'], 'pagina');
 
         // obter preços - apenas necessario preco loja e customer - desconto relacionado com nº artigos
         $precos = Precos::select(array('unit_price_catalog', 'unit_price_own'))->first()->toArray();

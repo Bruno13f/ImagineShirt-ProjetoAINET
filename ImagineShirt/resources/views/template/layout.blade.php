@@ -40,7 +40,9 @@
                 <a href="{{route('login')}}">Login</a>
                 <a href="{{route('register')}}">Registar</a>
             @else
-            <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle img-responsive" style="margin-left: 10px; max-width: 70px; border: solid #e63334 1px" alt="Avatar"/>
+            <a href="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
+            <img src="{{ Auth::user()->fullPhotoUrl }}" class="rounded-circle img-responsive" style="max-width: 70px; border: solid #e63334 1px" alt="Avatar"/>
             @endguest
             </div>
             <div class="offcanvas__top__hover">
