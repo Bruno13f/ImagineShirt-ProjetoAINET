@@ -52,7 +52,8 @@
                                                         @endif                                                    
                                                         href="{{route('t-shirts',request()->except('categoria'))}}">Todas
                                                     </a></li>
-                                                    @if (!empty(Auth::user()))
+                                                    @guest
+                                                    @else
                                                         <li><a 
                                                         @if (request()->query('categoria') === 'user')
                                                             style = "color:black; font-weight: bold;"
