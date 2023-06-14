@@ -97,9 +97,8 @@ class TShirtsController extends Controller
     {
         $idTShirt = strtok($str_tshirt, '-');
         $tshirt = TShirts::findOrFail($idTShirt);
-        $categoria = Categorias::where('id',$tshirt->category_id)->pluck('name');
         $cores = Cores::whereNull('deleted_at')->orderBy('name')->get();
-        return view('tshirts.show', compact('tshirt', 'categoria', 'cores'));
+        return view('tshirts.show', compact('tshirt', 'cores'));
     }
 
 }

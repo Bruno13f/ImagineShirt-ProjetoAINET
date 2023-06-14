@@ -121,7 +121,7 @@
                     <div class="product__item">
                         <a href="{{ route('t-shirts.show', $maisVendido->slug)}}">
                             <div class="product__item__pic set-bg" data-setbg="/storage/tshirt_images/{{ $maisVendido->image_url}}" style = "background-size: contain">
-                                <!-- <span class="label">New</span> -->
+                                <span class="label" style = "color: red">Hot</span>
                             </div>
                         </a>
                         <div class="product__item__text">

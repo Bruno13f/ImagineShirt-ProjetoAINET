@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -56,6 +57,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function cliente(): HasOne{
-        return $this->hasOne(Cliente::class);
+        return $this->hasOne(Cliente::class, 'id', 'id');
     }
 }

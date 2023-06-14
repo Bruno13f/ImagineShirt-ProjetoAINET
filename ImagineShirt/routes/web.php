@@ -36,6 +36,21 @@ Route::get('logout', function (){
     return Redirect::back();
 })->name('logout');
 Route::view('/contactos', 'contactos.index')->name('contactos');
-Route::get('/sobreNos', [PaginaSobreNosController::class, 'index'])->name('sobreNos'); //fazer controlador para atualizar numeross
-Route::get('/user/{user}', [PaginaUserController::class, 'index'])->name('pagUser')->middleware('verified');;
+Route::get('/sobreNos', [PaginaSobreNosController::class, 'index'])->name('sobreNos');
+Route::middleware('auth')->group(function (){
+    Route::get('/user/{user}', [PaginaUserController::class, 'index'])->name('pagUser')->middleware('verified');
+
+    Route::get('tshirt-images-user/{user_id}/{image_url}', function ($user_id, $image_url) {
+        $path = storage_path('app/tshirt_images_private/' . $image_url);
+        
+        $image = file_get_contents($path);
+        $tipo = mime_content_type($path);
+
+        if (Auth::user()->id != $user_id)
+            return redirect()->route('root');
+        
+        return response($image, 200)->header('Content-Type', $tipo);
+    })->name('imagem_user');
+});
+
 Auth::routes(['verify' => true]);

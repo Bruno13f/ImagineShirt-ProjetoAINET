@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Cores;
 use App\Models\TShirts;
 
-class ItemsEncomenda extends Model
+class ItensEncomenda extends Model
 {
     use HasFactory;
     protected $table = 'order_items';
@@ -21,5 +21,8 @@ class ItemsEncomenda extends Model
         return $this->belongsTo(TShirts::class, 'tshirt_image_id', 'id');
     }
 
+    public function encomendas(): BelongsTo{
+        return $this->belongsTo(Encomendas::class, 'order_id', 'id');
+    }
     
 }

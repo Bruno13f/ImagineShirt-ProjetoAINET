@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Categorias;
 use Illuminate\Support\Str;
-use App\Models\ItemsEncomenda;
+use App\Models\ItensEncomenda;
 
 class TShirts extends Model
 {
@@ -24,8 +24,12 @@ class TShirts extends Model
         return $this->id.'-'.Str::slug($this->name, '-');
     }
 
+    public function cliente(): BelongsTo{
+        return $this->belongsTo(Cliente::class, 'customer_id', 'id');
+    }
+
     public function itemsEncomenda(): HasMany{
-        return $this->hasMany(ItemsEncomenda::class, 'tshirt_image_id', 'id');
+        return $this->BelongsTo(ItensEncomenda::class, 'tshirt_image_id', 'id');
     }
     
 }

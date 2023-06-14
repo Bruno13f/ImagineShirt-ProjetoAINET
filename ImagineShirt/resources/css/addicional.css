@@ -1,0 +1,17 @@
+canvas-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.canvas-container img {
+    display: block;
+}
+
+#myCanvas {
+    position: absolute;
+    top: 38%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

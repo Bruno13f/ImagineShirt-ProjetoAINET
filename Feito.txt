@@ -64,11 +64,12 @@ npm install bootstrap@latest @popperjs/core --save-dev
 
 ALTERAR:
 
-	. Para manter opção selecionado quando se filtra por categoria - usado fullUrl() e request query - perguntar stor outras formas
 	. Como mudar linguagem bootstrap navigation bar "Showing ..."
 	. Camisolas User apenas visivel para o user - FEITO (FALTA mostrar imagem)
-	. T-Shirts mais vendidas = SELECT tshirt_image_id, SUM(qty) AS "Quantidade Vendida" FROM order_items GROUP BY tshirt_image_id ORDER BY SUM(qty) DESC;
 	. Notificações quando order enviada/cancelada ...
+	. Pode se passar user pelo controlador??
+	. Pagina Cliente e Funcionario
+	. Pagina Admin dashboard... - middlware para admin 
 
 ##################################################################################################################################################
 		
@@ -108,7 +109,7 @@ Filtragem T-Shirts
 
 Filtragem T-Shirts Pagina Inicial
 
-	. mais vendidos - fazer (falta modelos)
+	. mais vendidos - feito
 	. mais recentes
 	. mais popuplas - random
 
@@ -131,6 +132,6 @@ Após Login & Registo
 
 	- mudar permissoes de view layout
 	
-Imagens de T-Shirts overlay
+Imagens de T-Shirts overlay - feito
 
 	

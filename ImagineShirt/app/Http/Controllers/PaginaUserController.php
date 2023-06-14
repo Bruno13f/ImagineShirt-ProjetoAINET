@@ -9,9 +9,21 @@ class PaginaUserController extends Controller
 {
     public function index()
     {   
-        if(Auth::user()->user_type == 'A')
+        $user = Auth::user();
+
+        if($user->user_type == 'A'){
+            $tipoUser = 'Administrador';
             dd("ADMIN");
-        if(Auth::user()->user_type == 'C')
-            return view('clientes.index');
+        }
+
+        if($user->user_type == 'F'){
+            $tipoUser = 'Funcionário';
+            dd("ADMIN");
+        }
+
+        if($user->user_type == 'C'){
+            $tipoUser = 'Cliente';
+            return view('clientes.index',compact('user','tipoUser'));
+        }
     }
 }
