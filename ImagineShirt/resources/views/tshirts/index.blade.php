@@ -121,7 +121,7 @@
                                 <a href="{{ route('t-shirts.show', $tshirt->slug)}}">
                                     <div class="product__item__pic set-bg" data-setbg="
                                     {{ empty($tshirt->customer_id) ? "/storage/tshirt_images/{$tshirt->image_url}" : route('imagem_user', ['image_url' => $tshirt->image_url, 'user_id' => $tshirt->customer_id])}}
-                                    " style = "background-size: contain">   
+                                    " style = "background-size: contain; background-color: #d9d9d9; border-radius: 15%">   
                                     </div>
                                 </a> 
                                 <div class="product__item__text">
