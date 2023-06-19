@@ -14,11 +14,13 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="product__details__breadcrumb">
+                        <div class="breadcrumb__text">
+                        <div class="breadcrumb__links">
                             <a href="{{ route('root') }}">Página Inicial</a>
                             <a href="{{ route('t-shirts') }}">T-Shirts</a>
                             <span>{{ empty($tshirt->name) ? 'Detalhes T-Shirt' : $tshirt->name}}</span>
                         </div>
+                    </div>
                     </div>
                 </div>
                 <div class="row justify-content-md-center" style="margin-top: 40px">
@@ -30,8 +32,6 @@
                                         <img id="tshirtBase" src = "/storage/tshirt_base/{{$cores[0]->code}}.jpg" alt="">
                                         <canvas id="myCanvas"></canvas>
                                     </div>
-                                    <!--<img style="min-width: 200px; max-width: 300px; height: auto;" src="{{ empty($tshirt->customer_id) ? "/storage/tshirt_images/{$tshirt->image_url}" : 
-                                    route('imagem_user', ['image_url' => $tshirt->image_url, 'user_id' => $tshirt->customer_id])}}" alt="">-->
                                 </div>
                             </div>
                         </div>
@@ -148,7 +148,7 @@
                 var id = "{{$tshirt->customer_id}}";
 
                 imagem.src = "{{ empty($tshirt->customer_id) ? "/storage/tshirt_images/{$tshirt->image_url}" : 
-                    route('imagem_user', ['image_url' => $tshirt->image_url, 'user_id' => $tshirt->customer_id])}}";
+                    route('imagem_user', ['image_url' => $tshirt->image_url, 'user_id' => $tshirt->customer_id, 'tshirt' => $tshirt->name])}}";
 
                 canvas.width = img.offsetWidth / 2;
                 canvas.height = img.offsetHeight / 2;

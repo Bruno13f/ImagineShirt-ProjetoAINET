@@ -13,6 +13,12 @@ use Auth;
 
 class TShirtsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(TShirts::class, 'tshirts');
+    }
+
     public function index(Request $request): View
     {
         //obter tshirts
@@ -56,10 +62,12 @@ class TShirtsController extends Controller
         $tshirtsQuery->whereNull('deleted_at');
         // ordernar alfabeticamente default - t-shirts loja
 
-        if (empty(Auth::user())){
+        $user = Auth::user();
+
+        if (empty($user)){
             $tshirtsQuery->whereNull('customer_id');
-        }else{
-            $id = Auth::user()->id;
+        }elseif($user->user_type === 'C'){
+            $id = $user->id;
             $num_tshirts_user = TShirts::query()->where('customer_id', $id)->count();
 
             if ($categoriaFiltro === 'user'){
@@ -101,4 +109,15 @@ class TShirtsController extends Controller
         return view('tshirts.show', compact('tshirt', 'cores'));
     }
 
+    public function imagemCliente($tshirt, $user_id, $image_url){
+        $path = storage_path('app/tshirt_images_private/' . $image_url);
+        
+        $image = file_get_contents($path);
+        $tipo = mime_content_type($path);
+
+        if (Auth::user()->id != $user_id)
+            return redirect()->route('root');
+        
+        return response($image, 200)->header('Content-Type', $tipo);
+    }
 }

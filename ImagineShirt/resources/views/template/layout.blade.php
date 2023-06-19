@@ -107,12 +107,11 @@
                     <div class="header__nav__option">
                         <a><img src="{{ asset('img/icon/cart.png') }}" alt=""><span>0</span></a>
                         <div class="price">0.00€</div>
-                    @guest
-                    @else
+                    @auth
                     <a href="{{ route('pagUser', Auth::user()) }}">
                         <img src="{{ Auth::user()->fullPhotoUrl }}" class="rounded-circle img-responsive" style="margin-left: 10px; width: 60px; height: 60px; border: solid #e63334 1px" alt="Imagem Perfil"/>
                     </a>
-                    @endguest
+                    @endauth
                     </div>
                 </div>
             </div>

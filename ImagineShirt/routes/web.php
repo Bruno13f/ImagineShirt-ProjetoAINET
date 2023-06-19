@@ -40,17 +40,7 @@ Route::get('/sobreNos', [PaginaSobreNosController::class, 'index'])->name('sobre
 Route::middleware('auth')->group(function (){
     Route::get('/user/{user}', [PaginaUserController::class, 'index'])->name('pagUser')->middleware('verified');
 
-    Route::get('tshirt-images-user/{user_id}/{image_url}', function ($user_id, $image_url) {
-        $path = storage_path('app/tshirt_images_private/' . $image_url);
-        
-        $image = file_get_contents($path);
-        $tipo = mime_content_type($path);
-
-        if (Auth::user()->id != $user_id)
-            return redirect()->route('root');
-        
-        return response($image, 200)->header('Content-Type', $tipo);
-    })->name('imagem_user');
+    Route::get('tshirt-images-user/{tshirt}-{user_id}/{image_url}',[TShirtsController::class, 'imagemCliente'])->name('imagem_user');
 });
 
 Auth::routes(['verify' => true]);

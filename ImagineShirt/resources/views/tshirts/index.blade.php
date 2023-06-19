@@ -6,6 +6,11 @@
 @section('titulo',' | T-Shirts')
 
 @section('main')
+
+    @php
+        $userID = Auth::id();
+        $user = DB::table('users')->find($userID);
+    @endphp
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-option">
         <div class="container">
@@ -52,14 +57,13 @@
                                                         @endif                                                    
                                                         href="{{route('t-shirts',request()->except('categoria'))}}">Todas
                                                     </a></li>
-                                                    @guest
-                                                    @else
+                                                    @can('viewMinhas', $user)
                                                         <li><a 
                                                         @if (request()->query('categoria') === 'user')
                                                             style = "color:black; font-weight: bold;"
                                                         @endif  
                                                         href="{{request()->fullUrlWithQuery(['categoria' => 'user', 'pagina' => '1'])}}">Próprias T-Shirts</a></li>
-                                                    @endif
+                                                    @endcan
 
                                                     @foreach ($categorias as $categoria)
                                                         <li><a 
@@ -120,7 +124,7 @@
                             <div class="product__item">
                                 <a href="{{ route('t-shirts.show', $tshirt->slug)}}">
                                     <div class="product__item__pic set-bg" data-setbg="
-                                    {{ empty($tshirt->customer_id) ? "/storage/tshirt_images/{$tshirt->image_url}" : route('imagem_user', ['image_url' => $tshirt->image_url, 'user_id' => $tshirt->customer_id])}}
+                                    {{ empty($tshirt->customer_id) ? "/storage/tshirt_images/{$tshirt->image_url}" : route('imagem_user', ['image_url' => $tshirt->image_url, 'user_id' => $tshirt->customer_id, 'tshirt' => $tshirt->name])}}
                                     " style = "background-size: contain; background-color: #d9d9d9; border-radius: 15%">   
                                     </div>
                                 </a> 
@@ -131,13 +135,15 @@
                                     <h5>{{$precos['unit_price_catalog']}} €</h5>
                                 </div>
                             </div>
-                            <div style = "display: flex; justify-content: space-evenly">
-                                <a href=""><button type="button" class="btn btn-success">Editar</button></a>
-                                <a href="" style = "margin-bottom: 10px"><button type="button" class="btn btn-danger">Eliminar</button></a>
-                            </div>
+                            @can('gerirCatalogo', $user)
+                                <div style = "display: flex; justify-content: space-evenly">
+                                    <a href=""><button type="button" class="btn btn-success">Editar</button></a>
+                                    <a href="" style = "margin-bottom: 10px"><button type="button" class="btn btn-danger">Eliminar</button></a>
+                                </div>
+                            @endcan
                         </div>
                         @empty
-                        <div class="col-lg-9" style="text-align:center"><h6 style = "font-size: 1rem;font-weight: bolder;">Não foi encontrada nenhuma T-Shirt</h6></div>
+                            <div class="col-lg-9" style="text-align:center"><h6 style = "font-size: 1rem;font-weight: bolder;">Não foi encontrada nenhuma T-Shirt</h6></div>
                         @endforelse
                     </div>
                     <div class="row" style = "margin-top: 40px">

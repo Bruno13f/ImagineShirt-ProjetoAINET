@@ -65,11 +65,11 @@ npm install bootstrap@latest @popperjs/core --save-dev
 ALTERAR:
 
 	. Como mudar linguagem bootstrap navigation bar "Showing ..."
-	. Camisolas User apenas visivel para o user - FEITO (FALTA mostrar imagem)
 	. Notificações quando order enviada/cancelada ...
-	. Pode se passar user pelo controlador??
 	. Pagina Cliente e Funcionario
 	. Pagina Admin dashboard... - middlware para admin 
+	. customers e orders vai ser necessario (se houver problemas) alterar no php nome coluna - colunas com nome iguais
+	. PROBLEMA - Policy user passado nao é a instancia é caminho modelo
 
 ##################################################################################################################################################
 		
