@@ -85,19 +85,12 @@
                             </div>
                             <table class="table">
                             <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Data</th>
-                                        <th>Total</th>
-                                    </tr>
-                                </thead>
                                 <tbody>
-                                @if ($user && $user->cliente && $user->cliente->encomendas)
+                                @if ($user->cliente->encomendas)
                                     @foreach ($user->cliente->encomendas as $encomenda)
                                         <tr>
-                                            <td>{{ $encomenda->id }}</td>
-                                            <td>{{ $encomenda->date }}</td>
+                                            <td>Encomenda: {{ $encomenda->date }}</td>
+                                            <td>{{ $encomenda->status }}</td>
                                             <td>{{ $encomenda->total_price }}€</td>
                                         </tr>
                                     @endforeach
@@ -106,7 +99,7 @@
                                     <td colspan="3">Não foram encontradas encomendas.</td>
                                 </tr>
                                 @endif
-                            </tbody>
+                                </tbody>
                         </table>
                         </div>
                     </div>

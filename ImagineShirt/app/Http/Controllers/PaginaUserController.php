@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\Encomendas;
 use Auth;
 
 class PaginaUserController extends Controller
@@ -13,12 +15,14 @@ class PaginaUserController extends Controller
 
         if($user->user_type == 'A'){
             $tipoUser = 'Administrador';
-            return view('administradores.index',compact('user','tipoUser'));
+            $encomendas = Encomendas::orderByDesc('date')->paginate(15);
+            return view('administradores.index',compact('user','tipoUser','encomendas'));
         }
 
         if($user->user_type == 'E'){
             $tipoUser = 'Funcionário';
-            return view('funcionarios.index',compact('user','tipoUser'));
+            $encomendas = Encomendas::where('status','=','pending')->orwhere('status','=','paid')->orderByDesc('date')->paginate(15);
+            return view('funcionarios.index',compact('user','tipoUser','encomendas'));
         }
 
         if($user->user_type == 'C'){

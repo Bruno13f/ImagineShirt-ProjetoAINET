@@ -91,9 +91,26 @@
                             <div class="card-header">
                                 <h5 class="card-title mb-0">Encomendas</h5>
                             </div>
-                            <div class="card-body">
-                            </div>
+                            <table class="table">
+                            <table class="table">
+                                <tbody>
+                                @if ($encomendas)
+                                    @foreach ($encomendas as $encomenda)
+                                        <tr>
+                                            <td>Encomenda: {{ $encomenda->date }}</td>
+                                            <td>{{ $encomenda->status }}</td>
+                                            <td>{{ $encomenda->total_price }}€</td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                <tr>
+                                    <td colspan="3">Não foram encontradas encomendas.</td>
+                                </tr>
+                                @endif
+                                </tbody>
+                        </table>
                         </div>
+                        {{ $encomendas->links() }}
                     </div>
                     <div class="tab-pane fade" id="categorias" role="tabpanel">
                         <div class="card">
