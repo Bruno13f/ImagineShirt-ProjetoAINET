@@ -25,10 +25,14 @@ class TShirtsPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(?User $user, TShirts $tShirts): bool
+    public function view(?User $user, TShirts $t_shirt): bool
     {
         return true;
     }
+    /*public function view(?User $user, TShirts $t_shirt): bool
+    {
+        return true;
+    }*/
     /**
      * Determine whether the user can create models.
      */
@@ -40,7 +44,7 @@ class TShirtsPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, TShirts $tShirts): bool
+    public function update(User $user, TShirts $t_shirt): bool
     {
         return $user->user_type == 'A';
     }
@@ -48,7 +52,7 @@ class TShirtsPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, TShirts $tShirts): bool
+    public function delete(User $user, TShirts $t_shirt): bool
     {
         return $user->user_type == 'A';
     }
@@ -56,7 +60,7 @@ class TShirtsPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, TShirts $tShirts): bool
+    public function restore(User $user, TShirts $t_shirt): bool
     {
         return $user->user_type == 'A';
     }
@@ -64,12 +68,7 @@ class TShirtsPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, TShirts $tShirts): bool
-    {
-        return $user->user_type == 'A';
-    }
-
-    public function gerirCatalogo(User $user): bool
+    public function forceDelete(User $user, TShirts $t_shirt): bool
     {
         return $user->user_type == 'A';
     }

@@ -23,12 +23,13 @@ use App\Models\TShirts;
 Route::get('/', [PaginaInicialController::class, 'index'])->name('root');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::resource('t-shirts', TShirtsController::class, [
-    'names' => [
+     'names' => [
         'index' => 't-shirts'
-        // adicionar outro nomnes para rotas
+         // adicionar outro nomes para rotas
     ]
 ]);
-Route::get('/t-shirts/{tshirt}', [TShirtsController::class, 'show'])->name('t-shirts.show');
+Route::get('/t-shirts/{t_shirt}', [TShirtsController::class, 'show'])->name('t-shirts.show');
+
 //permitir logout com metodo GET no href
 Route::get('logout', function (){
     auth()->logout();
@@ -40,7 +41,7 @@ Route::get('/sobreNos', [PaginaSobreNosController::class, 'index'])->name('sobre
 Route::middleware('auth')->group(function (){
     Route::get('/user/{user}', [PaginaUserController::class, 'index'])->name('pagUser')->middleware('verified');
 
-    Route::get('tshirt-images-user/{tshirt}-{user_id}/{image_url}',[TShirtsController::class, 'imagemCliente'])->name('imagem_user');
+    Route::get('tshirt-images-user/{nome_tshirt}-{user_id}/{image_url}',[TShirtsController::class, 'imagemCliente'])->name('imagem_user');
 });
 
 Auth::routes(['verify' => true]);

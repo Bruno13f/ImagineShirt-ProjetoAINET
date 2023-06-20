@@ -10,7 +10,7 @@
 
 <!-- Shop Details Section Begin -->
     <section class="shop-details">
-        <div class="product__details__pic" style="background-color:white">
+        <div class="product__details__pic" style="background-color:white; margin-bottom: 0px">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
@@ -18,7 +18,7 @@
                         <div class="breadcrumb__links">
                             <a href="{{ route('root') }}">Página Inicial</a>
                             <a href="{{ route('t-shirts') }}">T-Shirts</a>
-                            <span>{{ empty($tshirt->name) ? 'Detalhes T-Shirt' : $tshirt->name}}</span>
+                            <span>{{ empty($t_shirt->name) ? 'Detalhes T-Shirt' : $t_shirt->name}}</span>
                         </div>
                     </div>
                     </div>
@@ -44,10 +44,10 @@
                 <div class="row d-flex justify-content-center">
                     <div class="col-lg-8">
                         <div class="product__details__text">
-                            <h4>{{ empty($tshirt->name) ? 'Sem Nome' : $tshirt->name }}</h4>
+                            <h4>{{ empty($t_shirt->name) ? 'Sem Nome' : $t_shirt->name }}</h4>
                             <div class="rating">
                             </div>
-                            <h3>{{$tshirt->price}}<!-- DESCONTO <span>70.00</span>--></h3> 
+                            <h3>{{$t_shirt->price}}<!-- DESCONTO <span>70.00</span>--></h3> 
                             <div class="product__details__option">
                                 <div class="product__details__option__size">
                                     <span>Tamanho:</span>
@@ -91,7 +91,7 @@
                                 <h5><span>Checkout Seguro</span></h5>
                                 <img src="{{ asset('img/payment.png')}} " alt="">
                                 <ul>
-                                    <li><h6 style="font-weight: bold;">Categoria: {{ empty($tshirt->categoria->name) ? 'Sem Categoria' : $tshirt->categoria->name}}</h6></li>
+                                    <li><h6 style="font-weight: bold;">Categoria: {{ empty($t_shirt->categoria->name) ? 'Sem Categoria' : $t_shirt->categoria->name}}</h6></li>
                                 </ul>
                             </div>
                         </div>
@@ -109,7 +109,7 @@
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tabs-5" role="tabpanel">
                                     <div class="product__details__tab__content">
-                                        <p class="note">{{ $tshirt->description }}</p>
+                                        <p class="note">{{ $t_shirt->description }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -145,11 +145,13 @@
                 var context = canvas.getContext("2d");
 
                 var imagem = new Image();
-                var id = "{{$tshirt->customer_id}}";
+                var id = "{{$t_shirt->customer_id}}";
 
-                imagem.src = "{{ empty($tshirt->customer_id) ? "/storage/tshirt_images/{$tshirt->image_url}" : 
-                    route('imagem_user', ['image_url' => $tshirt->image_url, 'user_id' => $tshirt->customer_id, 'tshirt' => $tshirt->name])}}";
+                imagem.src = "{{ empty($t_shirt->customer_id) ? "/storage/tshirt_images/{$t_shirt->image_url}" : 
+                    route('imagem_user', ['image_url' => $t_shirt->image_url, 'user_id' => $t_shirt->customer_id, 'nome_tshirt' => $t_shirt->name])}}";
 
+                console.log(imagem.src);
+                
                 canvas.width = img.offsetWidth / 2;
                 canvas.height = img.offsetHeight / 2;
                 

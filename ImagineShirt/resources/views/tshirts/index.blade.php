@@ -57,7 +57,7 @@
                                                         @endif                                                    
                                                         href="{{route('t-shirts',request()->except('categoria'))}}">Todas
                                                     </a></li>
-                                                    @can('viewMinhas', $user)
+                                                    @can('viewMinhas', \App\Models\TShirts::class)
                                                         <li><a 
                                                         @if (request()->query('categoria') === 'user')
                                                             style = "color:black; font-weight: bold;"
@@ -124,7 +124,7 @@
                             <div class="product__item">
                                 <a href="{{ route('t-shirts.show', $tshirt->slug)}}">
                                     <div class="product__item__pic set-bg" data-setbg="
-                                    {{ empty($tshirt->customer_id) ? "/storage/tshirt_images/{$tshirt->image_url}" : route('imagem_user', ['image_url' => $tshirt->image_url, 'user_id' => $tshirt->customer_id, 'tshirt' => $tshirt->name])}}
+                                    {{ empty($tshirt->customer_id) ? "/storage/tshirt_images/{$tshirt->image_url}" : route('imagem_user', ['image_url' => $tshirt->image_url, 'user_id' => $tshirt->customer_id, 'nome_tshirt' => $tshirt->name])}}
                                     " style = "background-size: contain; background-color: #d9d9d9; border-radius: 15%">   
                                     </div>
                                 </a> 
@@ -135,12 +135,16 @@
                                     <h5>{{$precos['unit_price_catalog']}} €</h5>
                                 </div>
                             </div>
-                            @can('gerirCatalogo', $user)
+                            
                                 <div style = "display: flex; justify-content: space-evenly">
+                                @can('update', $tshirt)
                                     <a href=""><button type="button" class="btn btn-success">Editar</button></a>
+                                @endcan
+                                @can('delete', $tshirt)
                                     <a href="" style = "margin-bottom: 10px"><button type="button" class="btn btn-danger">Eliminar</button></a>
+                                @endcan
                                 </div>
-                            @endcan
+                            
                         </div>
                         @empty
                             <div class="col-lg-9" style="text-align:center"><h6 style = "font-size: 1rem;font-weight: bolder;">Não foi encontrada nenhuma T-Shirt</h6></div>
@@ -157,7 +161,9 @@
     </section>
     <!-- Shop Section End -->
     <script>
-    document.getElementById('pesquisa-form').addEventListener('submit', function(e) {
+    let formpesquisa =  document.getElementById('pesquisa-form');   
+    if (formpesquisa){
+        document.getElementById('pesquisa-form').addEventListener('submit', function(e) {
         e.preventDefault(); // Impede o envio do formulário
 
         var form = this;
@@ -173,7 +179,9 @@
         }
 
         window.location.href = url.href;
-    });
+        });
+    }
+    
 
     function updateQuery (){
         let query = window.location.search;  // parametros url

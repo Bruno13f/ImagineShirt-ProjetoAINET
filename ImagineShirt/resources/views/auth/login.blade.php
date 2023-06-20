@@ -16,9 +16,7 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
-
                         <div class="row mb-3 justify-content-center">
-
                             <div class="col-md-6">
                                 <input id="email" type="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                                 <i class="fa-solid fa-envelope" style="color: #e63334;"></i>
@@ -35,7 +33,6 @@
 
                             <div class="col-md-6">
                                 <input id="password" placeholder="Palavra-Passe" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

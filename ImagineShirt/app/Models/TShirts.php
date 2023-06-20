@@ -19,17 +19,17 @@ class TShirts extends Model
         return $this->belongsTo(Categorias::class, 'category_id', 'id');
     }
 
-    public function getSlugAttribute() : String 
-    {
-        return $this->id.'-'.Str::slug($this->name, '-');
-    }
-
     public function cliente(): BelongsTo{
         return $this->belongsTo(Cliente::class, 'customer_id', 'id');
     }
 
     public function itemsEncomenda(): HasMany{
         return $this->BelongsTo(ItensEncomenda::class, 'tshirt_image_id', 'id');
+    }
+
+    public function getSlugAttribute() : String 
+    {
+        return $this->id.'-'.Str::slug($this->name, '-');
     }
     
 }

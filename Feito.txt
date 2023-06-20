@@ -69,7 +69,8 @@ ALTERAR:
 	. Pagina Cliente e Funcionario
 	. Pagina Admin dashboard... - middlware para admin 
 	. customers e orders vai ser necessario (se houver problemas) alterar no php nome coluna - colunas com nome iguais
-	. PROBLEMA - Policy user passado nao é a instancia é caminho modelo
+	. PROBLEMA - Resolvido alterar nome para o da rota
+	. USER REMEMBER & BLOCKED_AT (DELETED_AT RESOLVIDO)
 
 ##################################################################################################################################################
 		

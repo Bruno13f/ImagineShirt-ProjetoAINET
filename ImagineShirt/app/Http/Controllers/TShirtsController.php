@@ -16,7 +16,7 @@ class TShirtsController extends Controller
 
     public function __construct()
     {
-        $this->authorizeResource(TShirts::class, 'tshirts');
+        $this->authorizeResource(TShirts::class, 't_shirt');
     }
 
     public function index(Request $request): View
@@ -101,15 +101,13 @@ class TShirtsController extends Controller
         return view('tshirts.index', compact('tshirts','categorias','precos','categoriaFiltro','ordenarFiltro','pesquisaFiltro'));
     }
 
-    public function show(String $str_tshirt): View
+    public function show(TShirts $t_shirt): View
     {
-        $idTShirt = strtok($str_tshirt, '-');
-        $tshirt = TShirts::findOrFail($idTShirt);
         $cores = Cores::whereNull('deleted_at')->orderBy('name')->get();
-        return view('tshirts.show', compact('tshirt', 'cores'));
+        return view('tshirts.show', compact('t_shirt', 'cores'));
     }
 
-    public function imagemCliente($tshirt, $user_id, $image_url){
+    public function imagemCliente($nome_tshirt, $user_id, $image_url){
         $path = storage_path('app/tshirt_images_private/' . $image_url);
         
         $image = file_get_contents($path);

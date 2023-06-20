@@ -78,7 +78,7 @@
                 @forelse ($populares as $popular)
                 <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix">
                     <div class="product__item">
-                        <a href="{{ route('t-shirts.show', $popular->slug)}}">
+                        <a href="{{ route('t-shirts.show', $popular)}}">
                             <div class="product__item__pic set-bg" data-setbg="/storage/tshirt_images/{{ $popular->image_url}}" style = "background-size: contain">
                             </div>
                         </a>
@@ -98,7 +98,7 @@
                 @forelse ($recentes as $recente)
                 <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix">
                      <div class="product__item">
-                        <a href="{{ route('t-shirts.show', $recente->slug)}}">
+                        <a href="{{ route('t-shirts.show', $recente)}}">
                             <div class="product__item__pic set-bg" data-setbg="/storage/tshirt_images/{{ $recente->image_url}}" style = "background-size: contain">
                                 <span class="label" style = "color: red">Novo</span>
                             </div>
@@ -119,7 +119,7 @@
                 @forelse ($tshirtsmaisVendidas as $maisVendido)
                 <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix">
                     <div class="product__item">
-                        <a href="{{ route('t-shirts.show', $maisVendido->slug)}}">
+                        <a href="{{ route('t-shirts.show', $maisVendido)}}">
                             <div class="product__item__pic set-bg" data-setbg="/storage/tshirt_images/{{ $maisVendido->image_url}}" style = "background-size: contain">
                                 <span class="label" style = "color: red">Hot</span>
                             </div>
