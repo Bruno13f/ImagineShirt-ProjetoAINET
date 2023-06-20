@@ -45,7 +45,6 @@ class PaginaUserController extends Controller
             $tipoUser = 'Cliente';
             return view('clientes.edit',compact('user','tipoUser'));
         }
-
-        
     }
+
 }

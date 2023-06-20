@@ -4,6 +4,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Cliente extends Model
 {
@@ -27,6 +28,6 @@ class Cliente extends Model
     }
 
     public function encomendas(): HasMany{
-        return $this->hasMany(Encomendas::class, 'customer_id', 'id');
-    }
+    return $this->hasMany(Encomendas::class, 'customer_id', 'id');
+}
 }

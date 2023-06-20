@@ -83,8 +83,31 @@
                             <div class="card-header">
                                 <h5 class="card-title mb-0">Encomendas</h5>
                             </div>
-                            <div class="card-body">
-                            </div>
+                            <table class="table">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Data</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                @if ($user && $user->cliente && $user->cliente->encomendas)
+                                    @foreach ($user->cliente->encomendas as $encomenda)
+                                        <tr>
+                                            <td>{{ $encomenda->id }}</td>
+                                            <td>{{ $encomenda->date }}</td>
+                                            <td>{{ $encomenda->total_price }}€</td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                <tr>
+                                    <td colspan="3">Não foram encontradas encomendas.</td>
+                                </tr>
+                                @endif
+                            </tbody>
+                        </table>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="tshirts" role="tabpanel">
