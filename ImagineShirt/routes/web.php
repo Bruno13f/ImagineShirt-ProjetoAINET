@@ -40,7 +40,7 @@ Route::view('/contactos', 'contactos.index')->name('contactos');
 Route::get('/sobreNos', [PaginaSobreNosController::class, 'index'])->name('sobreNos');
 Route::middleware('auth')->group(function (){
     Route::get('/user/{user}', [PaginaUserController::class, 'index'])->name('pagUser')->middleware('verified');
-
+    Route::get('/user/{user}/edit', [PaginaUserController::class, 'edit'])->name('editUser')->middleware('verified');
     Route::get('tshirt-images-user/{nome_tshirt}-{user_id}/{image_url}',[TShirtsController::class, 'imagemCliente'])->name('imagem_user');
 });
 

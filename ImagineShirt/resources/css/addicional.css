@@ -7,6 +7,8 @@ canvas-container {
 
 .canvas-container img {
     display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #myCanvas {
@@ -14,4 +16,9 @@ canvas-container {
     top: 38%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+#mudarPalavraPasse:hover{
+    text-decoration: underline;
+    color: #007bff;
 }

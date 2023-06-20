@@ -14,16 +14,48 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="breadcrumb__text">
-                        <div class="breadcrumb__links">
+                        <div class="product__details__breadcrumb">
                             <a href="{{ route('root') }}">Página Inicial</a>
                             <a href="{{ route('t-shirts') }}">T-Shirts</a>
                             <span>{{ empty($t_shirt->name) ? 'Detalhes T-Shirt' : $t_shirt->name}}</span>
                         </div>
                     </div>
+                </div>
+                <div class="row" style="margin-top: 40px">
+                    <div class="col-lg-3 col-md-3">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">
+                                    <div id="tshirtBaseEsq" class="product__thumb__pic set-bg" data-setbg="/storage/tshirt_base/{{$cores[0]->code}}.jpg"></div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">
+                                    <div class="product__thumb__pic set-bg" data-setbg="{{ empty($t_shirt->customer_id) ? "/storage/tshirt_images/{$t_shirt->image_url}" : 
+                    route('imagem_user', ['image_url' => $t_shirt->image_url, 'user_id' => $t_shirt->customer_id, 'nome_tshirt' => $t_shirt->name])}}">
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6 col-md-9">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                                <div class="canvas-container">
+                                    <img id="tshirtBase" src = "/storage/tshirt_base/{{$cores[0]->code}}.jpg" alt="">
+                                    <canvas id="myCanvas"></canvas>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tabs-2" role="tabpanel">
+                                <div class="product__details__pic__item">
+                                    <img src="{{ empty($t_shirt->customer_id) ? "/storage/tshirt_images/{$t_shirt->image_url}" : 
+                    route('imagem_user', ['image_url' => $t_shirt->image_url, 'user_id' => $t_shirt->customer_id, 'nome_tshirt' => $t_shirt->name])}}" alt="" style="object-fit: contain; max-width: 100%; max-height: 100%;">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="row justify-content-md-center" style="margin-top: 40px">
+                <!-- <div class="row justify-content-md-center" style="margin-top: 40px">
                     <div class="col-lg-5 col-md-9">
                         <div class="tab-content">
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
@@ -36,7 +68,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="product__details__content">
@@ -133,8 +165,12 @@
             }
 
             function changeImg(label){
+                var shirtImageEsq = document.getElementById('tshirtBaseEsq');
                 var shirtImage = document.getElementById('tshirtBase');
-                shirtImage.src = "/storage/tshirt_base/" + label.htmlFor + ".jpg"
+                var path = "/storage/tshirt_base/" + label.htmlFor + ".jpg";
+                shirtImageEsq.style.backgroundImage = `url(${path})`
+                console.log(path)
+                shirtImage.src = path
             }
 
             window.addEventListener('load', function() {
@@ -149,8 +185,6 @@
 
                 imagem.src = "{{ empty($t_shirt->customer_id) ? "/storage/tshirt_images/{$t_shirt->image_url}" : 
                     route('imagem_user', ['image_url' => $t_shirt->image_url, 'user_id' => $t_shirt->customer_id, 'nome_tshirt' => $t_shirt->name])}}";
-
-                console.log(imagem.src);
                 
                 canvas.width = img.offsetWidth / 2;
                 canvas.height = img.offsetHeight / 2;

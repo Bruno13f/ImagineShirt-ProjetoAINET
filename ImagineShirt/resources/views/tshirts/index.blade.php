@@ -7,10 +7,6 @@
 
 @section('main')
 
-    @php
-        $userID = Auth::id();
-        $user = DB::table('users')->find($userID);
-    @endphp
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-option">
         <div class="container">

@@ -64,9 +64,7 @@ class TShirtsController extends Controller
 
         $user = Auth::user();
 
-        if (empty($user)){
-            $tshirtsQuery->whereNull('customer_id');
-        }elseif($user->user_type === 'C'){
+        if($user->user_type === 'C'){
             $id = $user->id;
             $num_tshirts_user = TShirts::query()->where('customer_id', $id)->count();
 
@@ -84,6 +82,8 @@ class TShirtsController extends Controller
                 $tshirtsQuery->whereNull('customer_id');
             }
             
+        }else{
+            $tshirtsQuery->whereNull('customer_id');
         }
 
         $tshirts = $tshirtsQuery->paginate(12, ['*'], 'pagina');

@@ -46,7 +46,12 @@
                             </div>
                             <div class="card-body justify-content-center">
                                 <form>
-                                    @include('users.shared.fields_foto', ['allowUpload' => false])
+                                    @include('users.shared.fields_foto', ['allowUpload' => true])
+                                    <div class="col-md-12 justify-content-center" style = "display:flex; margin-top: 10px">
+                                        <a href=""> 
+                                            <button type="submit" class="btn btn-primary" style="background-color:rgba(230, 51, 52, 0.8); border-color:rgba(230, 51, 52, 0.8)">Eliminar Foto</button>   
+                                        </a>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -55,17 +60,22 @@
                                 <h5 class="card-title mb-0">Informação Privada</h5>
                             </div>
                             <div class="card-body">
-                                @include('users.shared.fields_infpriv', ['user' => $user, 'readonlyData' => true])
-                                @include('clientes.shared.fields_infpriv', ['user' => $user, 'readonlyData' => true])
+                                @include('users.shared.fields_infpriv', ['user' => $user, 'readonlyData' => false])
+                                @include('clientes.shared.fields_infpriv', ['user' => $user, 'readonlyData' => false])
                             </div>
                         </div>
                         <div class="card" style="margin-top: 20px">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-12 justify-content-center" style = "display:flex">
-                                        <a href = "{{ route('editUser', $user) }}" >
-                                            <button type="submit" class="btn btn-primary" style="background-color:rgba(230, 51, 52, 0.8); border-color:rgba(230, 51, 52, 0.8)">Editar</button>   
-                                        </a> 
+                                    <div class="col-md-6 justify-content-end" style = "display:flex">
+                                        <a href=""> 
+                                            <button type="submit" class="btn btn-primary" style="background-color:rgba(230, 51, 52, 0.8); border-color:rgba(230, 51, 52, 0.8)">Guardar Alterações</button>   
+                                        </a>
+                                    </div> 
+                                    <div class="col-md-6 justify-content-start" style = "display:flex">
+                                        <a href="{{ url()->previous() }}"> 
+                                            <button type="submit" class="btn btn-primary" style="background-color:rgba(230, 51, 52, 0.8); border-color:rgba(230, 51, 52, 0.8)">Cancelar</button>   
+                                        </a>
                                     </div> 
                                 </div>
                             </div>

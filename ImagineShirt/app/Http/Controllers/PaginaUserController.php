@@ -13,17 +13,39 @@ class PaginaUserController extends Controller
 
         if($user->user_type == 'A'){
             $tipoUser = 'Administrador';
-            dd("ADMIN");
+            return view('administradores.index',compact('user','tipoUser'));
         }
 
-        if($user->user_type == 'F'){
+        if($user->user_type == 'E'){
             $tipoUser = 'Funcionário';
-            dd("ADMIN");
+            return view('funcionarios.index',compact('user','tipoUser'));
         }
 
         if($user->user_type == 'C'){
             $tipoUser = 'Cliente';
             return view('clientes.index',compact('user','tipoUser'));
         }
+    }
+
+    public function edit(){
+
+        $user = Auth::user();
+
+        if($user->user_type == 'A'){
+            $tipoUser = 'Administrador';
+            return view('administradores.edit',compact('user','tipoUser'));
+        }
+
+        if($user->user_type == 'E'){
+            $tipoUser = 'Funcionário';
+            return view('funcionarios.edit',compact('user','tipoUser'));
+        }
+
+        if($user->user_type == 'C'){
+            $tipoUser = 'Cliente';
+            return view('clientes.edit',compact('user','tipoUser'));
+        }
+
+        
     }
 }
