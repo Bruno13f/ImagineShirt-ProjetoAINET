@@ -88,6 +88,13 @@
                                         </div>
                                     </div>
                                 </div>
+                                @can('create', App\Models\TShirts::class)
+                                <div class="row">
+                                    <div class="col d-flex justify-content-center">
+                                        <a href=""><button type="button" class="btn btn-success">Criar T-Shirt</button></a>
+                                    </div>
+                                </div>
+                                @endcan
                             </div>
                         </div>
                     </div>

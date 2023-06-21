@@ -64,7 +64,7 @@ class TShirtsController extends Controller
 
         $user = Auth::user();
 
-        if($user->user_type === 'C'){
+        if(!empty($user) && $user->user_type === 'C'){
             $id = $user->id;
             $num_tshirts_user = TShirts::query()->where('customer_id', $id)->count();
 
