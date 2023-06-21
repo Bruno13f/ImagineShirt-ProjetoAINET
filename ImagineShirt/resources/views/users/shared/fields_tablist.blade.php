@@ -24,11 +24,15 @@
     Utilizadores
     <span class="badge badge-primary badge-pill badge-light">{{$numutilizadores}}</span>
 </a>
-<a class="list-group-item list-group-item-action" data-toggle="list" href="#categorias" role="tab">
+<a class="list-group-item list-group-item-action" href="{{ route('user.gerirCategorias', $user) }}">
     Categorias
     <span class="badge badge-primary badge-pill badge-light">{{$numCategorias}}</span>
 </a>
 <a class="list-group-item list-group-item-action" data-toggle="list" href="#precos" role="tab">
     Preços Catálogo
+</a>
+<a class="list-group-item list-group-item-action" href="{{ route('user.gerirCores', $user) }}">
+    Cores T-Shirts
+    <span class="badge badge-primary badge-pill badge-light">{{$numCores}}</span>
 </a>
 @endcan

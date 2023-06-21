@@ -62,7 +62,11 @@ Route::middleware('adminOrCustomer')->group(function (){
 
 Route::middleware('admin')->group(function (){
     // rotas para admin - dashboard etc
-    Route::get('/user/{user}/gerirUsers', [PaginaUserController::class, 'showUsers'])->middleware('verified')->name('user.gerirUsers');
+    Route::middleware('verified')->group(function (){
+        Route::get('/user/{user}/gerirUsers', [PaginaUserController::class, 'showUsers'])->middleware('verified')->name('user.gerirUsers');
+        Route::get('/user/{user}/gerirCategorias', [PaginaUserController::class, 'showCategorias'])->middleware('verified')->name('user.gerirCategorias');
+        Route::get('/user/{user}/gerirCores', [PaginaUserController::class, 'showCores'])->middleware('verified')->name('user.gerirCores');
+    });
 });
 
 Auth::routes(['verify' => true]);

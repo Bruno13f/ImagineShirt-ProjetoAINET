@@ -28,7 +28,7 @@
         <div class="tab-content">
             <div class="tab-pane fade show active" id="encomendas" role="tabpanel">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header d-flex justify-content-center">
                         <h5 class="card-title mb-0">Encomendas</h5>
                     </div>
                     <div class="card-body">
@@ -63,7 +63,7 @@
                                         break;
                                     case 'canceled':
                                         $btn = 'danger';
-                                        $estado = 'CANCELADO';
+                                        $estado = 'ANULADO';
                                         $alterarEstado='';
                                         break;
                                     case 'pending':
@@ -95,17 +95,20 @@
                                                     <button type="button" class="btn btn-{{$btnAlterar}} rounded-pill"><span>{{$alterarEstado}}</span></button>
                                                 @endif
                                             
-                                                @if($estado != 'CANCELADO')
-                                                    <button type="button" class="btn btn-danger rounded-pill"><span>Cancelar</span></button>
+                                                @if($estado != 'ANULADO')
+                                                    <button type="button" class="btn btn-danger rounded-pill"><span>Anular</span></button>
                                                 @else
                                                     <button type="button" class="btn btn-info rounded-pill"><span>Estado inalterável</span></button>
                                                 @endif
                                             </td>
                                         @endcan
                                         @can('isFuncionario')
-                                            <td>Cliente</td>
                                             <td>
-                                                @if ($estado == 'Pendente' || $estado == 'Pago')
+                                                <span>{{$encomenda->name}}<span>
+                                                <p><small>{{$encomenda->email}}</small></p>
+                                            </td>
+                                            <td>
+                                                @if ($estado == 'PENDENTE' || $estado == 'PAGO')
                                                     <button type="button" class="btn btn-{{$btnAlterar}} rounded-pill"><span>{{$alterarEstado}}</span></button>
                                                 @endif
                                             </td>

@@ -32,7 +32,7 @@
                         <h5 class="card-title mb-0">Definições Perfil {{$tipoUser}}</h5>
                     </div>
                     <div class="list-group list-group-flush" role="tablist">
-                    @include('users.shared.fields_tablist', ['usertipo' => $tipoUser, 'allowUpload' => false, 'numencomendas'  => $numencomendas])
+                    @include('users.shared.fields_tablist', ['usertipo' => $tipoUser, 'allowUpload' => false])
                     </div>
                 </div>
             </div>
@@ -85,70 +85,45 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="categorias" role="tabpanel">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title mb-0">Categorias</h5>
-                            </div>
-                            <table class="table">
-                                    <tbody>
-                                        @if($numCategorias != 0)
-                                            @foreach($categorias as $categoria)
-                                                <tr>
-                                                    <td>{{$categoria->name}}</td>
-                                                    <td><a href="">
-                                                        <button type="button" class="btn btn-primary btn-sm">Editar Categoria</button>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td>Não existem Categorias cridadas</td>
-                                            </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
-                        </div>
-                        {{ $categorias->links() }}
-                    </div>
                     <div class="tab-pane fade" id="precos" role="tabpanel">
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="card-title mb-0">Preços Catálogo</h5>
                             </div>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Preço catálogo</th>
-                                        <th>Preço cliente</th>
-                                        <th>Preço desconto catálogo</th>
-                                        <th>Preço desconto cliente</th>
-                                        <th>Quantidade de desconto</th>
-                                        <th>Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if(!empty($precos))
+                            <div class="card-body">
+                                <table class="table table-hover table-bordered table-light">
+                                    <thead class="thead-dark">
                                         <tr>
-                                            <td>{{$precos[0]['unit_price_catalog']}}</td>
-                                            <td>{{$precos[0]['unit_price_own']}}</td>
-                                            <td>{{$precos[0]['unit_price_catalog_discount']}}</td>
-                                            <td>{{$precos[0]['unit_price_own_discount']}}</td>
-                                            <td>{{$precos[0]['qty_discount']}}</td>
-                                            <td>
-                                                <a href="">
-                                                    <button type="button" class="btn btn-primary btn-sm">Editar Preço</button>
-                                                </a>
-                                            </td>
+                                            <th>Preço catálogo</th>
+                                            <th>Preço cliente</th>
+                                            <th>Preço desconto catálogo</th>
+                                            <th>Preço desconto cliente</th>
+                                            <th>Quantidade necessária para desconto</th>
+                                            <th>Ações</th>
                                         </tr>
-                                    @else
-                                        <tr>
-                                            <td colspan="6">Não há preços definidos</td>
-                                        </tr>
-                                    @endif
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @if(count($precos) !== 0)
+                                            <tr>
+                                                <td>{{$precos[0]['unit_price_catalog']}}</td>
+                                                <td>{{$precos[0]['unit_price_own']}}</td>
+                                                <td>{{$precos[0]['unit_price_catalog_discount']}}</td>
+                                                <td>{{$precos[0]['unit_price_own_discount']}}</td>
+                                                <td>{{$precos[0]['qty_discount']}}</td>
+                                                <td>
+                                                    <a href="">
+                                                        <button type="button" class="btn btn-info rounded-pill">Editar Preços</button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @else
+                                            <tr>
+                                                <td colspan="6">Não há preços definidos</td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

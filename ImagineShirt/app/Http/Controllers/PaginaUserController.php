@@ -8,6 +8,7 @@ use App\Http\Requests\UserRequest;
 use App\Models\User;
 use App\Models\Categorias;
 use App\Models\Precos;
+use App\Models\Cores;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
@@ -34,13 +35,13 @@ class PaginaUserController extends Controller
 
             $numutilizadores = User::whereNull('deleted_at')->count();
 
-            $queryCategorias = Categorias::whereNull('deleted_at');
-            $numCategorias =$queryCategorias->count();
-            $categorias = $queryCategorias->paginate(15);
+            $numCategorias = Categorias::whereNull('deleted_at')->count();
 
             $precos = Precos::get()->toArray();
+
+            $numCores = Cores::whereNull('deleted_at')->count();
             
-            return view('administradores.index',compact('user','tipoUser','numencomendas','numutilizadores','numCategorias','categorias','precos'));
+            return view('administradores.index',compact('user','tipoUser','numencomendas','numutilizadores','numCategorias','precos','numCores'));
         }
 
         if($user->user_type == 'E'){
@@ -168,7 +169,9 @@ class PaginaUserController extends Controller
 
         if($user->user_type == 'E'){
 
-            $encomendas = Encomendas::where('status','=','pending')->orwhere('status','=','paid')->orderByDesc('date')->paginate(15);
+            $encomendas = Encomendas::where('status','=','pending')->orwhere('status','=','paid')->join('customers','orders.customer_id','=','customers.id')
+            ->join('users','customers.id','=','users.id')
+            ->orderByDesc('date')->paginate(15);
 
             return view('users.shared.fields_encomendas',compact('user','encomendas'));
         }
@@ -187,6 +190,22 @@ class PaginaUserController extends Controller
         $utilizadores = User::whereNull('deleted_at')->paginate(15);
 
         return view('administradores.users', compact('user','utilizadores'));
+    }
+
+    public function showCategorias(){
+
+        $user = Auth::user();
+        $categorias = Categorias::whereNull('deleted_at')->paginate(15);
+
+        return view('administradores.categorias', compact('user','categorias'));
+    }
+
+    public function showCores(){
+        
+        $user = Auth::user();
+        $cores = Cores::whereNull('deleted_at')->paginate(15);
+
+        return view('administradores.cores', compact('user','cores'));
     }
 
 }

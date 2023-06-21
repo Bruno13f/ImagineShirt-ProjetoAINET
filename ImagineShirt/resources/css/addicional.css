@@ -49,5 +49,15 @@ canvas-container {
 .table tr,
 .table th[scope="row"],
 .table td {
+    text-align: center;
+    vertical-align: middle;
     background-color: white !important;
+}
+
+.card-body{
+    overflow-x:auto;
+}
+
+#imagemGestaoUser{
+    object-fit: contain;
 }

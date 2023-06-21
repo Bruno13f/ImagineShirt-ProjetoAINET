@@ -29,23 +29,39 @@
         <div class="tab-content">
             <div class="tab-pane fade show active" id="users" role="tabpanel">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header d-flex justify-content-center">
                         <h5 class="card-title mb-0">Utilizadores</h5>
                     </div>
+                    <div class="card-body">
                     @if(count($utilizadores) != 0)
-                        <table class="table">
+                        <table class="table table-hover table-bordered table-light">
                             <tbody>
                                 @foreach($utilizadores as $utilizador)
+                                @php    
+                                switch($utilizador->user_type){
+                                    case 'A':
+                                        $tipoUser = 'Administrador';
+                                        break;
+                                    case 'E':
+                                        $tipoUser = 'Funcionario';
+                                        break;
+                                    case 'C':
+                                        $tipoUser = 'Cliente';
+                                        break;
+                                }
+                                @endphp
                                     <tr>
-                                        <td><img id="imagemPerfil" src="{{ $utilizador->fullPhotoUrl }}" alt="{{ $utilizador->name }}" class="rounded-circle" ></td>
-                                        <td>{{$utilizador->name}}</td>
-                                        <td>{{$utilizador->email}}</td>
+                                        <td><img id="imagemGestaoUser"src="{{ $utilizador->fullPhotoUrl }}" alt="{{ $utilizador->name }}" width="128" height="128"></td>
+                                        <td>{{$tipoUser}}<br>{{$utilizador->name}}</td>
+                                        <td><span><u>{{$utilizador->email}}</u></span></td>
                                         <td>{{$utilizador->created_at}}</td>
-                                        <td>
-                                            <a href="">
-                                                <button type="button" class="btn btn-danger rounded-pill"><span>Editar Utilizador</span></button>
-                                            </a>
-                                        </td>
+                                        <td><a href=""> 
+                                        @if($utilizador->user_type !== 'C')
+                                            <button type="button" class="btn btn-info rounded-pill"><span>Editar</span></button>
+                                        @endif
+                                            <button type="button" class="btn btn-warning rounded-pill"><span>Bloquear</span></button>
+                                            <button type="button" class="btn btn-danger rounded-pill"><span>Eliminar</span></button>
+                                        </td></a>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -53,6 +69,7 @@
                     @else
                         <span>Não foram encontradas encomendas.</span>
                     @endif
+                    </div>
                 </div>
                 {{ $utilizadores->links() }}
             </div>
