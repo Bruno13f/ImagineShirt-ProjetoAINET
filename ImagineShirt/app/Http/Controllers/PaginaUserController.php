@@ -159,7 +159,9 @@ class PaginaUserController extends Controller
         
         if($user->user_type == 'A'){
 
-            $encomendas = Encomendas::orderByDesc('date')->paginate(15);
+            $encomendas = Encomendas::join('customers','orders.customer_id','=','customers.id')
+            ->join('users','customers.id','=','users.id')
+            ->orderByDesc('date')->paginate(15);
             
             return view('users.shared.fields_encomendas',compact('user','encomendas'));
         }

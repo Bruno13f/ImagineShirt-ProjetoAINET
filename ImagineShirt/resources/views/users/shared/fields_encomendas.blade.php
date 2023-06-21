@@ -86,7 +86,10 @@
                                         <td>{{ $encomenda->date }}</td>
                                         <td><span class="font-weight-bold">{{ $estado }}</span></td>
                                         @can('isAdmin')
-                                            <td>Cliente</td>
+                                            <td>
+                                                <span>{{$encomenda->name}}<span>
+                                                <p><small>{{$encomenda->email}}</small></p>
+                                            </td>
                                             <td>
                                                 @if ($estado == 'PENDENTE' || $estado == 'PAGO')
                                                     <button type="button" class="btn btn-{{$btnAlterar}} rounded-pill"><span>{{$alterarEstado}}</span></button>
