@@ -32,9 +32,7 @@ class PaginaUserController extends Controller
 
             $numencomendas = Encomendas::count();
 
-            $queryUsers = User::whereNull('deleted_at');
-            $numutilizadores = $queryUsers->count();
-            $utilizadores = $queryUsers->paginate(15);
+            $numutilizadores = User::whereNull('deleted_at')->count();
 
             $queryCategorias = Categorias::whereNull('deleted_at');
             $numCategorias =$queryCategorias->count();
@@ -42,7 +40,7 @@ class PaginaUserController extends Controller
 
             $precos = Precos::get()->toArray();
             
-            return view('administradores.index',compact('user','tipoUser','numencomendas','numutilizadores','utilizadores','numCategorias','categorias','precos'));
+            return view('administradores.index',compact('user','tipoUser','numencomendas','numutilizadores','numCategorias','categorias','precos'));
         }
 
         if($user->user_type == 'E'){
@@ -179,6 +177,14 @@ class PaginaUserController extends Controller
 
             return view('users.shared.fields_encomendas',compact('user','encomendas'));
         }
+    }
+
+    public function showUsers(){
+
+        $user = Auth::user();
+        $utilizadores = User::whereNull('deleted_at')->paginate(15);
+
+        return view('administradores.users', compact('user','utilizadores'));
     }
 
 }

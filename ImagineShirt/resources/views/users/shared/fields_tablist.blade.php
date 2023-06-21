@@ -20,7 +20,7 @@
 @endcan
 
 @can ('fazerGestao', App\Models\User::class)
-<a class="list-group-item list-group-item-action" data-toggle="list" href="#users" role="tab">
+<a class="list-group-item list-group-item-action" href="{{ route('user.gerirUsers', $user) }}">
     Utilizadores
     <span class="badge badge-primary badge-pill badge-light">{{$numutilizadores}}</span>
 </a>

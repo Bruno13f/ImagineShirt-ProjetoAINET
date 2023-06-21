@@ -37,19 +37,18 @@
                             <thead class="thead-dark">
                                 <tr>
                                 <th scope="col">Encomenda Numero</th>
-                                @can('isAdmin')
-                                    <th scope="col">Cliente</th>
-                                @endcan
                                 <th scope="col">Data</th>
                                 <th scope="col">Estado</th>
-                                <th scope="col">Preço</th>
                                 @can('isAdmin')
-                                    <th>Alterar Estado</th>
+                                    <th scope="col">Cliente</th>
+                                    <th scope="col">Alterar Estado</th>
                                 @endcan
                                 @can('isFuncionario')
-                                    <th>Alterar Estado</th>
+                                    <th scope="col">Cliente</th>
+                                    <th scope="col">Alterar Estado</th>
                                 @endcan
-                                <th>Detalhes</th>
+                                <th scope="col">Preço</th>
+                                <th scope="col">Detalhes</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -84,13 +83,10 @@
                                 
                                     <tr>
                                         <th scope="row">{{ $encomenda->id }}</th>
-                                        @can('isAdmin')
-                                            <td>Cliente</th>
-                                        @endcan
-                                        <td>{{ $encomenda->date }}</th>
+                                        <td>{{ $encomenda->date }}</td>
                                         <td><span class="font-weight-bold">{{ $estado }}</span></td>
-                                        <td>{{ $encomenda->total_price }}€</td>
                                         @can('isAdmin')
+                                            <td>Cliente</td>
                                             <td>
                                                 @if ($estado == 'PENDENTE' || $estado == 'PAGO')
                                                     <button type="button" class="btn btn-{{$btnAlterar}} rounded-pill"><span>{{$alterarEstado}}</span></button>
@@ -104,12 +100,14 @@
                                             </td>
                                         @endcan
                                         @can('isFuncionario')
+                                            <td>Cliente</td>
                                             <td>
                                                 @if ($estado == 'Pendente' || $estado == 'Pago')
                                                     <button type="button" class="btn btn-{{$btnAlterar}} rounded-pill"><span>{{$alterarEstado}}</span></button>
                                                 @endif
                                             </td>
                                         @endcan
+                                        <td>{{ $encomenda->total_price }}€</td>
                                         <td>A fazer</td>
                                     </tr>
                                 @endforeach

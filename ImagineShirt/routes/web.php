@@ -62,6 +62,7 @@ Route::middleware('adminOrCustomer')->group(function (){
 
 Route::middleware('admin')->group(function (){
     // rotas para admin - dashboard etc
+    Route::get('/user/{user}/gerirUsers', [PaginaUserController::class, 'showUsers'])->middleware('verified')->name('user.gerirUsers');
 });
 
 Auth::routes(['verify' => true]);

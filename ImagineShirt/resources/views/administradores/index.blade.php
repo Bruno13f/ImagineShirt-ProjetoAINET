@@ -55,6 +55,7 @@
                                 @include('users.shared.fields_infpriv', ['user' => $user, 'readonlyData' => true])
                             </div>
                         </div>
+                        @can('update', $user)
                         <div class="card" style="margin-top: 20px">
                             <div class="card-body">
                                 <div class="row">
@@ -66,6 +67,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endcan
                     </div>
                     <div class="tab-pane fade" id="password" role="tabpanel">
                         <div class="card">
@@ -82,36 +84,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="tab-pane fade" id="users" role="tabpanel">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title mb-0">Utilizadores</h5>
-                            </div>
-                                <table class="table">
-                                    <tbody>
-                                        @if($numutilizadores != 0)
-                                            @foreach($utilizadores as $utilizador)
-                                                <tr>
-                                                    <td><img id="imagemPerfil" src="{{ $utilizador->fullPhotoUrl }}" alt="{{ $utilizador->name }}" class="rounded-circle" ></td>
-                                                    <td>{{$utilizador->name}}</td>
-                                                    <td>{{$utilizador->email}}</td>
-                                                    <td>{{$utilizador->created_at}}</td>
-                                                    <td><a href="{{ route('user.edit', $utilizador) }}">
-                                                        <button type="button" class="btn btn-primary btn-sm">Editar Utilizador</button>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td>Não existem utilizadores cridados</td>
-                                            </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
-                        </div>
-                        {{ $utilizadores->links() }}
                     </div>
                     <div class="tab-pane fade" id="categorias" role="tabpanel">
                         <div class="card">
