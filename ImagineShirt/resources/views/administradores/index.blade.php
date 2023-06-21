@@ -33,7 +33,7 @@
                         <h5 class="card-title mb-0">Definições Perfil {{$tipoUser}}</h5>
                     </div>
                     <div class="list-group list-group-flush" role="tablist">
-                        @include('users.shared.fields_tablist', ['usertipo' => $user->type_user])
+                        @include('users.shared.fields_tablist', ['usertipo' => $user->type_user], ['allowUpload' => false, 'numencomendas'  => $numencomendas])
                     </div>
                 </div>
             </div>
@@ -92,9 +92,8 @@
                                 <h5 class="card-title mb-0">Encomendas</h5>
                             </div>
                             <table class="table">
-                            <table class="table">
                                 <tbody>
-                                @if ($encomendas)
+                                @if ($numencomendas != 0)
                                     @foreach ($encomendas as $encomenda)
                                         <tr>
                                             <td>Encomenda: {{ $encomenda->date }}</td>
@@ -104,7 +103,7 @@
                                     @endforeach
                                 @else
                                 <tr>
-                                    <td colspan="3">Não foram encontradas encomendas.</td>
+                                    <td colspan="3">Não há encomendas.</td>
                                 </tr>
                                 @endif
                                 </tbody>

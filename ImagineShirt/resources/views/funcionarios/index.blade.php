@@ -33,14 +33,7 @@
                         <h5 class="card-title mb-0">Definições Perfil {{$tipoUser}}</h5>
                     </div>
                     <div class="list-group list-group-flush" role="tablist">
-                        <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account"
-                            role="tab">
-                            Conta
-                        </a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#encomendas" role="tab">
-                            Encomendas
-                            <span class="badge badge-primary badge-pill badge-light">numero</span>
-                        </a>
+                        @include('users.shared.fields_tablist', ['usertipo' => $user->type_user], ['allowUpload' => false, 'numencomendas'  => $numencomendas])
                     </div>
                 </div>
             </div>
@@ -65,6 +58,33 @@
                                 @include('users.shared.fields_infpriv', ['user' => $user, 'readonlyData' => true])
                             </div>
                         </div>
+                        <div class="card" style="margin-top: 20px">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12 justify-content-center" style = "display:flex">
+                                        <a href = "{{ route('editUser', $user) }}" >
+                                            <button type="submit" class="btn btn-primary" style="background-color:rgba(230, 51, 52, 0.8); border-color:rgba(230, 51, 52, 0.8)">Editar</button>   
+                                        </a> 
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="password" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Palavra Passe</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="users" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Utilizadores</h5>
+                            </div>
+                            <div class="card-body">
+                            </div>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="encomendas" role="tabpanel">
                         <div class="card">
@@ -72,9 +92,8 @@
                                 <h5 class="card-title mb-0">Encomendas</h5>
                             </div>
                             <table class="table">
-                            <table class="table">
                                 <tbody>
-                                @if ($encomendas)
+                                @if ($numencomendas != 0)
                                     @foreach ($encomendas as $encomenda)
                                         <tr>
                                             <td>Encomenda: {{ $encomenda->date }}</td>
@@ -83,12 +102,31 @@
                                         </tr>
                                     @endforeach
                                 @else
-                                <tr>
-                                    <td colspan="3">Não foram encontradas encomendas.</td>
-                                </tr>
+                                    <tr>
+                                        <td> Nao há encomendas a necessitar de gestão.</td>
+                                    </tr>
                                 @endif
                                 </tbody>
-                        </table>
+                            </table>
+                        </div>
+                        {{ $encomendas->links() }}
+                    </div>
+                    <div class="tab-pane fade" id="categorias" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Categorias</h5>
+                            </div>
+                            <div class="card-body">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="precos" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Preços Catálogo</h5>
+                            </div>
+                            <div class="card-body">
+                            </div>
                         </div>
                     </div>
                 </div>

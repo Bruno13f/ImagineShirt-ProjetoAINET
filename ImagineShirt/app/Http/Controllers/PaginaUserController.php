@@ -16,13 +16,15 @@ class PaginaUserController extends Controller
         if($user->user_type == 'A'){
             $tipoUser = 'Administrador';
             $encomendas = Encomendas::orderByDesc('date')->paginate(15);
-            return view('administradores.index',compact('user','tipoUser','encomendas'));
+            $numencomendas = Encomendas::orderByDesc('date')->count();
+            return view('administradores.index',compact('user','tipoUser','encomendas','numencomendas'));
         }
 
         if($user->user_type == 'E'){
             $tipoUser = 'Funcionário';
             $encomendas = Encomendas::where('status','=','pending')->orwhere('status','=','paid')->orderByDesc('date')->paginate(15);
-            return view('funcionarios.index',compact('user','tipoUser','encomendas'));
+            $numencomendas = Encomendas::where('status','=','pending')->orwhere('status','=','paid')->orderByDesc('date')->count();
+            return view('funcionarios.index',compact('user','tipoUser','encomendas','numencomendas'));
         }
 
         if($user->user_type == 'C'){

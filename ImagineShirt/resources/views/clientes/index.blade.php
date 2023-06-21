@@ -96,7 +96,7 @@
                                     @endforeach
                                 @else
                                 <tr>
-                                    <td colspan="3">Não foram encontradas encomendas.</td>
+                                    <td colspan="3">Não tem encomendas</td>
                                 </tr>
                                 @endif
                                 </tbody>

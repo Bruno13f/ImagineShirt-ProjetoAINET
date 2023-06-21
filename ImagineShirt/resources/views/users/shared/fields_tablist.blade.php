@@ -9,7 +9,7 @@
 
 <a class="list-group-item list-group-item-action" data-toggle="list" href="#encomendas" role="tab">
     Encomendas
-    <span class="badge badge-primary badge-pill badge-light">numero</span>
+    <span class="badge badge-primary badge-pill badge-light">{{$numencomendas}}</span>
 </a>
 
 @if ($usertipo == 'Cliente')
