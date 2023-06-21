@@ -146,22 +146,37 @@
                                 <h5 class="card-title mb-0">Preços Catálogo</h5>
                             </div>
                             <table class="table">
-                                    <tbody>
-                                        @if(!empty($precos))
-                                            <tr>
-                                                <td></td>
-                                                <td><a href="">
-                                                    <button type="button" class="btn btn-primary btn-sm">Editar Preco</button>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        @else
-                                            <tr>
-                                                <td>Não há preços definidos</td>
-                                            </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
+                                <thead>
+                                    <tr>
+                                        <th>Preço catálogo</th>
+                                        <th>Preço cliente</th>
+                                        <th>Preço desconto catálogo</th>
+                                        <th>Preço desconto cliente</th>
+                                        <th>Quantidade de desconto</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if(!empty($precos))
+                                        <tr>
+                                            <td>{{$precos[0]['unit_price_catalog']}}</td>
+                                            <td>{{$precos[0]['unit_price_own']}}</td>
+                                            <td>{{$precos[0]['unit_price_catalog_discount']}}</td>
+                                            <td>{{$precos[0]['unit_price_own_discount']}}</td>
+                                            <td>{{$precos[0]['qty_discount']}}</td>
+                                            <td>
+                                                <a href="">
+                                                    <button type="button" class="btn btn-primary btn-sm">Editar Preço</button>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @else
+                                        <tr>
+                                            <td colspan="6">Não há preços definidos</td>
+                                        </tr>
+                                    @endif
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
