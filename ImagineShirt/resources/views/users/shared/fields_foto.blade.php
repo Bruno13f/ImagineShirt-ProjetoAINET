@@ -11,8 +11,7 @@
     @csrf
     @method('DELETE')
     <div class="col-md-12 justify-content-center" style = "display:flex; margin-top: 10px">
-        <button type="button" class="btn btn-primary" style="background-color:rgba(230, 51, 52, 0.8); border-color:rgba(230, 51, 52, 0.8)"
-        onclick="confirmDelete()">Eliminar Foto</button>   
+        <button type="submit" class="btn btn-primary" style="background-color:rgba(230, 51, 52, 0.8); border-color:rgba(230, 51, 52, 0.8)">Eliminar Foto</button>   
     </div>
 </form>
 @endif
