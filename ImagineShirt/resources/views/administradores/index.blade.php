@@ -23,17 +23,6 @@
         </div>
     </section>
     <!-- Breadcrumb Section End -->
-
-    @if (session('alert-msg'))
-    <div class="row justify-content-center" style="margin-top: 20px">
-        <div class="col-lg-6">
-            <div class="alert alert-{{ session('alert-type') }} alert-dismissible">
-                {{ session('alert-msg') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        </div>
-    </div>
-    @endif
     
     <div class="container p-0" style = "margin-top: 50px; margin-bottom: 50px">
         <div class="row">

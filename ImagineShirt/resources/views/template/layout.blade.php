@@ -197,6 +197,8 @@
         </div>
     </div>
     <!-- Search End -->
+    @include('sweetalert::alert')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script> 
 </body>
 
 </html>

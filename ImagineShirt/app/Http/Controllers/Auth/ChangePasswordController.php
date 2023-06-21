@@ -17,8 +17,17 @@ class ChangePasswordController extends Controller
         $user = $request->user();
         $user->password = Hash::make($request->validated()['password']);
         $user->save();
-        return redirect()->route('user', $user)
-            ->with('alert-msg', 'A senha foi alterada com sucesso')
-            ->with('alert-type', 'success');
+
+        switch($user->user_type){
+            case 'C': 
+                $tipoUser = "Cliente"; 
+                break;
+            case 'A':
+                $tipoUser = "Administrador";
+                break;
+        }
+        
+        Alert::success('Alterada com sucesso!', 'A palavra-passe do '.$tipoUser.' '.$user->name.' foi alterada com sucesso');
+        return redirect()->route('user', $user);
     }
 }

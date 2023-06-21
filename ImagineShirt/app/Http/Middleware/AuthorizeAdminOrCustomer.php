@@ -15,7 +15,8 @@ class AuthorizeAdminOrCustomer
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user()->user_type === 'E') {
+        $user = $request->user();
+        if (empty($user) || $user->user_type === 'E') {
             return $request->expectsJson()
                 ? abort(403, 'Não tem permissões.')
                 : redirect()->route('root')

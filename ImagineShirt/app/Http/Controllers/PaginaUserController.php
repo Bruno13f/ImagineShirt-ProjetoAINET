@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Encomendas;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PaginaUserController extends Controller
 {
@@ -105,9 +106,9 @@ class PaginaUserController extends Controller
 
         $htmlMessage = "O $tipoUser $user->name foi alterado com sucesso!";
 
-        return redirect()->route('user', $user)
-            ->with('alert-msg', $htmlMessage)
-            ->with('alert-type', 'success');
+        Alert::success('Editado com sucesso!', $htmlMessage);
+
+        return redirect()->route('user', $user);
 
     }
 
@@ -128,9 +129,10 @@ class PaginaUserController extends Controller
                 break;
         }
 
-        return redirect()->route('user.edit', $user)
-        ->with('alert-msg', 'Foto do '.$tipoUser.' "' . $user->name .
-        '" foi removida!')
-        ->with('alert-type', 'success');
+        $htmlMessage = "A foto do $tipoUser $user->name foi eliminada!";
+
+        Alert::success('Eliminada com sucesso!', $htmlMessage);
+
+        return redirect()->route('user.edit', $user);
     }
 }

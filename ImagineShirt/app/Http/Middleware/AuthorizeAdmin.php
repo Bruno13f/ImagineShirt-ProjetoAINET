@@ -15,7 +15,8 @@ class AuthorizeAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user()->user_type !== 'A') {
+        $user = $request->user();
+        if (empty($user) || $user ->user_type !== 'A') {
             return $request->expectsJson()
                 ? abort(403, 'Não é administrador.')
                 : redirect()->route('root')

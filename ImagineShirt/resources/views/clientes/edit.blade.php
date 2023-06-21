@@ -25,17 +25,6 @@
         </div>
     </section>
     <!-- Breadcrumb Section End -->
-
-    @if (session('alert-msg'))
-    <div class="row justify-content-center" style="margin-top: 20px">
-        <div class="col-lg-6">
-            <div class="alert alert-{{ session('alert-type') }} alert-dismissible">
-                {{ session('alert-msg') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        </div>
-    </div>
-    @endif
     
     <div class="container p-0" style = "margin-top: 50px; margin-bottom: 50px">
         <div class="row justify-content-center">
@@ -81,5 +70,25 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function confirmDelete() {
+
+        Swal.fire({
+        title: 'Tem a certeza?',
+        text: "Irá eliminar a foto do seu perfil!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#218838',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim, quero eliminar!',
+        cancelButtonText: 'Cancelar',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('form_delete_photo').submit();
+            }
+        })
+        }
+    </script>
 
 @endsection()
