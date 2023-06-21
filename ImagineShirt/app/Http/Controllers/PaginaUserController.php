@@ -103,9 +103,7 @@ class PaginaUserController extends Controller
                 break;
         }
 
-        $htmlMessage = "$tipoUser <a href='$url'>#{$user->id}</a>
-        <strong>\"{$user->name}\"</strong>
-        foi alterado com sucesso!";
+        $htmlMessage = "O $tipoUser $user->name foi alterado com sucesso!";
 
         return redirect()->route('user', $user)
             ->with('alert-msg', $htmlMessage)

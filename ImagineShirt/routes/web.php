@@ -39,15 +39,28 @@ Route::get('logout', function (){
 })->name('logout');
 Route::view('/contactos', 'contactos.index')->name('contactos');
 Route::get('/sobreNos', [PaginaSobreNosController::class, 'index'])->name('sobreNos');
+
 Route::middleware('auth')->group(function (){
-    Route::get('/user/{user}', [PaginaUserController::class, 'index'])->name('user')->middleware('verified');
-    Route::get('/user/{user}/edit', [PaginaUserController::class, 'edit'])->name('user.edit')->middleware('verified');
-    Route::put('/user/{user}/update', [PaginaUserController::class, 'update'])->name('user.update')->middleware('verified');
-    Route::delete('/user/{user}/foto', [PaginaUserController::class, 'destroy_foto'])->name('user.foto.destroy')->middleware('verified');
-
+    // rotas para todos os users
+    Route::get('/user/{user}', [PaginaUserController::class, 'index'])->middleware('verified')->name('user');
     Route::get('tshirt-images-user/{nome_tshirt}-{user_id}/{image_url}',[TShirtsController::class, 'imagemCliente'])->name('imagem_user');
+    
+});
 
-    Route::post('/password/change', [ChangePasswordController::class, 'store'])->name('password.change.store')->middleware('verified');
+Route::middleware('adminOrCustomer')->group(function (){
+    // rotas para admin e cliente
+    Route::middleware('verified')->group(function (){
+        // rotas que necessitam confirmação email
+        Route::get('/user/{user}/edit', [PaginaUserController::class, 'edit'])->name('user.edit');
+        Route::put('/user/{user}/update', [PaginaUserController::class, 'update'])->name('user.update');
+        Route::delete('/user/{user}/foto', [PaginaUserController::class, 'destroy_foto'])->name('user.foto.destroy');
+        Route::post('/password/change', [ChangePasswordController::class, 'store'])->name('password.change.store');
+    });
+});
+
+
+Route::middleware('admin')->group(function (){
+    // rotas para admin - dashboard etc
 });
 
 Auth::routes(['verify' => true]);
