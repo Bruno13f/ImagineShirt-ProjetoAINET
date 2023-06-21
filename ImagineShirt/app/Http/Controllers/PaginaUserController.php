@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use App\Models\Categorias;
+use App\Models\Precos;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
@@ -23,7 +25,18 @@ class PaginaUserController extends Controller
             $queryEncomendas = Encomendas::query();
             $numencomendas = $queryEncomendas->count();
             $encomendas = $queryEncomendas->orderByDesc('date')->paginate(15);
-            return view('administradores.index',compact('user','tipoUser','encomendas','numencomendas'));
+
+            $queryUsers = User::whereNull('deleted_at');
+            $numutilizadores = $queryUsers->count();
+            $utilizadores = $queryUsers->paginate(15);
+
+            $queryCategorias = Categorias::whereNull('deleted_at');
+            $numCategorias =$queryCategorias->count();
+            $categorias = $queryCategorias->paginate(15);
+
+            $precos = Precos::get()->toArray();
+            
+            return view('administradores.index',compact('user','tipoUser','encomendas','numencomendas','numutilizadores','utilizadores','numCategorias','categorias','precos'));
         }
 
         if($user->user_type == 'E'){

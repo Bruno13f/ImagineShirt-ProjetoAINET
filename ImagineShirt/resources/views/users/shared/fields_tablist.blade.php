@@ -22,11 +22,11 @@
 @if ($usertipo == 'Administrador')
 <a class="list-group-item list-group-item-action" data-toggle="list" href="#users" role="tab">
     Utilizadores
-    <span class="badge badge-primary badge-pill badge-light">numero</span>
+    <span class="badge badge-primary badge-pill badge-light">{{$numutilizadores}}</span>
 </a>
 <a class="list-group-item list-group-item-action" data-toggle="list" href="#categorias" role="tab">
     Categorias
-    <span class="badge badge-primary badge-pill badge-light">numero</span>
+    <span class="badge badge-primary badge-pill badge-light">{{$numCategorias}}</span>
 </a>
 <a class="list-group-item list-group-item-action" data-toggle="list" href="#precos" role="tab">
     Preços Catálogo

@@ -80,9 +80,30 @@
                             <div class="card-header">
                                 <h5 class="card-title mb-0">Utilizadores</h5>
                             </div>
-                            <div class="card-body">
-                            </div>
+                                <table class="table">
+                                    <tbody>
+                                        @if($numutilizadores != 0)
+                                            @foreach($utilizadores as $utilizador)
+                                                <tr>
+                                                    <td><img id="imagemPerfil" src="{{ $utilizador->fullPhotoUrl }}" alt="{{ $utilizador->name }}" class="rounded-circle" ></td>
+                                                    <td>{{$utilizador->name}}</td>
+                                                    <td>{{$utilizador->email}}</td>
+                                                    <td>{{$utilizador->created_at}}</td>
+                                                    <td><a href="{{ route('user.edit', $utilizador) }}">
+                                                        <button type="button" class="btn btn-primary btn-sm">Editar Utilizador</button>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td>Não existem utilizadores cridados</td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
                         </div>
+                        {{ $utilizadores->links() }}
                     </div>
                     @include('users.shared.fields_encomendas', ['encomendas' => $encomendas, 'msgNotFound' => 'Não há encomendas.'])
                     <div class="tab-pane fade" id="categorias" role="tabpanel">
@@ -90,17 +111,50 @@
                             <div class="card-header">
                                 <h5 class="card-title mb-0">Categorias</h5>
                             </div>
-                            <div class="card-body">
-                            </div>
+                            <table class="table">
+                                    <tbody>
+                                        @if($numCategorias != 0)
+                                            @foreach($categorias as $categoria)
+                                                <tr>
+                                                    <td>{{$categoria->name}}</td>
+                                                    <td><a href="">
+                                                        <button type="button" class="btn btn-primary btn-sm">Editar Categoria</button>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td>Não existem Categorias cridadas</td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
                         </div>
+                        {{ $categorias->links() }}
                     </div>
                     <div class="tab-pane fade" id="precos" role="tabpanel">
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="card-title mb-0">Preços Catálogo</h5>
                             </div>
-                            <div class="card-body">
-                            </div>
+                            <table class="table">
+                                    <tbody>
+                                        @if(!empty($precos))
+                                            <tr>
+                                                <td></td>
+                                                <td><a href="">
+                                                    <button type="button" class="btn btn-primary btn-sm">Editar Preco</button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @else
+                                            <tr>
+                                                <td>Não há preços definidos</td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
                         </div>
                     </div>
                 </div>
