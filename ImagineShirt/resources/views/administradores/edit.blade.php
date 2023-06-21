@@ -16,7 +16,8 @@
                         <h4>Perfil - {{$user->name}}</h4>
                         <div class="breadcrumb__links">
                             <a href="{{ route('root') }}">Página Inicial</a>
-                            <span style = "font-weight: bold;">Perfil</span>
+                            <a href="{{ route('user', $user) }}">Perfil</a>
+                            <span style = "font-weight: bold;">Editar</span>
                         </div>
                     </div>
                 </div>
@@ -26,24 +27,7 @@
     <!-- Breadcrumb Section End -->
     
     <div class="container p-0" style = "margin-top: 50px; margin-bottom: 50px">
-        <div class="row">
-            <div class="col-md-5 col-xl-4" style = "margin-bottom: 20px">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">Definições Perfil {{$tipoUser}}</h5>
-                    </div>
-                    <div class="list-group list-group-flush" role="tablist">
-                        <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account"
-                            role="tab">
-                            Conta
-                        </a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#encomendas" role="tab">
-                            Encomendas
-                            <span class="badge badge-primary badge-pill badge-light">numero</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
+        <div class="row justify-content-center">
             <div class="col-md-7 col-xl-8">
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="account" role="tabpanel">
@@ -52,7 +36,7 @@
                                 <h5 class="card-title mb-0">Informação Pessoal</h5>
                             </div>
                             <div class="card-body justify-content-center">
-                                @include('users.shared.fields_foto', ['allowUpload' => false, 'allowElimPhoto' => false])
+                                @include('users.shared.fields_foto', ['allowUpload' => true, 'allowElimPhoto' => true])
                             </div>
                         </div>
                         <div class="card" style="margin-top: 20px">
@@ -60,11 +44,27 @@
                                 <h5 class="card-title mb-0">Informação Privada</h5>
                             </div>
                             <div class="card-body">
-                                @include('users.shared.fields_infpriv', ['user' => $user, 'readonlyData' => true])
+                                @include('users.shared.fields_infpriv', ['user' => $user, 'readonlyData' => false])
+                            </div>
+                        </div>
+                        <div class="card" style="margin-top: 20px">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6 justify-content-center" style = "display:flex">
+                                            <a href=""> 
+                                                <button type="submit" name="ok" form="form_user" class="btn btn-primary" style="background-color:rgba(230, 51, 52, 0.8); border-color:rgba(230, 51, 52, 0.8)">Guardar Alterações</button>   
+                                            </a>
+                                        </div> 
+                                        <div class="col-md-6 justify-content-center" style = "display:flex">
+                                            <a href="{{ route('user', $user) }}"> 
+                                                <button type="submit" class="btn btn-primary" style="background-color:rgba(230, 51, 52, 0.8); border-color:rgba(230, 51, 52, 0.8)">Cancelar</button>   
+                                            </a>
+                                        </div> 
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    @include('users.shared.fields_encomendas', ['encomendas' => $encomendas, 'msgNotFound' => 'De momento não há encomendas a ser geridas.'])
                 </div>
             </div>
         </div>

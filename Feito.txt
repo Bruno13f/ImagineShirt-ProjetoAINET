@@ -71,6 +71,8 @@ ALTERAR:
 	. customers e orders vai ser necessario (se houver problemas) alterar no php nome coluna - colunas com nome iguais
 	. PROBLEMA - Resolvido alterar nome para o da rota
 	. USER REMEMBER & BLOCKED_AT (DELETED_AT RESOLVIDO)
+	. Popups p.e eliminar foto
+	. Como manter elemento palavra-passe ativa quando se erra palavra-passe
 
 ##################################################################################################################################################
 		

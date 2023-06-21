@@ -1,7 +1,7 @@
 <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account" role="tab">
     Conta
 </a>
-@if ($usertipo != 'Funcionário')
+@if ($usertipo != 'Funcionario')
 <a class="list-group-item list-group-item-action" data-toggle="list" href="#password" role="tab">
     Palavra-Passe
 </a>
@@ -19,7 +19,7 @@
 </a>
 @endif
 
-@if ($usertipo == 'Aadministrador')
+@if ($usertipo == 'Administrador')
 <a class="list-group-item list-group-item-action" data-toggle="list" href="#users" role="tab">
     Utilizadores
     <span class="badge badge-primary badge-pill badge-light">numero</span>

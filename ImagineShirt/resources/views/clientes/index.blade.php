@@ -45,9 +45,7 @@
                                 <h5 class="card-title mb-0">Informação Pessoal</h5>
                             </div>
                             <div class="card-body justify-content-center">
-                                <form>
-                                    @include('users.shared.fields_foto', ['allowUpload' => false])
-                                </form>
+                                @include('users.shared.fields_foto', ['user' => $user, 'allowUpload' => false, 'allowElimPhoto' => false, 'numencomendas' => $numencomendas])
                             </div>
                         </div>
                         <div class="card" style="margin-top: 20px">
@@ -63,7 +61,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12 justify-content-center" style = "display:flex">
-                                        <a href = "{{ route('editUser', $user) }}" >
+                                        <a href = "{{ route('user.edit', $user) }}" >
                                             <button type="submit" class="btn btn-primary" style="background-color:rgba(230, 51, 52, 0.8); border-color:rgba(230, 51, 52, 0.8)">Editar</button>   
                                         </a> 
                                     </div> 
@@ -76,33 +74,10 @@
                             <div class="card-header">
                                 <h5 class="card-title mb-0">Palavra Passe</h5>
                             </div>
+                            @include('auth.passwords.change')
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="encomendas" role="tabpanel">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title mb-0">Encomendas</h5>
-                            </div>
-                            <table class="table">
-                            <table class="table">
-                                <tbody>
-                                @if ($user->cliente->encomendas)
-                                    @foreach ($user->cliente->encomendas as $encomenda)
-                                        <tr>
-                                            <td>Encomenda: {{ $encomenda->date }}</td>
-                                            <td>{{ $encomenda->status }}</td>
-                                            <td>{{ $encomenda->total_price }}€</td>
-                                        </tr>
-                                    @endforeach
-                                @else
-                                <tr>
-                                    <td colspan="3">Não tem encomendas</td>
-                                </tr>
-                                @endif
-                                </tbody>
-                        </table>
-                        </div>
-                    </div>
+                    @include('users.shared.fields_encomendas', ['encomendas' => $encomendas, 'msgNotFound' => 'Sem encomendas.'])
                     <div class="tab-pane fade" id="tshirts" role="tabpanel">
                         <div class="card">
                             <div class="card-header">

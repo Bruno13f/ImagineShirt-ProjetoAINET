@@ -42,7 +42,9 @@
             @else
             <a href="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
-            <img src="{{ Auth::user()->fullPhotoUrl }}" class="rounded-circle img-responsive" style="max-width: 70px; border: solid #e63334 1px" alt="Avatar"/>
+            <a href="{{ route('user', Auth::user()) }}">
+                <img id="imagemPerfilTele" src="{{ Auth::user()->fullPhotoUrl }}" class="rounded-circle img-responsive" alt="Avatar"/>
+            </a>
             @endguest
             </div>
             <div class="offcanvas__top__hover">
@@ -108,8 +110,8 @@
                         <a><img src="{{ asset('img/icon/cart.png') }}" alt=""><span>0</span></a>
                         <div class="price">0.00€</div>
                     @auth
-                    <a href="{{ route('pagUser', Auth::user()) }}">
-                        <img src="{{ Auth::user()->fullPhotoUrl }}" class="rounded-circle img-responsive" style="margin-left: 10px; width: 60px; height: 60px; border: solid #e63334 1px" alt="Imagem Perfil"/>
+                    <a href="{{ route('user', Auth::user()) }}">
+                        <img id="imagemPerfil" src="{{ Auth::user()->fullPhotoUrl }}" class="rounded-circle img-responsive" alt="Imagem Perfil"/>
                     </a>
                     @endauth
                     </div>

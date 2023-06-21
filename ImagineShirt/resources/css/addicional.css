@@ -22,3 +22,32 @@ canvas-container {
     text-decoration: underline;
     color: #007bff;
 }
+
+#imagemPerfilTele{ 
+    width: 70px; 
+    height: 70px; 
+    border: solid #e63334 1px;
+    object-fit: cover;
+}
+
+#imagemPerfil{
+    width: 70px; 
+    height: 70px; 
+    margin-left: 10px;
+    border: solid #e63334 1px;
+    object-fit: cover;
+}
+
+#imagemPaginaPerfil{
+    width: 128px; 
+    height: 128px; 
+    margin-bottom: 10px;
+    object-fit: cover;
+}
+
+.table,
+.table tr,
+.table th[scope="row"],
+.table td {
+    background-color: white !important;
+}

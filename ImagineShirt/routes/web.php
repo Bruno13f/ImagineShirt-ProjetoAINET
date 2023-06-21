@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaginaInicialController;
 use App\Http\Controllers\PaginaSobreNosController;
 use App\Http\Controllers\PaginaUserController;
+use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Models\TShirts;
 
 /*
@@ -39,9 +40,14 @@ Route::get('logout', function (){
 Route::view('/contactos', 'contactos.index')->name('contactos');
 Route::get('/sobreNos', [PaginaSobreNosController::class, 'index'])->name('sobreNos');
 Route::middleware('auth')->group(function (){
-    Route::get('/user/{user}', [PaginaUserController::class, 'index'])->name('pagUser')->middleware('verified');
-    Route::get('/user/{user}/edit', [PaginaUserController::class, 'edit'])->name('editUser')->middleware('verified');
+    Route::get('/user/{user}', [PaginaUserController::class, 'index'])->name('user')->middleware('verified');
+    Route::get('/user/{user}/edit', [PaginaUserController::class, 'edit'])->name('user.edit')->middleware('verified');
+    Route::put('/user/{user}/update', [PaginaUserController::class, 'update'])->name('user.update')->middleware('verified');
+    Route::delete('/user/{user}/foto', [PaginaUserController::class, 'destroy_foto'])->name('user.foto.destroy')->middleware('verified');
+
     Route::get('tshirt-images-user/{nome_tshirt}-{user_id}/{image_url}',[TShirtsController::class, 'imagemCliente'])->name('imagem_user');
+
+    Route::post('/password/change', [ChangePasswordController::class, 'store'])->name('password.change.store')->middleware('verified');
 });
 
 Auth::routes(['verify' => true]);
