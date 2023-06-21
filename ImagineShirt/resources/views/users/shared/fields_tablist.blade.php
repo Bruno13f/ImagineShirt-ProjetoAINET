@@ -1,25 +1,25 @@
 <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account" role="tab">
     Conta
 </a>
-@if ($usertipo != 'Funcionario')
+@can ('alterarPasse', App\Models\User::class)
 <a class="list-group-item list-group-item-action" data-toggle="list" href="#password" role="tab">
     Palavra-Passe
 </a>
-@endif
+@endcan
 
-<a class="list-group-item list-group-item-action" data-toggle="list" href="#encomendas" role="tab">
+<a class="list-group-item list-group-item-action" href="{{ route('user.encomendas', $user) }}">
     Encomendas
     <span class="badge badge-primary badge-pill badge-light">{{$numencomendas}}</span>
 </a>
 
-@if ($usertipo == 'Cliente')
+@can ('verPropriasTShirts', App\Models\User::class)
 <a class="list-group-item list-group-item-action" data-toggle="list" href="#tshirts" role="tab">
     T-Shirts
     <span class="badge badge-primary badge-pill badge-light">numero</span>
 </a>
-@endif
+@endcan
 
-@if ($usertipo == 'Administrador')
+@can ('fazerGestao', App\Models\User::class)
 <a class="list-group-item list-group-item-action" data-toggle="list" href="#users" role="tab">
     Utilizadores
     <span class="badge badge-primary badge-pill badge-light">{{$numutilizadores}}</span>
@@ -31,4 +31,4 @@
 <a class="list-group-item list-group-item-action" data-toggle="list" href="#precos" role="tab">
     Preços Catálogo
 </a>
-@endif
+@endcan

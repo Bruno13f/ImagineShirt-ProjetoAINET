@@ -23,7 +23,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void{
    
-        /*Gate::define('isAdmin', function($user) {
+        Gate::define('isAdmin', function($user) {
            return $user->user_type == 'A';
         });
        
@@ -33,6 +33,6 @@ class AuthServiceProvider extends ServiceProvider
       
         Gate::define('isCliente', function($user) {
             return $user->user_type == 'C';
-        });*/
+        });
     }
 }

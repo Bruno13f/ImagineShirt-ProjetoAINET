@@ -59,7 +59,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12 justify-content-center" style = "display:flex">
-                                        <a href = "{{ route('user.edit', $user) }}" >
+                                        <a href = "{{ route('user.edit', ['user' => $user]) }}" >
                                             <button type="submit" class="btn btn-primary" style="background-color:rgba(230, 51, 52, 0.8); border-color:rgba(230, 51, 52, 0.8)">Editar</button>   
                                         </a> 
                                     </div> 
@@ -72,7 +72,15 @@
                             <div class="card-header">
                                 <h5 class="card-title mb-0">Palavra Passe</h5>
                             </div>
-                            @include('auth.passwords.change')
+                            <div class="row mt-4 mb-4">
+                                <div class="col-md-6 offset-md-4">
+                                    <a href="{{ route('password.change.show') }}">
+                                        <button type="button" class="btn btn-primary" style="background-color:rgba(230, 51, 52, 0.8); border-color:rgba(230, 51, 52, 0.8)">
+                                            Alterar Palavra-Passe
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="users" role="tabpanel">
@@ -105,7 +113,6 @@
                         </div>
                         {{ $utilizadores->links() }}
                     </div>
-                    @include('users.shared.fields_encomendas', ['encomendas' => $encomendas, 'msgNotFound' => 'Não há encomendas.'])
                     <div class="tab-pane fade" id="categorias" role="tabpanel">
                         <div class="card">
                             <div class="card-header">

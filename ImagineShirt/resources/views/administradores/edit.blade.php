@@ -3,9 +3,11 @@
                                         'active3' => '',
                                         'active4' => '']]) 
 
-@section('titulo',' | Página Administrador')
+@section('titulo',' | Editar Administrador')
 
 @section('main')
+
+@can('update', $user)
 
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-option">
@@ -70,5 +72,7 @@
             </div>
         </div>
     </div>
+
+@endcan
 
 @endsection

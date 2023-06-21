@@ -3,7 +3,7 @@
                                         'active3' => '',
                                         'active4' => '']]) 
 
-@section('titulo',' | Página Cliente')
+@section('titulo',' | Editar Cliente')
 
 @section('main')
 

@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Hash;
 class ChangePasswordController extends Controller
 {
 
+    public function show(): View
+    {
+        return view('auth.passwords.change');
+    }
+
     public function store(ChangePasswordRequest $request): RedirectResponse
     {
         $user = $request->user();

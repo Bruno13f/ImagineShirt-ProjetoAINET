@@ -3,7 +3,7 @@
                                         'active3' => '',
                                         'active4' => '']]) 
 
-@section('titulo',' | Página Administrador')
+@section('titulo',' | Página Funcionário')
 
 @section('main')
 
@@ -33,14 +33,7 @@
                         <h5 class="card-title mb-0">Definições Perfil {{$tipoUser}}</h5>
                     </div>
                     <div class="list-group list-group-flush" role="tablist">
-                        <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account"
-                            role="tab">
-                            Conta
-                        </a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#encomendas" role="tab">
-                            Encomendas
-                            <span class="badge badge-primary badge-pill badge-light">numero</span>
-                        </a>
+                        @include('users.shared.fields_tablist', ['usertipo' => $tipoUser])
                     </div>
                 </div>
             </div>
@@ -64,7 +57,6 @@
                             </div>
                         </div>
                     </div>
-                    @include('users.shared.fields_encomendas', ['encomendas' => $encomendas, 'msgNotFound' => 'De momento não há encomendas a ser geridas.'])
                 </div>
             </div>
         </div>

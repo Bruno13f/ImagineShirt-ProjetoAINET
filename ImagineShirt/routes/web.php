@@ -44,7 +44,7 @@ Route::middleware('auth')->group(function (){
     // rotas para todos os users
     Route::get('/user/{user}', [PaginaUserController::class, 'index'])->middleware('verified')->name('user');
     Route::get('tshirt-images-user/{nome_tshirt}-{user_id}/{image_url}',[TShirtsController::class, 'imagemCliente'])->name('imagem_user');
-    
+    Route::get('/user/{user}/encomendas', [PaginaUserController::class, 'showEncomendas'])->middleware('verified')->name('user.encomendas');
 });
 
 Route::middleware('adminOrCustomer')->group(function (){
@@ -55,6 +55,7 @@ Route::middleware('adminOrCustomer')->group(function (){
         Route::put('/user/{user}/update', [PaginaUserController::class, 'update'])->name('user.update');
         Route::delete('/user/{user}/foto', [PaginaUserController::class, 'destroy_foto'])->name('user.foto.destroy');
         Route::post('/password/change', [ChangePasswordController::class, 'store'])->name('password.change.store');
+        Route::get('/password/change', [ChangePasswordController::class, 'show'])->name('password.change.show');
     });
 });
 

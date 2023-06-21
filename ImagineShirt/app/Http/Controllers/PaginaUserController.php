@@ -16,15 +16,21 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class PaginaUserController extends Controller
 {
+
+    public function __construct()
+    {
+        //$this->authorizeResource(User::class, 'user');
+    }
+
     public function index()
     {   
         $user = Auth::user();
 
         if($user->user_type == 'A'){
+
             $tipoUser = 'Administrador';
-            $queryEncomendas = Encomendas::query();
-            $numencomendas = $queryEncomendas->count();
-            $encomendas = $queryEncomendas->orderByDesc('date')->paginate(15);
+
+            $numencomendas = Encomendas::count();
 
             $queryUsers = User::whereNull('deleted_at');
             $numutilizadores = $queryUsers->count();
@@ -36,23 +42,23 @@ class PaginaUserController extends Controller
 
             $precos = Precos::get()->toArray();
             
-            return view('administradores.index',compact('user','tipoUser','encomendas','numencomendas','numutilizadores','utilizadores','numCategorias','categorias','precos'));
+            return view('administradores.index',compact('user','tipoUser','numencomendas','numutilizadores','utilizadores','numCategorias','categorias','precos'));
         }
 
         if($user->user_type == 'E'){
             $tipoUser = 'Funcionário';
-            $queryEncomendas = Encomendas::where('status','=','pending')->orwhere('status','=','paid');
-            $numencomendas = $queryEncomendas->count();
-            $encomendas = $queryEncomendas->paginate(15);
-            return view('funcionarios.index',compact('user','tipoUser','encomendas','numencomendas'));
+
+            $numencomendas = Encomendas::where('status','=','pending')->orwhere('status','=','paid')->count();
+
+            return view('funcionarios.index',compact('user','tipoUser','numencomendas'));
         }
 
         if($user->user_type == 'C'){
             $tipoUser = 'Cliente';
-            $queryEncomendas = Encomendas::where('customer_id', '=', $user->id);
-            $numencomendas = $queryEncomendas->count();
-            $encomendas = $queryEncomendas->paginate(15);
-            return view('clientes.index',compact('user','tipoUser','encomendas','numencomendas'));
+
+            $numencomendas = Encomendas::where('customer_id', '=', $user->id)->count();
+            
+            return view('clientes.index',compact('user','tipoUser','numencomendas'));
         }
     }
 
@@ -147,5 +153,31 @@ class PaginaUserController extends Controller
         Alert::success('Eliminada com sucesso!', $htmlMessage);
 
         return redirect()->route('user.edit', $user);
+    }
+
+    public function showEncomendas(){
+
+        $user = Auth::user();
+        
+        if($user->user_type == 'A'){
+
+            $encomendas = Encomendas::orderByDesc('date')->paginate(15);
+            
+            return view('users.shared.fields_encomendas',compact('user','encomendas'));
+        }
+
+        if($user->user_type == 'E'){
+
+            $encomendas = Encomendas::where('status','=','pending')->orwhere('status','=','paid')->orderByDesc('date')->paginate(15);
+
+            return view('users.shared.fields_encomendas',compact('user','encomendas'));
+        }
+
+        if($user->user_type == 'C'){
+
+            $encomendas = Encomendas::where('customer_id', '=', $user->id)->orderByDesc('date')->paginate(15);
+
+            return view('users.shared.fields_encomendas',compact('user','encomendas'));
+        }
     }
 }
