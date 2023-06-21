@@ -36,7 +36,7 @@
                         <table class="table table-hover table-bordered table-light">
                             <thead class="thead-dark">
                                 <tr>
-                                <th scope="col">ID</th>
+                                <th scope="col">Encomenda Numero</th>
                                 @can('isAdmin')
                                     <th scope="col">Cliente</th>
                                 @endcan
@@ -45,11 +45,11 @@
                                 <th scope="col">Preço</th>
                                 @can('isAdmin')
                                     <th>Alterar Estado</th>
-                                    <th>Detalhes</th>
                                 @endcan
                                 @can('isFuncionario')
                                     <th>Alterar Estado</th>
                                 @endcan
+                                <th>Detalhes</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -59,23 +59,23 @@
                                 switch($encomenda->status){
                                     case 'closed':
                                         $btn = 'dark';
-                                        $estado = 'Fechado';
+                                        $estado = 'FECHADO';
                                         $alterarEstado='';
                                         break;
                                     case 'canceled':
                                         $btn = 'danger';
-                                        $estado = 'Cancelado';
+                                        $estado = 'CANCELADO';
                                         $alterarEstado='';
                                         break;
                                     case 'pending':
                                         $btn = 'warning';
-                                        $estado = 'Pendente';
+                                        $estado = 'PENDENTE';
                                         $btnAlterar = 'success';
                                         $alterarEstado = 'Pagar';
                                         break;
                                     case 'paid':
                                         $btn = 'success';
-                                        $estado = "Pago";
+                                        $estado = "PAGO";
                                         $btnAlterar = 'dark';
                                         $alterarEstado = 'Fechar';
                                         break;
@@ -88,21 +88,20 @@
                                             <td>Cliente</th>
                                         @endcan
                                         <td>{{ $encomenda->date }}</th>
-                                        <td><button type="button" class="btn btn-{{$btn}} rounded-pill" disabled><span>{{ $estado }}</span></button></td>
+                                        <td><span class="font-weight-bold">{{ $estado }}</span></td>
                                         <td>{{ $encomenda->total_price }}€</td>
                                         @can('isAdmin')
                                             <td>
-                                                @if ($estado == 'Pendente' || $estado == 'Pago')
+                                                @if ($estado == 'PENDENTE' || $estado == 'PAGO')
                                                     <button type="button" class="btn btn-{{$btnAlterar}} rounded-pill"><span>{{$alterarEstado}}</span></button>
                                                 @endif
                                             
-                                                @if($estado != 'Cancelado')
+                                                @if($estado != 'CANCELADO')
                                                     <button type="button" class="btn btn-danger rounded-pill"><span>Cancelar</span></button>
                                                 @else
                                                     <button type="button" class="btn btn-info rounded-pill"><span>Estado inalterável</span></button>
                                                 @endif
                                             </td>
-                                            <td>A fazer</td>
                                         @endcan
                                         @can('isFuncionario')
                                             <td>
@@ -111,6 +110,7 @@
                                                 @endif
                                             </td>
                                         @endcan
+                                        <td>A fazer</td>
                                     </tr>
                                 @endforeach
                             </tbody>
