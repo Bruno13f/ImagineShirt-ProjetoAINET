@@ -180,4 +180,5 @@ class PaginaUserController extends Controller
             return view('users.shared.fields_encomendas',compact('user','encomendas'));
         }
     }
+
 }

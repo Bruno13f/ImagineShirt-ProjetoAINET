@@ -6,7 +6,24 @@
 @section('titulo',' | Encomendas')
 
 @section('main')
-<div class="row mb-5 justify-content-md-center" >
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Perfil - {{$user->name}}</h4>
+                    <div class="breadcrumb__links">
+                        <a href="{{ route('root') }}">Página Inicial</a>
+                        <a href="{{ route('user', $user) }}">Perfil</a>
+                        <span style = "font-weight: bold;">Encomendas</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="row mb-5 mt-5 justify-content-md-center" >
     <div class="col-10">
         <div class="tab-content">
             <div class="tab-pane fade show active" id="encomendas" role="tabpanel">
