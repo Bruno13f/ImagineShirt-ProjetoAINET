@@ -45,7 +45,7 @@
                                 <h5 class="card-title mb-0">Informação Pessoal</h5>
                             </div>
                             <div class="card-body justify-content-center">
-                                @include('users.shared.fields_foto', ['user' => $user, 'allowUpload' => false, 'allowElimPhoto' => false, 'numencomendas' => $numencomendas])
+                                @include('users.shared.fields_foto', ['user' => $user, 'allowFoto' => true, 'allowCreate' => false, 'allowUpload' => false, 'allowElimPhoto' => false, 'numencomendas' => $numencomendas])
                             </div>
                         </div>
                         <div class="card" style="margin-top: 20px">

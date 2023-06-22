@@ -24,10 +24,17 @@
     </div>
 </section>
     <!-- Breadcrumb Section End -->
-<div class="row mb-5 mt-5 justify-content-md-center" >
+<div class="row mb-5 mt-4 justify-content-center" >
     <div class="col-10">
         <div class="tab-content">
             <div class="tab-pane fade show active" id="users" role="tabpanel">
+                <div class="row d-flex justify-content-center">
+                    @can('create', App\Models\User::class)
+                        <div class="col-4 d-flex justify-content-center mb-4">
+                            <a href="{{ route('user.create') }}"><button type="button" class="btn btn-success btn-lg"><span>Criar User</span></button></a>
+                        </div>
+                    @endcan
+                </div>
                 <div class="card">
                     <div class="card-header d-flex justify-content-center">
                         <h5 class="card-title mb-0">Utilizadores</h5>
@@ -53,8 +60,8 @@
                                     <tr>
                                         <td><img id="imagemGestaoUser"src="{{ $utilizador->fullPhotoUrl }}" alt="{{ $utilizador->name }}" width="128" height="128"></td>
                                         <td><span class="font-weight-bold text-uppercase">{{$tipoUser}}</span><br>{{$utilizador->name}}</td>
-                                        <td><span><u>{{$utilizador->email}}</u></span></td>
-                                        <td>{{$utilizador->created_at}}</td>
+                                        <td><span class="font-weight-bold text-uppercase">{{is_null($utilizador->email_verified_at) ? 'Por verificar' : 'Verificado'}}</span><u><br>{{$utilizador->email}}</u></td>
+                                        <td>Criação: <br>{{$utilizador->created_at}}</td>
                                         <td>
                                         @can('update', $utilizador)
                                             <a href="{{ route('user.edit', $utilizador) }}"><button type="button" class="btn btn-info rounded-pill"><span>Editar</span></button></a>

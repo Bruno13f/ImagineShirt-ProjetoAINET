@@ -24,7 +24,7 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
-        $user = Auth::user();
+
         switch($this->default_payment_type){
             case 'VISA':
             case 'MC':
@@ -39,22 +39,39 @@ class UserRequest extends FormRequest
 
         $user = $this->route('user');
 
+        $isCreating = $this->method() == 'POST';
+
+        $ruleEmail = [
+            'required',
+            'email',
+        ];
+
+        $ruleNif = [
+            'nullable',
+            'digits:9',
+        ];
+
+        if ($isCreating){
+            $rulesUserType = 'required|in:A,E';
+            $ruleEmail[] = Rule::unique('users', 'email');
+            $rulesPassword = 'required|string|min:8|max:50';
+        }else{
+            $rulesUserType = 'nullable';
+            $ruleEmail[] = Rule::unique('users', 'email')->ignore($user->id);
+            $ruleNif[] = Rule::unique('customers', 'nif')->ignore($user->id);
+            $rulesPassword = 'nullable';
+        }
+
         return [
             'name' => [
                 'required',
                 'string',
                 'max:200',
             ],
-            'email' => [
-                'required',
-                'email',
-                Rule::unique('users', 'email')->ignore($user->id),
-            ],
-            'nif' => [
-                'nullable',
-                'digits:9',
-                Rule::unique('customers', 'nif')->ignore($user->id),
-            ],
+            'password' => $rulesPassword,
+            'email' => $ruleEmail,
+            'nif' => $ruleNif,
+            'userType' => $rulesUserType,
             'image' => 'sometimes|image|max:2048',
             'address' => 'nullable|string|max:200',
             'default_payment_type' => 'nullable|in:PAYPAL,MC,VISA',
@@ -81,6 +98,12 @@ class UserRequest extends FormRequest
             'default_payment_ref.required_with' => 'A referência de pagamento é obrigatório',
             'default_payment_ref.digits' => 'A referência de pagamento deve ter 16 dígitos',
             'default_payment_ref.email' => 'A referência de pagamento deve ter um formato de e-mail válido',
+            'userType.required' => 'Tipo de user é obrigatório',
+            'userType.in' => 'Tipo de user não é valido',
+            'password.required' => 'Palavra-Passe é obrigatória',
+            'password.string' => 'Palavra-Passe inválida',
+            'password.min' => 'Palavra-Passe tem de ter no mínimo 8 caracteres',
+            'password.max' => 'Palavra-Passe não pode ter mais de 50 caracteres',
         ];
     }
 }

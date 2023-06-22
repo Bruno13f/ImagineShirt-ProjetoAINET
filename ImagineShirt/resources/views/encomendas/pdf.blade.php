@@ -105,14 +105,14 @@
 					
                     @endforeach
 					<tr class="total">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="right-align"><span>
-                            Total s/desconto:{{$encomendaData->total_price + (($catalogo_tshirt * $descontocatalogo)+($customer_tshirt * $descontoown))}}€
-						<br>Desconto: {{($catalogo_tshirt * $descontocatalogo)+($customer_tshirt * $descontoown) }} €
-                        <br>Total: {{ $encomendaData->total_price }}€</span>
-                    </td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td class="right-align"><span>
+								Total s/ desconto: {{$encomendaData->total_price + (($catalogo_tshirt * $descontocatalogo)+($customer_tshirt * $descontoown))}}€
+							<br>Desconto: {{($catalogo_tshirt * $descontocatalogo)+($customer_tshirt * $descontoown) }} €
+							<br>Total: {{ $encomendaData->total_price }}€</span>
+						</td>
                 	</tr>
 			</table>
 		</div>

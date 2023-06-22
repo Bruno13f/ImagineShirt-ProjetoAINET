@@ -1,11 +1,3 @@
-@extends('template.layout', ['dados' => ['active1' => '',
-                                        'active2' => '',
-                                        'active3' => '',
-                                        'active4' => '']]) 
-
-@section('titulo',' | Editar Cliente')
-
-@section('main')
 
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-option">
@@ -25,7 +17,7 @@
         </div>
     </section>
     <!-- Breadcrumb Section End -->
-    
+
     <div class="container p-0" style = "margin-top: 50px; margin-bottom: 50px">
         <div class="row justify-content-center">
             <div class="col-md-7 col-xl-8">
@@ -36,7 +28,7 @@
                                 <h5 class="card-title mb-0">Informação Pessoal</h5>
                             </div>
                             <div class="card-body justify-content-center">
-                                @include('users.shared.fields_foto', ['user' => $user, 'allowFoto' => true, 'allowCreate' => false, 'allowUpload' => true, 'allowElimPhoto' => true])
+                                @include('users.shared.fields_foto', ['allowFoto' => true, 'allowCreate' => false, 'allowUpload' => true, 'allowElimPhoto' => true])
                             </div>
                         </div>
                         <div class="card" style="margin-top: 20px">
@@ -45,24 +37,23 @@
                             </div>
                             <div class="card-body">
                                 @include('users.shared.fields_infpriv', ['user' => $user, 'readonlyData' => false])
-                                @include('clientes.shared.fields_infpriv', ['user' => $user, 'readonlyData' => false])
                             </div>
                         </div>
                         <div class="card" style="margin-top: 20px">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-6 justify-content-center" style = "display:flex">
-                                        <a href=""> 
-                                            <button type="submit" name="ok" form="form_user" class="btn btn-primary" style="background-color:rgba(230, 51, 52, 0.8); border-color:rgba(230, 51, 52, 0.8)">Guardar Alterações</button>   
-                                        </a>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6 justify-content-center" style = "display:flex">
+                                            <a href=""> 
+                                                <button type="submit" name="ok" form="form_user" class="btn btn-primary" style="background-color:rgba(230, 51, 52, 0.8); border-color:rgba(230, 51, 52, 0.8)">Guardar Alterações</button>   
+                                            </a>
+                                        </div> 
+                                        </form>
+                                        <div class="col-md-6 justify-content-center" style = "display:flex">
+                                            <a href="{{ Auth::user() == $user ? route('user', $user) : route('user.gerirUsers', $user)}}"> 
+                                                <button type="submit" class="btn btn-primary" style="background-color:rgba(230, 51, 52, 0.8); border-color:rgba(230, 51, 52, 0.8)">Cancelar</button>   
+                                            </a>
+                                        </div> 
                                     </div>
-                                    </form> 
-                                    <div class="col-md-6 justify-content-center" style = "display:flex">
-                                        <a href="
-                                        {{ route('user', $user) }}"> 
-                                            <button type="submit" class="btn btn-primary" style="background-color:rgba(230, 51, 52, 0.8); border-color:rgba(230, 51, 52, 0.8)">Cancelar</button>   
-                                        </a>
-                                    </div> 
                                 </div>
                             </div>
                         </div>
@@ -71,5 +62,3 @@
             </div>
         </div>
     </div>
-
-@endsection()

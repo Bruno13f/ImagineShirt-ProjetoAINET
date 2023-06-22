@@ -42,6 +42,20 @@ Route::get('logout', function (){
 Route::view('/contactos', 'contactos.index')->name('contactos');
 Route::get('/sobreNos', [PaginaSobreNosController::class, 'index'])->name('sobreNos');
 
+Route::middleware('admin')->group(function (){
+    // rotas para admin - dashboard etc
+    Route::middleware('verified')->group(function (){
+        Route::get('/user/{user}/gerirUsers', [PaginaUserController::class, 'showUsers'])->name('user.gerirUsers');
+        Route::get('/user/{user}/gerirCategorias', [PaginaUserController::class, 'showCategorias'])->name('user.gerirCategorias');
+        Route::get('/user/{user}/gerirCores', [PaginaUserController::class, 'showCores'])->name('user.gerirCores');
+        
+        Route::put('/user/{user}/blocked', [PaginaUserController::class, 'updateStatusBlock'])->name('user.updateStatusBlock');
+        Route::delete('/user/{user}/delete', [PaginaUserController::class, 'destroy_user'])->name('user.destroy');
+        Route::get('/user/create', [PaginaUserController::class, 'create'])->name('user.create');
+        Route::post('/user/store', [PaginaUserController::class, 'store'])->name('user.store');
+    });
+});
+
 Route::middleware('auth')->group(function (){
     // rotas para todos os users
     Route::middleware('verified')->group(function (){
@@ -78,17 +92,5 @@ Route::middleware('cliente')->group(function (){
     Route::get('/user/{user}/minhasTShirts', [PaginaUserController::class, 'showMinhasTShirts'])->name('user.gerirMinhasTShirts');
 });
 
-
-Route::middleware('admin')->group(function (){
-    // rotas para admin - dashboard etc
-    Route::middleware('verified')->group(function (){
-        Route::get('/user/{user}/gerirUsers', [PaginaUserController::class, 'showUsers'])->name('user.gerirUsers');
-        Route::get('/user/{user}/gerirCategorias', [PaginaUserController::class, 'showCategorias'])->name('user.gerirCategorias');
-        Route::get('/user/{user}/gerirCores', [PaginaUserController::class, 'showCores'])->name('user.gerirCores');
-        
-        Route::put('/user/{user}/blocked', [PaginaUserController::class, 'updateStatusBlock'])->name('user.updateStatusBlock');
-        Route::delete('/user/{user}/delete', [PaginaUserController::class, 'destroy_user'])->name('user.destroy');
-    });
-});
 
 Auth::routes(['verify' => true]);

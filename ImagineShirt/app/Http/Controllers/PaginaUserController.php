@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Encomendas;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Hash;
 
 class PaginaUserController extends Controller
 {
@@ -226,6 +227,44 @@ class PaginaUserController extends Controller
         Alert::success('Eliminada com sucesso!', $htmlMessage);
 
         return Auth::user() == $user ? redirect()->route('user', $user) : redirect()->route('user.gerirUsers', Auth::user());
+    }
+
+    public function create(): View{
+
+        $user = new User();
+        return view('users.create', compact('user'));
+    }
+
+    public function store(UserRequest $request): RedirectResponse{
+
+        $formData = $request->validated();
+        $user = DB::transaction(function() use ($formData, $request){
+
+            $newUser = new User();
+
+            $newUser->name = $formData['name'];
+            $newUser->email = $formData['email'];
+            $newUser->user_type = $formData['userType'];
+            $newUser->blocked = '0';
+            //password
+            $newUser->password = Hash::make($formData['password']);
+
+            if ($request->hasFile('image')){
+                $path = $request->image->store('photos');
+                $newUser->photo_url = basename($path);  
+            }
+
+            $newUser->save();
+            return $newUser;
+        });
+
+        $tipoUser = self::getTipoUser($user);
+
+        $htmlMessage = "A conta do $tipoUser $user->name foi criada!";
+
+        Alert::success('Criada com sucesso!', $htmlMessage);
+
+        return redirect()->route('user', Auth::user());
     }
 
     // tem de ser sempre a ultima 
