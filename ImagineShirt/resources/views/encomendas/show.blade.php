@@ -26,7 +26,10 @@
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <p class="lead fw-normal mb-0 font-weight-bold" style="color: #e63334;">Detalhes Encomenda</p>
                 </div>
-                
+                @php
+                    $customer_tshirt = 0;
+                    $catalogo_tshirt = 0;
+                @endphp
                 @foreach ($itemsData as $item)
                 <div class="card shadow-0 border mb-4">
                     <div class="card-body">
@@ -40,7 +43,7 @@
                         <div class="col-md-1 text-center d-flex justify-content-center align-items-center"> 
                         <span class="text-muted mb-0 mr-2">{{ $item->color_name }}</span>
                         </div>
-                        <div class="col-md-1 text-center d-flex justify-content-center align-items-center"> 
+                        <div class="col-md-1 text-center d-flex justify-content-center align-items-center "> 
                         <button class="btn rounded-circle" style="background-color: #{{$item->code_color}}; width: 40px; height: 40px"></button>
                         </div>
                         <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
@@ -55,16 +58,29 @@
                     </div>
                     </div>
                 </div>
+                    @if (!is_null($item->customer_id) && $item->qty >= $quantdesconto)
+                        @php
+                            $customer_tshirt++;
+                        @endphp
+                    @endif
+
+                    @if (is_null($item->customer_id) && $item->qty >= $quantdesconto)
+                        @php
+                            $catalogo_tshirt++;
+                        @endphp
+                    @endif
                 @endforeach
                 <div class="d-flex justify-content-between pt-2">
                     <p class="fw-bold mb-0 h6">Detalhes da encomenda</p>
-                    <p class="text-muted mb-0"><span class="fw-bold me-1">Total</span>{{ $encomendaData->total_price }} €</p>
+                    <p class="text-muted mb-0"><span class="fw-bold me-1">Total sem desconto</span>{{$encomendaData->total_price + (($catalogo_tshirt * $descontocatalogo)+($customer_tshirt * $descontoown))}}€</p>
                 </div>
                 <div class="d-flex justify-content-between pt-2">
                     <p class="text-muted mb-0"><span class="fw-bold me-1">NIF cliente:</span>{{ $encomendaData->nif }}</p>
+                    <p class="text-muted mb-0"><span class="fw-bold me-1">Desconto:</span>{{($catalogo_tshirt * $descontocatalogo)+($customer_tshirt * $descontoown) }} €</p>
                 </div>
                 <div class="d-flex justify-content-between pt-2">
                     <p class="text-muted mb-0"><span class="fw-bold me-1">Data:</span> {{ $encomendaData->date }}</p>
+                    <p class="text-muted mb-0"><span class="fw-bold me-1">Total</span>{{ $encomendaData->total_price }} €</p>
                 </div>
                 <div class="d-flex justify-content-between pt-2">
                     <p class="text-muted mb-0"><span class="fw-bold me-1">Método de Pagamento:</span>
