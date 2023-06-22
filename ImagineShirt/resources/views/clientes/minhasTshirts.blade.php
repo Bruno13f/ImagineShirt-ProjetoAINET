@@ -72,8 +72,8 @@
                                         <td>{{$tshirt->description}}</td>
                                         <td>{{$tshirt->created_at}}</td>
                                         <td>
-                                            <a href="route('t-shirts.edit', $tshirt)"><button type="button" class="btn btn-info rounded-pill"><span>Editar</span></button></a>
-                                            <a href="route('t-shirts.destroy', $tshirt->slug)"><button type="button" class="btn btn-danger rounded-pill"><span>Eliminar</span></button></a>
+                                            <a href="{{route('t-shirts.edit', $tshirt)}}"><button type="button" class="btn btn-info rounded-pill"><span>Editar</span></button></a>
+                                            <a href="{{route('t-shirts.destroy', $tshirt->slug)}}"><button type="button" class="btn btn-danger rounded-pill"><span>Eliminar</span></button></a>
                                         </td>
                                     </tr>
                                 @endforeach
