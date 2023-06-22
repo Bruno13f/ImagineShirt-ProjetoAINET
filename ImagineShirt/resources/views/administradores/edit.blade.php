@@ -59,7 +59,7 @@
                                         </div> 
                                         </form>
                                         <div class="col-md-6 justify-content-center" style = "display:flex">
-                                            <a href="{{ route('user', $user) }}"> 
+                                            <a href="{{ Auth::user() == $user ? route('user', $user) : route('user.gerirUsers', Auth::user())}}"> 
                                                 <button type="submit" class="btn btn-primary" style="background-color:rgba(230, 51, 52, 0.8); border-color:rgba(230, 51, 52, 0.8)">Cancelar</button>   
                                             </a>
                                         </div> 

@@ -10,7 +10,7 @@
 <section>
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-lg-10 col-xl-8">
+      <div class="col-lg-10 col-xl-10">
         <div class="card" style="border-radius: 10px;">
           <div class="card-header px-4 py-5">
             <div class="row">
@@ -31,40 +31,43 @@
                 <div class="card shadow-0 border mb-4">
                     <div class="card-body">
                     <div class="row">
-                        <div class="col-md-2">
-                        <img src="/storage/tshirt_images/{{ $item->image_url }}" class="img-fluid" alt="{{ $item->name }}" style="max-width: 75px; max-height: 75px;">
+                        <div class="col-md-2 d-flex justify-content-center">
+                        <img src="/storage/tshirt_images/{{ $item->image_url }}" class="img-fluid" alt="{{ $item->name }}" style="max-width: 100px; max-height: 100px;">
                         </div>
                         <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
                         <p class="text-muted mb-0">{{ $item->name }}</p>
                         </div>
-                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                        <p class="text-muted mb-0 small">{{ $item->color_name }}</p>
+                        <div class="col-md-1 text-center d-flex justify-content-center align-items-center"> 
+                        <span class="text-muted mb-0 mr-2">{{ $item->color_name }}</span>
+                        </div>
+                        <div class="col-md-1 text-center d-flex justify-content-center align-items-center"> 
+                        <button class="btn rounded-circle" style="background-color: #{{$item->code_color}}; width: 40px; height: 40px"></button>
                         </div>
                         <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                        <p class="text-muted mb-0 small">Qty: {{ $item->qty }}</p>
+                        <p class="text-muted mb-0 ">Quant: {{ $item->qty }}</p>
                         </div>
                         <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                        <p class="text-muted mb-0 small">{{ $item->unit_price }} €</p>
+                        <p class="text-muted mb-0">{{ $item->unit_price }} €</p>
                         </div>
                         <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                        <p class="text-muted mb-0 small">{{ $item->sub_total }} €</p>
+                        <p class="text-muted mb-0">{{ $item->sub_total }} €</p>
                         </div>
                     </div>
                     </div>
                 </div>
                 @endforeach
                 <div class="d-flex justify-content-between pt-2">
-                    <p class="fw-bold mb-0 ml-1">Detalhes da encomenda</p>
-                    <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span>{{ $encomendaData->total_price }} €</p>
+                    <p class="fw-bold mb-0 h6">Detalhes da encomenda</p>
+                    <p class="text-muted mb-0"><span class="fw-bold me-1">Total</span>{{ $encomendaData->total_price }} €</p>
                 </div>
                 <div class="d-flex justify-content-between pt-2">
-                    <p class="text-muted mb-0"><span class="fw-bold me-4">NIF cliente:</span>{{ $encomendaData->nif }}</p>
+                    <p class="text-muted mb-0"><span class="fw-bold me-1">NIF cliente:</span>{{ $encomendaData->nif }}</p>
                 </div>
                 <div class="d-flex justify-content-between pt-2">
-                    <p class="text-muted mb-0"><span class="fw-bold me-4">Data:</span>{{ $encomendaData->date }}</p>
+                    <p class="text-muted mb-0"><span class="fw-bold me-1">Data:</span> {{ $encomendaData->date }}</p>
                 </div>
                 <div class="d-flex justify-content-between pt-2">
-                    <p class="text-muted mb-0"><span class="fw-bold me-4">Método de Pagamento:</span>
+                    <p class="text-muted mb-0"><span class="fw-bold me-1">Método de Pagamento:</span>
                         @if ($encomendaData->payment_type == 'MC')
                             MasterCard
                         @else
@@ -73,13 +76,13 @@
                     </p>
                 </div>
                 <div class="d-flex justify-content-between pt-2">
-                    <p class="text-muted mb-0"><span class="fw-bold me-4">Referencia de Pagamento:</span>{{ $encomendaData->payment_ref }}</p>
+                    <p class="text-muted mb-0"><span class="fw-bold me-1">Referencia de Pagamento:</span>{{ $encomendaData->payment_ref }}</p>
                 </div>
-                <div class="d-flex justify-content-between">
-                    <p class="text-muted mb-0"><span class="fw-bold me-4">Notas:</span>{{ $encomendaData->notes }}</p>
+                <div class="d-flex justify-content-between pt-2">
+                    <p class="text-muted mb-0"><span class="fw-bold me-1">Notas:</span>{{ empty($encomendaData->notes) ? 'Sem Notas' : $encomendaData->notes }}</p>
                 </div>
-                <div class="d-flex justify-content-between mb-5">
-                    <p class="text-muted mb-0"><span class="fw-bold me-4">Endereço de envio:</span>{{ $encomendaData->address }}</p>
+                <div class="d-flex justify-content-between pt-2 mb-2">
+                    <p class="text-muted mb-0"><span class="fw-bold me-1">Endereço de envio:</span>{{ $encomendaData->address }}</p>
                 </div>
           </div>
         </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rule;
 use Auth;
 
@@ -35,6 +36,8 @@ class UserRequest extends FormRequest
             default:
                 $ruleRefPagamento = 'nullable';
         }
+
+        $user = $this->route('user');
 
         return [
             'name' => [

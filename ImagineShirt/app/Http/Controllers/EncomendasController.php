@@ -53,7 +53,7 @@ class EncomendasController extends Controller
 
     private function itensEncomenda($encomenda){
 
-        $itemsData = Encomendas::select('tshirt_images.name','order_items.qty','order_items.size','order_items.unit_price','order_items.sub_total','tshirt_images.customer_id','colors.name as color_name','tshirt_images.image_url')
+        $itemsData = Encomendas::select('tshirt_images.name','order_items.qty','order_items.size','order_items.unit_price','order_items.sub_total','tshirt_images.customer_id','colors.code as code_color','colors.name as color_name','tshirt_images.image_url')
         ->leftJoin('order_items','orders.id','=','order_items.order_id')
         ->leftJoin('tshirt_images','order_items.tshirt_image_id','=','tshirt_images.id')
         ->leftJoin('colors','order_items.color_code','=','colors.code')

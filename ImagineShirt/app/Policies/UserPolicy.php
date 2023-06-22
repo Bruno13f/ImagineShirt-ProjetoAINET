@@ -51,13 +51,28 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        return $user->user_type == 'A' || $user->user_type == 'C';
+        // MUDAR 
+
+        if ($user->user_type == 'C' && $user == $model){
+            return $user->user_type == 'C';
+        }
+
+        if ($user->user_type == 'A' && $model->user_type != 'C'){
+            return $user->user_type == 'A';
+        }
+
+        return false;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
     public function delete(User $user, User $model): bool
+    {
+        return $user->user_type == 'A';
+    }
+
+    public function block(User $user, User $model): bool
     {
         return $user->user_type == 'A';
     }

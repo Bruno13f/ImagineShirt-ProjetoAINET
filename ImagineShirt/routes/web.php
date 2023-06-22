@@ -85,6 +85,8 @@ Route::middleware('admin')->group(function (){
         Route::get('/user/{user}/gerirUsers', [PaginaUserController::class, 'showUsers'])->name('user.gerirUsers');
         Route::get('/user/{user}/gerirCategorias', [PaginaUserController::class, 'showCategorias'])->name('user.gerirCategorias');
         Route::get('/user/{user}/gerirCores', [PaginaUserController::class, 'showCores'])->name('user.gerirCores');
+        
+        Route::put('/user/{user}/block', [PaginaUserController::class, 'block'])->name('user.block');
     });
 });
 

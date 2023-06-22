@@ -9,7 +9,7 @@
 	</head>
 
 	<body>
-		<div class="invoice-box">
+		<div class="invoice-box" style="overflow-x: auto;">
 			<table>
 			<tr class="top">
 	<td colspan="4">

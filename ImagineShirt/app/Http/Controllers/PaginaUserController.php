@@ -15,16 +15,17 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Encomendas;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\View\View;
 
 class PaginaUserController extends Controller
 {
 
     public function __construct()
     {
-        //$this->authorizeResource(User::class, 'user');
+        $this->authorizeResource(User::class, 'user');
     }
 
-    public function index()
+    public function index(): View
     {   
         $user = Auth::user();
 
@@ -64,7 +65,7 @@ class PaginaUserController extends Controller
         }
     }
 
-    public function edit(User $user){
+    public function edit(User $user): View{
 
         if($user->user_type == 'A'){
             $tipoUser = 'Administrador';
@@ -119,16 +120,16 @@ class PaginaUserController extends Controller
             case 'A':
                 $tipoUser = "Administrador";
                 break;
+            case 'E':
+                $tipoUser = "Funcionário";
+                break;
         }
-
-        $isUpdated = $user->isDirty();
 
         $htmlMessage = "O $tipoUser $user->name foi alterado com sucesso!";
         
         Alert::success('Editado com sucesso!', $htmlMessage);
         
-        return redirect()->route('user', $user);
-
+        return Auth::user() == $user ? redirect()->route('user', $user) : redirect()->route('user.gerirUsers', Auth::user());
     }
 
     public function destroy_foto(User $user): RedirectResponse
@@ -155,7 +156,7 @@ class PaginaUserController extends Controller
         return redirect()->route('user.edit', $user);
     }
 
-    public function showEncomendas(User $user){
+    public function showEncomendas(User $user): View{
         
         if($user->user_type == 'A'){
 
@@ -184,32 +185,37 @@ class PaginaUserController extends Controller
         }
     }
 
-    public function showUsers(User $user){
+    public function showUsers(User $user): View{
 
         $utilizadores = User::whereNull('deleted_at')->paginate(15);
 
         return view('administradores.users', compact('user','utilizadores'));
     }
 
-    public function showCategorias(User $user){
+    public function showCategorias(User $user): View{
 
         $categorias = Categorias::whereNull('deleted_at')->paginate(15);
 
         return view('administradores.categorias', compact('user','categorias'));
     }
 
-    public function showCores(User $user){
+    public function showCores(User $user): View{
         
         $cores = Cores::whereNull('deleted_at')->paginate(15);
 
         return view('administradores.cores', compact('user','cores'));
     }
 
-    public function showMinhasTShirts(User $user){
+    public function showMinhasTShirts(User $user): View{
 
         $t_shirts = TShirts::whereNull('deleted_at')->where('customer_id', '=', $user->id)->paginate(15);
 
         return view('clientes.minhasTshirts', compact('user', 't_shirts'));
+    }
+
+    public function block (Request $request){
+
+        
     }
 
 }

@@ -55,13 +55,17 @@
                                         <td><span class="font-weight-bold text-uppercase">{{$tipoUser}}</span><br>{{$utilizador->name}}</td>
                                         <td><span><u>{{$utilizador->email}}</u></span></td>
                                         <td>{{$utilizador->created_at}}</td>
-                                        <td><a href=""> 
-                                        @if($utilizador->user_type !== 'C')
-                                            <button type="button" class="btn btn-info rounded-pill"><span>Editar</span></button>
-                                        @endif
+                                        <td>
+                                        @can('update', $utilizador)
+                                            <a href="{{ route('user.edit', $utilizador) }}"><button type="button" class="btn btn-info rounded-pill"><span>Editar</span></button></a>
+                                        @endcan
+                                        @can('block', $utilizador)
                                             <button type="button" class="btn btn-warning rounded-pill"><span>Bloquear</span></button>
+                                        @endcan
+                                        @can('delete', $utilizador)
                                             <button type="button" class="btn btn-danger rounded-pill"><span>Eliminar</span></button>
-                                        </td></a>
+                                        @endcan
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
