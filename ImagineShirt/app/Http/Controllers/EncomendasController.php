@@ -87,7 +87,16 @@ class EncomendasController extends Controller
         $encomendaData = self::dadosRecibo($encomenda);
         $itemsData = self::itensEncomenda($encomenda);
 
-        return view('encomendas.pdf', compact('encomendaData', 'itemsData'));
+        $precocatalogo = Precos::select('unit_price_catalog')->first()->unit_price_catalog;
+        $precocatalogodisc = Precos::select('unit_price_catalog_discount')->first()->unit_price_catalog_discount;
+        $precoown = Precos::select('unit_price_own')->first()->unit_price_own;
+        $precoowndisc = Precos::select('unit_price_own_discount')->first()->unit_price_own_discount;
+        $quantdesconto = Precos::select('qty_discount')->first()->qty_discount;
+
+        $descontocatalogo = $precocatalogo - $precocatalogodisc;
+        $descontoown = $precoown - $precoowndisc;
+
+        return view('encomendas.pdf', compact('encomendaData', 'itemsData','descontocatalogo','descontoown','quantdesconto'));
     }
 
 }

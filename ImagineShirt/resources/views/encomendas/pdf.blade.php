@@ -78,6 +78,11 @@
 					<td class="right-align">Total</td>
 				</tr>
 
+				@php
+                    $customer_tshirt = 0;
+                    $catalogo_tshirt = 0;
+                @endphp
+
                     @foreach ($itemsData as $item)
                         <tr class="item">
                             <td>{{ $item->name }}</td>
@@ -85,11 +90,24 @@
 							<td class="right-align">{{ $item->qty }}</td>
 							<td class="right-align">{{ $item->sub_total}}€</td>
                         </tr>
+
+					@if (!is_null($item->customer_id) && $item->qty >= $quantdesconto)
+                        @php
+                            $customer_tshirt= $customer_tshirt + $item->qty;
+                        @endphp
+                    @endif
+
+                    @if (is_null($item->customer_id) && $item->qty >= $quantdesconto)
+                        @php
+                            $catalogo_tshirt = $catalogo_tshirt + $item->qty;
+                        @endphp
+                    @endif
+					
                     @endforeach
 				<tr class="total">
 					<td></td>
-					<td></td>
-					<td></td>
+					<td class="right-align">Total sem desconto: {{$encomendaData->total_price + (($catalogo_tshirt * $descontocatalogo)+($customer_tshirt * $descontoown))}} €</td>
+					<td class="right-align">Desconto: {{($catalogo_tshirt * $descontocatalogo)+($customer_tshirt * $descontoown) }} €</td>
 					<td class="right-align">Total: {{ $encomendaData->total_price }}€</td>
 				</tr>
 			</table>
