@@ -140,9 +140,13 @@ class TShirtsController extends Controller
             $t_shirt->name = $formData['name'];
             $t_shirt->description = $formData['description'];
 
-            $encomendaID = Categorias::where('name', 'LIKE', $formData['category'])->pluck('id')->toArray();
-            $t_shirt->category_id = $encomendaID[0];
-
+            if (is_null($formData['category'])){
+                $t_shirt->category_id = null;
+            }else{
+                $encomendaID = Categorias::where('name', 'LIKE', $formData['category'])->pluck('id')->toArray();
+                $t_shirt->category_id = $encomendaID[0];
+            }
+            
             $t_shirt->save();
             
             // imagem para admin
@@ -158,9 +162,14 @@ class TShirtsController extends Controller
             return $t_shirt;
         });
 
-        $htmlMessage = "A T-Shirt foi alterada com sucesso!";
+        $isUpdated = $t_shirt->isDirty();
 
-        Alert::success('Editada com sucesso!', $htmlMessage);
+        if ($isUpdated){
+            Alert::success('Editada com sucesso!', 'A T-Shirt foi alterada com sucesso!');
+        }else{
+            Alert::info('Nada para alterar!', 'A T-Shirt foi mantida!');
+        }
+        
 
         return redirect()->route('t-shirts.show', $t_shirt->slug);
 

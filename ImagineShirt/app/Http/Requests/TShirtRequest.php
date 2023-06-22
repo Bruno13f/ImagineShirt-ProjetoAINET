@@ -27,12 +27,9 @@ class TShirtRequest extends FormRequest
     {   
         $userType = Auth::user()->user_type;
         $categorias = Categorias::whereNull('deleted_at')->orderBy('name')->pluck('name')->toArray();
-
-        $categoryRules = [
-            Rule::requiredIf($userType !== 'C'),
-        ];
     
         if ($userType !== 'C') {
+            $categoryRules[] = 'nullable';
             $categoryRules[] = Rule::in($categorias);
         } else {
             $categoryRules[] = 'nullable';
@@ -75,7 +72,6 @@ class TShirtRequest extends FormRequest
             'image.required' => 'A imagem é obrigatória',
             'image.image' => 'O ficheiro tem de ser uma imagem',
             'image.max' => 'A imagem não pode ter mais de 2MB',
-            'category.required' => 'A categoria é obrigatória',
             'category.in' => 'Categoria não é válida',
         ];
     }

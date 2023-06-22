@@ -51,7 +51,7 @@
                             @endphp
                             <option value="{{$categoria}}" {{$categoria === old('category',$nomeCategoria) ? 'selected' : ''}}>{{$categoria}}</option>  
                         @else 
-                            <option value="{{$categoria}}" {{$categoria === old('category',$t_shirt->categoria) ? 'selected' : ''}}>{{$categoria}}</option>  
+                            <option value="{{$categoria}}" {{$categoria === old('category',$t_shirt->categoria->name) ? 'selected' : ''}}>{{$categoria}}</option>  
                         @endif
 
                         @endforeach
