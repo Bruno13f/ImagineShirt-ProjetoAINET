@@ -140,9 +140,10 @@ class TShirtsController extends Controller
 
     public function update(TShirtRequest $request, TShirts $t_shirt): RedirectResponse{
 
-        $user = Auth::user();
         $formData = $request->validated();
         $t_shirt = DB::transaction(function () use ($formData, $t_shirt, $request) {
+
+            $user = Auth::user();
 
             $t_shirt->name = $formData['name'];
             $t_shirt->description = $formData['description'];
@@ -154,10 +155,7 @@ class TShirtsController extends Controller
                 $t_shirt->category_id = $encomendaID[0];
             }
 
-            // imagem para cliente
-
             if ($request->hasFile('image')){
-
                 // t-shirts user
                 if ($user->user_type === 'C') {
                     if ($t_shirt->image_url) {
