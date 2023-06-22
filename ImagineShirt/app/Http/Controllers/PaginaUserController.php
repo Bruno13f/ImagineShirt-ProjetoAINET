@@ -123,15 +123,10 @@ class PaginaUserController extends Controller
 
         $isUpdated = $user->isDirty();
 
+        $htmlMessage = "O $tipoUser $user->name foi alterado com sucesso!";
         
-        if ($isUpdated){
-            $htmlMessage = "O $tipoUser $user->name foi alterado com sucesso!";
-            Alert::success('Editado com sucesso!', $htmlMessage);
-        }else{
-            Alert::info('Nada para alterar!', 'O utilizador foi mantido!');
-        }
+        Alert::success('Editado com sucesso!', $htmlMessage);
         
-
         return redirect()->route('user', $user);
 
     }

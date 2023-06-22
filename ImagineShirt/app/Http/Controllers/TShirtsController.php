@@ -162,14 +162,7 @@ class TShirtsController extends Controller
             return $t_shirt;
         });
 
-        $isUpdated = $t_shirt->isDirty();
-
-        if ($isUpdated){
-            Alert::success('Editada com sucesso!', 'A T-Shirt foi alterada com sucesso!');
-        }else{
-            Alert::info('Nada para alterar!', 'A T-Shirt foi mantida!');
-        }
-        
+        Alert::success('Editada com sucesso!', 'A T-Shirt foi alterada com sucesso!');
 
         return redirect()->route('t-shirts.show', $t_shirt->slug);
 

@@ -42,19 +42,21 @@
                 </div>
                 <div class="form-group">
                     <select class="@error('category') is-invalid @enderror" name="category" id="inputCategory">
-                        <option {{empty($t_shirt->categoria->name) ? 'selected' : ''}}></option>    
-                        @foreach($categorias as $categoria)
+                        <option {{empty($t_shirt->categoria->name) ? 'selected' : ''}}></option> 
+                        @if(Auth::user()->user_type === 'A')   
+                            @foreach($categorias as $categoria)
 
-                        @if ($post)
-                            @php
-                                $nomeCategoria = $t_shirt->categoria ? $t_shirt->categoria->name : '';
-                            @endphp
-                            <option value="{{$categoria}}" {{$categoria === old('category',$nomeCategoria) ? 'selected' : ''}}>{{$categoria}}</option>  
-                        @else 
-                            <option value="{{$categoria}}" {{$categoria === old('category',$t_shirt->categoria->name) ? 'selected' : ''}}>{{$categoria}}</option>  
+                            @if ($post)
+                                @php
+                                    $nomeCategoria = $t_shirt->categoria ? $t_shirt->categoria->name : '';
+                                @endphp
+                                <option value="{{$categoria}}" {{$categoria === old('category',$nomeCategoria) ? 'selected' : ''}}>{{$categoria}}</option>  
+                            @else 
+                                <option value="{{$categoria}}" {{$categoria === old('category',$t_shirt->categoria->name) ? 'selected' : ''}}>{{$categoria}}</option>  
+                            @endif
+
+                            @endforeach
                         @endif
-
-                        @endforeach
                     </select>
                     @error('category')
                         <div class="invalid-feedback">

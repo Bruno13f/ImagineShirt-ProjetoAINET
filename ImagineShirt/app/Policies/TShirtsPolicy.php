@@ -36,9 +36,14 @@ class TShirtsPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function createAdmin(User $user): bool
     {
         return $user->user_type == 'A';
+    }
+
+    public function create(User $user): bool
+    {
+        return $user->user_type == 'A' || $user->user_type == 'C';
     }
 
     /**
@@ -46,7 +51,8 @@ class TShirtsPolicy
      */
     public function update(User $user, TShirts $t_shirt): bool
     {
-        return $user->user_type == 'A';
+        //dd(is_null($t_shirt->customer_id));
+        return is_null($t_shirt->customer_id) ? ($user->user_type == 'A') : ($user->user_type == 'C');
     }
 
     /**
@@ -54,7 +60,7 @@ class TShirtsPolicy
      */
     public function delete(User $user, TShirts $t_shirt): bool
     {
-        return $user->user_type == 'A';
+        return is_null($t_shirt->customer_id) ? ($user->user_type == 'A') : ($user->user_type == 'C');
     }
 
     /**

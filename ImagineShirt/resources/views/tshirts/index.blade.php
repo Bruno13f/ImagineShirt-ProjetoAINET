@@ -88,7 +88,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @can('create', App\Models\TShirts::class)
+                                @can('createAdmin', App\Models\TShirts::class)
                                 <div class="row">
                                     <div class="col d-flex justify-content-center">
                                         <a href="{{route('t-shirts.create')}}"><button type="button" class="btn btn-success">Criar T-Shirt</button></a>

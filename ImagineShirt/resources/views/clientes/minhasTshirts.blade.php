@@ -32,26 +32,18 @@
                     <div class="col-6">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title mb-0">Importar Imagem para T-Shirt</h5>
+                                <h5 class="card-title mb-0">Criar Própria T-Shirt</h5>
                             </div>
-                            <div class="card-body justify-content-center">
-                                <form>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="text-center">
-                                                <div class="mt-2">
-                                                    <label for="formFile" class="form-label"></label>
-                                                    <input class="form-control" type="file" id="formFile">
-                                                </div>
-                                            </div>
-                                        </div>
+                            <div class="card-body">
+                                <div class="row mt-4 mb-4 justify-content-center">
+                                    <div class="col-md-6 d-flex justify-content-center">
+                                        <a href="{{ route('t-shirts.create') }}">
+                                            <button type="button" class="btn btn-primary" style="background-color:rgba(230, 51, 52, 0.8); border-color:rgba(230, 51, 52, 0.8)">
+                                                Criar T-Shirt
+                                            </button>
+                                        </a>
                                     </div>
-                                    <div class="row" style="margin-top: 20px">
-                                        <div class="col-md-12 justify-content-center" style = "display:flex">
-                                            <button type="submit" class="btn btn-primary" style="background-color:rgba(230, 51, 52, 0.8); border-color: rgba(230, 51, 52, 0.8)" >Importar</button>   
-                                        </div> 
-                                    </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -80,8 +72,8 @@
                                         <td>{{$tshirt->description}}</td>
                                         <td>{{$tshirt->created_at}}</td>
                                         <td>
-                                            <button type="button" class="btn btn-info rounded-pill"><span>Editar</span></button>
-                                            <button type="button" class="btn btn-danger rounded-pill"><span>Eliminar</span></button>
+                                            <a href="route('t-shirts.edit', $tshirt)"><button type="button" class="btn btn-info rounded-pill"><span>Editar</span></button></a>
+                                            <a href="route('t-shirts.destroy', $tshirt->slug)"><button type="button" class="btn btn-danger rounded-pill"><span>Eliminar</span></button></a>
                                         </td>
                                     </tr>
                                 @endforeach
