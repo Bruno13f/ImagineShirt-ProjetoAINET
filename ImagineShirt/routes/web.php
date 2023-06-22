@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaginaInicialController;
 use App\Http\Controllers\PaginaSobreNosController;
 use App\Http\Controllers\PaginaUserController;
+use App\Http\Controllers\EncomendasController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Models\TShirts;
 
@@ -43,9 +44,14 @@ Route::get('/sobreNos', [PaginaSobreNosController::class, 'index'])->name('sobre
 
 Route::middleware('auth')->group(function (){
     // rotas para todos os users
-    Route::get('/user/{user}', [PaginaUserController::class, 'index'])->middleware('verified')->name('user');
-    Route::get('tshirt-images-user/{nome_tshirt}-{user_id}/{image_url}',[TShirtsController::class, 'imagemCliente'])->name('imagem_user');
-    Route::get('/user/{user}/encomendas', [PaginaUserController::class, 'showEncomendas'])->middleware('verified')->name('user.encomendas');
+    Route::middleware('verified')->group(function (){
+        Route::get('/user/{user}', [PaginaUserController::class, 'index'])->name('user');
+        Route::get('/user/{user}/encomendas', [PaginaUserController::class, 'showEncomendas'])->name('user.encomendas');
+        Route::get('/encomendas/{encomenda}/pdf', [EncomendasController::class, 'generatePDF'])->name('encomendas.pdf');
+        Route::get('/encomendas/{encomenda}/showPDF', [EncomendasController::class, 'showPDF'])->name('encomendas');
+        Route::get('tshirt-images-user/{nome_tshirt}-{user_id}/{image_url}',[TShirtsController::class, 'imagemCliente'])->name('imagem_user');
+    });
+    
 });
 
 Route::middleware('adminOrCustomer')->group(function (){
@@ -57,7 +63,7 @@ Route::middleware('adminOrCustomer')->group(function (){
         Route::delete('/user/{user}/foto', [PaginaUserController::class, 'destroy_foto'])->name('user.foto.destroy');
         Route::post('/password/change', [ChangePasswordController::class, 'store'])->name('password.change.store');
         Route::get('/password/change', [ChangePasswordController::class, 'show'])->name('password.change.show');
-        
+
         Route::get('t-shirts/create', [TShirtsController::class, 'create'])->name('t-shirts.create');
         Route::post('/t-shirts/store', [TShirtsController::class, 'store'])->name('t-shirts.store');
         Route::get('/t-shirts/{t_shirt}/edit', [TShirtsController::class, 'edit'])->name('t-shirts.edit');
