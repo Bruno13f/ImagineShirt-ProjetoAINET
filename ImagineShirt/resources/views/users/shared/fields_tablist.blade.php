@@ -13,9 +13,9 @@
 </a>
 
 @can ('verPropriasTShirts', App\Models\User::class)
-<a class="list-group-item list-group-item-action" data-toggle="list" href="#tshirts" role="tab">
+<a class="list-group-item list-group-item-action" href="{{ route('user.gerirMinhasTShirts', $user) }}">
     T-Shirts
-    <span class="badge badge-primary badge-pill badge-light">numero</span>
+    <span class="badge badge-primary badge-pill badge-light">{{$numTshirts}}</span>
 </a>
 @endcan
 

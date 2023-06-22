@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Categorias;
 use App\Models\Precos;
 use App\Models\Cores;
+use App\Models\TShirts;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
@@ -56,8 +57,10 @@ class PaginaUserController extends Controller
             $tipoUser = 'Cliente';
 
             $numencomendas = Encomendas::where('customer_id', '=', $user->id)->count();
+
+            $numTshirts = TShirts::whereNull('deleted_at')->where('customer_id', '=', $user->id)->count();
             
-            return view('clientes.index',compact('user','tipoUser','numencomendas'));
+            return view('clientes.index',compact('user','tipoUser','numencomendas', 'numTshirts'));
         }
     }
 
@@ -202,7 +205,9 @@ class PaginaUserController extends Controller
 
     public function showMinhasTShirts(User $user){
 
-        return view('clientes.minhasTshirts', compact('user'));
+        $t_shirts = TShirts::whereNull('deleted_at')->where('customer_id', '=', $user->id)->paginate(15);
+
+        return view('clientes.minhasTshirts', compact('user', 't_shirts'));
     }
 
 }

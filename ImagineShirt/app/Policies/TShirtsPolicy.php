@@ -38,7 +38,7 @@ class TShirtsPolicy
      */
     public function create(User $user): bool
     {
-        return $user->user_type == 'A' || $user->user_type == 'C';
+        return $user->user_type == 'A';
     }
 
     /**
@@ -46,7 +46,7 @@ class TShirtsPolicy
      */
     public function update(User $user, TShirts $t_shirt): bool
     {
-        return $user->user_type == 'A' || $user->user_type == 'C';
+        return $user->user_type == 'A';
     }
 
     /**
@@ -54,7 +54,7 @@ class TShirtsPolicy
      */
     public function delete(User $user, TShirts $t_shirt): bool
     {
-        return $user->user_type == 'A' || $user->user_type == 'C';
+        return $user->user_type == 'A';
     }
 
     /**
