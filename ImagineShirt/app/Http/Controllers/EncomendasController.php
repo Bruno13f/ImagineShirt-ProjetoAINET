@@ -40,14 +40,6 @@ class EncomendasController extends Controller
 
         return response()->download(storage_path('app/' . $pdfPath));
     }
-    public function showPDF($encomenda){
-
-        $encomendaData = self::dadosRecibo($encomenda);
-
-        $itemsData = self::itensEncomenda($encomenda);
-
-        return view('encomendas.show', compact('encomendaData','itemsData'));
-    }
 
     private function dadosRecibo($encomenda){
         
@@ -68,6 +60,23 @@ class EncomendasController extends Controller
         ->get();
 
         return $itemsData;
+    }
+
+    public function show($encomenda){
+
+        $encomendaData = self::dadosRecibo($encomenda);
+
+        $itemsData = self::itensEncomenda($encomenda);
+
+        return view('encomendas.show', compact('encomenda','encomendaData','itemsData'));
+    }
+
+    public function showRecibo($encomenda){
+
+        $encomendaData = self::dadosRecibo($encomenda);
+        $itemsData = self::itensEncomenda($encomenda);
+
+        return view('encomendas.pdf', compact('encomendaData', 'itemsData'));
     }
 
 }

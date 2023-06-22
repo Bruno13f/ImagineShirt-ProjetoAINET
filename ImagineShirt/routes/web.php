@@ -48,7 +48,8 @@ Route::middleware('auth')->group(function (){
         Route::get('/user/{user}', [PaginaUserController::class, 'index'])->name('user');
         Route::get('/user/{user}/encomendas', [PaginaUserController::class, 'showEncomendas'])->name('user.encomendas');
         Route::get('/encomendas/{encomenda}/pdf', [EncomendasController::class, 'generatePDF'])->name('encomendas.pdf');
-        Route::get('/encomendas/{encomenda}/showPDF', [EncomendasController::class, 'showPDF'])->name('encomendas');
+        Route::get('/encomendas/{encomenda}/detalhes', [EncomendasController::class, 'show'])->name('encomendas.show');
+        Route::get('/encomendas/{encomenda}/recibo', [EncomendasController::class, 'showRecibo'])->name('encomendas.recibo');
         Route::get('tshirt-images-user/{nome_tshirt}-{user_id}/{image_url}',[TShirtsController::class, 'imagemCliente'])->name('imagem_user');
     });
     

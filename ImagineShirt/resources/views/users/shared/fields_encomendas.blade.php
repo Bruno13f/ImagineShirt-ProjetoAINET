@@ -115,7 +115,7 @@
                                         @endcan
                                         <td>{{ $encomenda->total_price }}€</td>
                                         <td><a href="{{ route('encomendas.pdf', $encomenda) }}"><button type="button" class="btn btn-info rounded-pill"><span>Descarregar PDF</span></button></a>
-                                        <a href="{{ route('encomendas', $encomenda) }}"><button type="button" class="btn btn-info rounded-pill"><span>Ver PDF</span></button></a>
+                                        <a href="{{ route('encomendas.show', $encomenda) }}"><button type="button" class="btn btn-info rounded-pill"><span>Detalhes</span></button></a>
                                         </td>
                                     </tr>
                                 @endforeach
