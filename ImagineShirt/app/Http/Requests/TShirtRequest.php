@@ -38,6 +38,14 @@ class TShirtRequest extends FormRequest
             $categoryRules[] = 'nullable';
         }
 
+        $isCreating = $this->method() == 'POST';
+
+        if ($isCreating){
+            $imageRules = 'required|image|max:2048';
+        }else{
+            $imageRules = 'sometimes|image|max:2048';
+        }
+
         return [
             'name' => [
                 'required',
@@ -51,7 +59,7 @@ class TShirtRequest extends FormRequest
                 'max:200',
             ],
 
-            'image' => 'sometimes|image|max:2048',
+            'image' => $imageRules,
             'category' => $categoryRules,
         ];
     }
@@ -64,6 +72,7 @@ class TShirtRequest extends FormRequest
             'name.max' => 'O nome não pode ter mais de 50 caracteres',
             'description.string' => 'Descrição Inválida',
             'description.max' => 'A descrição não pode ter mais de 200 caracteres',
+            'image.required' => 'A imagem é obrigatória',
             'image.image' => 'O ficheiro tem de ser uma imagem',
             'image.max' => 'A imagem não pode ter mais de 2MB',
             'category.required' => 'A categoria é obrigatória',

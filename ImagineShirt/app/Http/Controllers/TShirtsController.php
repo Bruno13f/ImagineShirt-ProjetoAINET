@@ -133,6 +133,7 @@ class TShirtsController extends Controller
 
     public function update(TShirtRequest $request, TShirts $t_shirt): RedirectResponse{
 
+        $user = Auth::user();
         $formData = $request->validated();
         $t_shirt = DB::transaction(function () use ($formData, $t_shirt, $request) {
 
@@ -144,7 +145,8 @@ class TShirtsController extends Controller
 
             $t_shirt->save();
             
-            if ($request->hasFile('image')) {
+            // imagem para admin
+            if ($request->hasFile('image') && $user->user_type === 'A') {
                 if ($t_shirt->image_url) {
                     Storage::delete('public/tshirt_images' . $t_shirt->image_url);
                 }
@@ -173,5 +175,43 @@ class TShirtsController extends Controller
         Alert::success('Eliminada com sucesso!', $htmlMessage);
 
         return redirect()->route('t-shirts', $t_shirt->slug);
+    }
+
+    public function create(): View{
+
+        $categorias = Categorias::whereNull('deleted_at')->orderBy('name')->pluck('name')->toArray();
+        $t_shirt = new TShirts();
+        return view('tshirts.create', compact('t_shirt','categorias'));
+    }
+
+    public function store(TShirtRequest $request): RedirectResponse
+    {
+        $formData = $request->validated();
+        $t_shirt = DB::transaction(function() use ($formData, $request){
+
+            $user = Auth::user();
+
+            $newTShirt = new TShirts();
+            $newTShirt->name = $formData['name'];
+            $newTShirt->description = $formData['description'];
+
+            $encomendaID = Categorias::where('name', 'LIKE', $formData['category'])->pluck('id')->toArray();
+            $newTShirt->category_id = $encomendaID[0];
+
+            // imagem para admin
+            if ($user->user_type === 'A'){
+                $path = $request->image->store('public/tshirt_images');
+                $newTShirt->image_url = basename($path);  
+            }
+
+            $newTShirt->save();
+            return $newTShirt;
+        });
+
+        $htmlMessage = "A T-Shirt foi criada com sucesso!";
+
+        Alert::success('Criada com sucesso!', $htmlMessage);
+
+        return redirect()->route('t-shirts.show', $t_shirt->slug);
     }
 }
