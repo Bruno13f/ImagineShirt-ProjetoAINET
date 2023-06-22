@@ -37,6 +37,23 @@
                             </div>
                             <div class="card-body">
                                 @include('users.shared.fields_infpriv', ['user' => $user, 'readonlyData' => false])
+                                <div class="form-group">
+                                    <div class="form-group" style="display:flex; align-items: center;">
+                                        <span>Tipo de User</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <select class="@error('userType') is-invalid @enderror" name="userType" id="inputUserType">
+                                            <option {{empty($user->user_type) ? 'selected' : ''}}></option>
+                                            <option value="A" {{'A' === old('userType',$user->user_type) ? 'selected' : ''}}>Administrador</option> 
+                                            <option value="E" {{'E' === old('userType',$user->user_type) ? 'selected' : ''}}>Funcionário</option> 
+                                        </select>
+                                        @error('userType')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="card" style="margin-top: 20px">

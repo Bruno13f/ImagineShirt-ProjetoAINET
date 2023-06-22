@@ -56,10 +56,15 @@ class UserRequest extends FormRequest
             $ruleEmail[] = Rule::unique('users', 'email');
             $rulesPassword = 'required|string|min:8|max:50';
         }else{
-            $rulesUserType = 'nullable';
             $ruleEmail[] = Rule::unique('users', 'email')->ignore($user->id);
             $ruleNif[] = Rule::unique('customers', 'nif')->ignore($user->id);
             $rulesPassword = 'nullable';
+
+            if ($user->user_type != 'C'){
+                $rulesUserType = 'required|in:A,E';
+            }else{
+                $rulesUserType = 'nullable';
+            }
         }
 
         return [

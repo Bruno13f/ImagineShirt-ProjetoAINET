@@ -92,7 +92,13 @@ class PaginaUserController extends Controller
 
             $user->name = $formData['name'];
             $user->email = $formData['email'];
+            
+            if (Auth::user()->user_type == 'A'){
+                $user->user_type = $formData['userType'];
+            }
+            
             $user->save();
+
             if ($user->user_type === 'C'){
                 $cliente = $user->cliente;
                 $cliente->nif = $formData['nif'];
@@ -120,7 +126,7 @@ class PaginaUserController extends Controller
         
         Alert::success('Editado com sucesso!', $htmlMessage);
         
-        return Auth::user() == $user ? redirect()->route('user', $user) : redirect()->route('user.gerirUsers', Auth::user());
+        return Auth::user()->id == $user->id ? redirect()->route('user', $user) : redirect()->route('user.gerirUsers', Auth::user());
     }
 
     public function destroy_foto(User $user): RedirectResponse
@@ -171,7 +177,7 @@ class PaginaUserController extends Controller
 
     public function showUsers(User $user): View{
 
-        $utilizadores = User::whereNull('deleted_at')->paginate(15);
+        $utilizadores = User::whereNull('deleted_at')->orderByDesc('user_type')->paginate(15);
 
         return view('administradores.users', compact('user','utilizadores'));
     }
