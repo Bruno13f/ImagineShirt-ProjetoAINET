@@ -71,24 +71,4 @@
         </div>
     </div>
 
-    <script>
-        function confirmDelete() {
-
-        Swal.fire({
-        title: 'Tem a certeza?',
-        text: "Irá eliminar a foto do seu perfil!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#218838',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sim, quero eliminar!',
-        cancelButtonText: 'Cancelar',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById('form_delete_photo').submit();
-            }
-        })
-        }
-    </script>
-
 @endsection()

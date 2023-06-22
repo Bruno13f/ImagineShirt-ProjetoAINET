@@ -111,8 +111,6 @@ class PaginaUserController extends Controller
             return $user;
         });
 
-        $url = route('user', $user);
-
         switch($user->user_type){
             case 'C': 
                 $tipoUser = "Cliente"; 
@@ -160,8 +158,9 @@ class PaginaUserController extends Controller
         
         if($user->user_type == 'A'){
 
-            $encomendas = Encomendas::join('customers','orders.customer_id','=','customers.id')
-            ->join('users','customers.id','=','users.id')
+            $encomendas = Encomendas::select('orders.id','orders.status','orders.date','orders.total_price','users.name','users.email')
+            ->leftJoin('customers','customer_id','=','customers.id')
+            ->leftJoin('users','customers.id','=','users.id')
             ->orderByDesc('date')->paginate(15);
             
             return view('users.shared.fields_encomendas',compact('user','encomendas'));

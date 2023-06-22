@@ -3,20 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\TShirtRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 use App\Models\TShirts;
 use App\Models\Categorias;
 use App\Models\Precos;
 use App\Models\Cores;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 use Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class TShirtsController extends Controller
 {
 
     public function __construct()
     {
-        $this->authorizeResource(TShirts::class, 't_shirt');
+        //$this->authorizeResource(TShirts::class, 't_shirt');
     }
 
     public function index(Request $request): View
@@ -117,5 +122,45 @@ class TShirtsController extends Controller
             return redirect()->route('root');
         
         return response($image, 200)->header('Content-Type', $tipo);
+    }
+
+    public function edit(TShirts $t_shirt): View{
+
+        $categorias = Categorias::whereNull('deleted_at')->orderBy('name')->pluck('name')->toArray();
+
+        return view('tshirts.edit', compact('t_shirt','categorias'));
+    }
+
+    public function update(TShirtRequest $request, TShirts $t_shirt): RedirectResponse{
+
+        $formData = $request->validated();
+        $t_shirt = DB::transaction(function () use ($formData, $t_shirt, $request) {
+
+            $t_shirt->name = $formData['name'];
+            $t_shirt->description = $formData['description'];
+
+            $encomendaID = Categorias::where('name', 'LIKE', $formData['category'])->pluck('id')->toArray();
+            $t_shirt->category_id = $encomendaID[0];
+
+            $t_shirt->save();
+            
+            if ($request->hasFile('image')) {
+                if ($t_shirt->image_url) {
+                    Storage::delete('public/tshirt_images' . $t_shirt->image_url);
+                }
+                $path = $request->image->store('public/tshirt_images');
+                $t_shirt->image_url = basename($path);
+                $t_shirt->save();
+            }
+
+            return $t_shirt;
+        });
+
+        $htmlMessage = "A T-Shirt foi alterada com sucesso!";
+
+        Alert::success('Editada com sucesso!', $htmlMessage);
+
+        return redirect()->route('t-shirts.show', $t_shirt);
+
     }
 }

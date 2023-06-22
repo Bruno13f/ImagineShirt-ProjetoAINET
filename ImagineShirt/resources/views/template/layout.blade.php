@@ -131,7 +131,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__logo">
-                            <a href="#"><img src=" {{ asset('img/footer-logo.png')}}" alt=""></a>
+                            <a href="#"><img src="{{ asset('img/footer-logo.png')}}" alt=""></a>
                         </div>
                         <p>O cliente é o coração da nossa loja</p>
                         <a href="#"><img src=" {{asset('img/payment.png')}}" alt=""></a>

@@ -61,3 +61,8 @@ canvas-container {
 #imagemGestaoUser{
     object-fit: contain;
 }
+
+.list {
+    max-height: 300px;
+    overflow-y: scroll !important;
+}

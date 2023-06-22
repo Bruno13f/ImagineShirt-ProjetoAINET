@@ -141,7 +141,7 @@
                             
                                 <div style = "display: flex; justify-content: space-evenly">
                                 @can('update', $tshirt)
-                                    <a href=""><button type="button" class="btn btn-success">Editar</button></a>
+                                    <a href="{{route('t-shirts.edit', $tshirt)}}"><button type="button" class="btn btn-success">Editar</button></a>
                                 @endcan
                                 @can('delete', $tshirt)
                                     <a href="" style = "margin-bottom: 10px"><button type="button" class="btn btn-danger">Eliminar</button></a>

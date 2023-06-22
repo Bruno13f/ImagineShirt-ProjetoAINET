@@ -52,7 +52,7 @@
                                 @endphp
                                     <tr>
                                         <td><img id="imagemGestaoUser"src="{{ $utilizador->fullPhotoUrl }}" alt="{{ $utilizador->name }}" width="128" height="128"></td>
-                                        <td>{{$tipoUser}}<br>{{$utilizador->name}}</td>
+                                        <td><span class="font-weight-bold text-uppercase">{{$tipoUser}}</span><br>{{$utilizador->name}}</td>
                                         <td><span><u>{{$utilizador->email}}</u></span></td>
                                         <td>{{$utilizador->created_at}}</td>
                                         <td><a href=""> 

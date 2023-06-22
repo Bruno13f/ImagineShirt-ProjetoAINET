@@ -21,54 +21,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" style="margin-top: 40px">
-                    <div class="col-lg-3 col-md-3">
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">
-                                    <div id="tshirtBaseEsq" class="product__thumb__pic set-bg" data-setbg="/storage/tshirt_base/{{$cores[0]->code}}.jpg"></div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">
-                                    <div class="product__thumb__pic set-bg" data-setbg="{{ empty($t_shirt->customer_id) ? "/storage/tshirt_images/{$t_shirt->image_url}" : 
-                    route('imagem_user', ['image_url' => $t_shirt->image_url, 'user_id' => $t_shirt->customer_id, 'nome_tshirt' => $t_shirt->name])}}">
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-6 col-md-9">
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="tabs-1" role="tabpanel">
-                                <div class="canvas-container">
-                                    <img id="tshirtBase" src = "/storage/tshirt_base/{{$cores[0]->code}}.jpg" alt="">
-                                    <canvas id="myCanvas"></canvas>
-                                </div>
-                            </div>
-                            <div class="tab-pane" id="tabs-2" role="tabpanel">
-                                <div class="product__details__pic__item">
-                                    <img src="{{ empty($t_shirt->customer_id) ? "/storage/tshirt_images/{$t_shirt->image_url}" : 
-                    route('imagem_user', ['image_url' => $t_shirt->image_url, 'user_id' => $t_shirt->customer_id, 'nome_tshirt' => $t_shirt->name])}}" alt="" style="object-fit: contain; max-width: 100%; max-height: 100%;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- <div class="row justify-content-md-center" style="margin-top: 40px">
-                    <div class="col-lg-5 col-md-9">
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="tabs-1" role="tabpanel">
-                                <div class="product__details__pic__item">
-                                    <div class="canvas-container">
-                                        <img id="tshirtBase" src = "/storage/tshirt_base/{{$cores[0]->code}}.jpg" alt="">
-                                        <canvas id="myCanvas"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
+                @include('tshirts.shared.fields_img', ['edit' => false])
+            </div>
+        </div>
+        <div>
+            <div class="col md-6 d-flex justify-content-center mb-4">
+                @can('update', $t_shirt)
+                    <a href="{{route('t-shirts.edit', $t_shirt)}}"><button type="button" class="btn btn-success">Editar</button></a>
+                @endcan
+                <div class="ml-4 mr-4"></div>
+                @can('delete', $t_shirt)
+                    <a href="" style = "margin-bottom: 10px"><button type="button" class="btn btn-danger">Eliminar</button></a>
+                @endcan
             </div>
         </div>
         <div class="product__details__content">
