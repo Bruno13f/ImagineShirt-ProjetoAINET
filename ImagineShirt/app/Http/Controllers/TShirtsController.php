@@ -109,7 +109,14 @@ class TShirtsController extends Controller
     public function show(TShirts $t_shirt): View
     {
         $cores = Cores::whereNull('deleted_at')->orderBy('name')->get();
-        return view('tshirts.show', compact('t_shirt', 'cores'));
+
+        if (is_null($t_shirt->customer_id)){
+            $preco = Precos::pluck('unit_price_catalog');
+        }else{
+            $preco = Precos::pluck('unit_price_own');
+        }  
+
+        return view('tshirts.show', compact('t_shirt', 'cores', 'preco'));
     }
 
     public function imagemCliente($nome_tshirt, $user_id, $image_url){
@@ -146,18 +153,33 @@ class TShirtsController extends Controller
                 $encomendaID = Categorias::where('name', 'LIKE', $formData['category'])->pluck('id')->toArray();
                 $t_shirt->category_id = $encomendaID[0];
             }
+
+            // imagem para cliente
+
+            if ($request->hasFile('image')){
+
+                // t-shirts user
+                if ($user->user_type === 'C') {
+                    if ($t_shirt->image_url) {
+                        Storage::delete('tshirt_images_private/' . $t_shirt->image_url);
+                    }
+                    $path = $request->image->store('tshirt_images_private');
+                    $t_shirt->image_url = basename($path);
+                }
+
+                // t-shirts catalogo
+                if ($user->user_type === 'A') {
+                    if ($t_shirt->image_url) {
+                        Storage::delete('public/tshirt_images/' . $t_shirt->image_url);
+                    }
+                    $path = $request->image->store('public/tshirt_images');
+                    $t_shirt->image_url = basename($path); 
+                }
+
+            }
             
             $t_shirt->save();
             
-            // imagem para admin
-            if ($request->hasFile('image') && $user->user_type === 'A') {
-                if ($t_shirt->image_url) {
-                    Storage::delete('public/tshirt_images' . $t_shirt->image_url);
-                }
-                $path = $request->image->store('public/tshirt_images');
-                $t_shirt->image_url = basename($path);
-                $t_shirt->save();
-            }
 
             return $t_shirt;
         });
@@ -170,7 +192,23 @@ class TShirtsController extends Controller
 
     public function destroy(TShirts $t_shirt): RedirectResponse{
 
-        $t_shirt->delete();
+        if (count($t_shirt->itemsEncomenda) == 0){
+
+            //eliminar imagem
+
+            //dd(is_null($t_shirt->customer_id));
+
+            if (is_null($t_shirt->customer_id)){
+                Storage::delete('public/tshirt_images/' . $t_shirt->image_url);
+            }else{
+                Storage::delete('tshirt_images_private/' . $t_shirt->image_url);
+            }
+
+            $t_shirt->forceDelete();
+        
+        }else{
+            $t_shirt->delete();
+        }
 
         $htmlMessage = "A T-Shirt foi eliminada com sucesso!";
 
@@ -197,10 +235,23 @@ class TShirtsController extends Controller
             $newTShirt->name = $formData['name'];
             $newTShirt->description = $formData['description'];
 
-            $encomendaID = Categorias::where('name', 'LIKE', $formData['category'])->pluck('id')->toArray();
-            $newTShirt->category_id = $encomendaID[0];
+            if (is_null($formData['category'])){
+                $newTShirt->category_id = null;
+            }else{
+                $encomendaID = Categorias::where('name', 'LIKE', $formData['category'])->pluck('id')->toArray();
+                $newTShirt->category_id = $encomendaID[0];
+            }
+
+            // imagem para cliente
+
+            if ($user->user_type === 'C'){
+                $newTShirt->customer_id = $user->id;
+                $path = $request->image->store('tshirt_images_private');
+                $newTShirt->image_url = basename($path);  
+            }
 
             // imagem para admin
+
             if ($user->user_type === 'A'){
                 $path = $request->image->store('public/tshirt_images');
                 $newTShirt->image_url = basename($path);  

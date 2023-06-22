@@ -102,7 +102,7 @@ class PaginaUserController extends Controller
 
             if ($request->hasFile('image')) {
                 if ($user->photo_url) {
-                    Storage::delete('public/photos' . $user->photo_url);
+                    Storage::delete('public/photos/' . $user->photo_url);
                 }
                 $path = $request->image->store('public/photos');
                 $user->photo_url = basename($path);
@@ -134,7 +134,7 @@ class PaginaUserController extends Controller
     public function destroy_foto(User $user): RedirectResponse
     {
         if ($user->photo_url) {
-            Storage::delete('public/photos' . $user->photo_url);
+            Storage::delete('public/photos/' . $user->photo_url);
             $user->photo_url = null;
             $user->save();
         }

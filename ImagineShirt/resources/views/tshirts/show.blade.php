@@ -47,7 +47,7 @@
                             <h4>{{ empty($t_shirt->name) ? 'Sem Nome' : $t_shirt->name }}</h4>
                             <div class="rating">
                             </div>
-                            <h3>{{$t_shirt->price}}<!-- DESCONTO <span>70.00</span>--></h3> 
+                            <h3>{{$preco[0]}} €<!-- DESCONTO <span>70.00</span>--></h3> 
                             <div class="product__details__option">
                                 <div class="product__details__option__size">
                                     <span>Tamanho:</span>

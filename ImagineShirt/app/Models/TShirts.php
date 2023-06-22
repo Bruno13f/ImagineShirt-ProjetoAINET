@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Categorias;
 use Illuminate\Support\Str;
 use App\Models\ItensEncomenda;
@@ -25,7 +26,7 @@ class TShirts extends Model
     }
 
     public function itemsEncomenda(): HasMany{
-        return $this->BelongsTo(ItensEncomenda::class, 'tshirt_image_id', 'id');
+        return $this->hasMany(ItensEncomenda::class, 'tshirt_image_id', 'id');
     }
 
     public function getSlugAttribute() : String 
