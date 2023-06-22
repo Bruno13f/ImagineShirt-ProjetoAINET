@@ -53,6 +53,8 @@ Route::middleware('admin')->group(function (){
         Route::delete('/user/{user}/delete', [PaginaUserController::class, 'destroy_user'])->name('user.destroy');
         Route::get('/user/create', [PaginaUserController::class, 'create'])->name('user.create');
         Route::post('/user/store', [PaginaUserController::class, 'store'])->name('user.store');
+
+        Route::get('/user/{user}/estatisticas', [PaginaUserController::class, 'estatisticas'])->name('user.estatisticas');
     });
 });
 

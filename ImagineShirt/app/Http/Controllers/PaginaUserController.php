@@ -91,6 +91,7 @@ class PaginaUserController extends Controller
         $user = DB::transaction(function () use ($formData, $user, $request) {
 
             $user->name = $formData['name'];
+            // enviar email de confirmação se for diferente - TODO
             $user->email = $formData['email'];
             
             if (Auth::user()->user_type == 'A'){
@@ -256,7 +257,7 @@ class PaginaUserController extends Controller
             $newUser->password = Hash::make($formData['password']);
 
             if ($request->hasFile('image')){
-                $path = $request->image->store('photos');
+                $path = $request->image->store('public/photos/');
                 $newUser->photo_url = basename($path);  
             }
 
@@ -270,7 +271,12 @@ class PaginaUserController extends Controller
 
         Alert::success('Criada com sucesso!', $htmlMessage);
 
-        return redirect()->route('user', Auth::user());
+        return redirect()->route('user.gerirUsers', Auth::user());
+    }
+
+    public function estatisticas(User $user): View
+    {
+        return view('administradores.estatisticas', compact('user'));
     }
 
     // tem de ser sempre a ultima 

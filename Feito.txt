@@ -71,7 +71,7 @@ ALTERAR:
 	. customers e orders vai ser necessario (se houver problemas) alterar no php nome coluna - colunas com nome iguais
 	. PROBLEMA - Resolvido alterar nome para o da rota
 	. USER REMEMBER
-	. mudar email - enviar mail confirmação
+	. EMAILS - criar conta/mudar email - enviar mail confirmação
 
 ##################################################################################################################################################
 		

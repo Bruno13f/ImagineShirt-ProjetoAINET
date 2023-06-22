@@ -8,10 +8,12 @@ use Illuminate\Support\Facades\Response;
 use App\Models\Encomendas;
 use App\Models\Precos;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class EncomendasController extends Controller
 {
-    public function generatePDF($encomenda)
+    public function generatePDF($encomenda): BinaryFileResponse
     {
         $encomendaData = self::dadosRecibo($encomenda);
         $itemsData = self::itensEncomenda($encomenda);
@@ -72,7 +74,7 @@ class EncomendasController extends Controller
         return $itemsData;
     }
 
-    public function show($encomenda){
+    public function show($encomenda): View{
 
         $encomendaData = self::dadosRecibo($encomenda);
 
@@ -90,7 +92,7 @@ class EncomendasController extends Controller
         return view('encomendas.show', compact('encomenda','encomendaData','itemsData','descontocatalogo','descontoown','quantdesconto'));
     }
 
-    public function showRecibo($encomenda){
+    public function showRecibo($encomenda): View{
 
         $encomendaData = self::dadosRecibo($encomenda);
         $itemsData = self::itensEncomenda($encomenda);

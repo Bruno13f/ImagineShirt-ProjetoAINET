@@ -8,11 +8,12 @@ use App\Models\Precos;
 use App\Models\ItensEncomenda;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 
 class PaginaInicialController extends Controller
 {
     
-    public function index()
+    public function index(): View
     {        
         // preco sempre 10.00€ - produtos loja
         $recentes = TShirts::whereNull('deleted_at')->whereNull('customer_id')->orderBy('created_at', 'desc')->take(8)->get();
