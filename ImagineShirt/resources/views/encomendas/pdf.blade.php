@@ -109,8 +109,8 @@
                     <td></td>
                     <td></td>
                     <td class="right-align"><span>
-                            Total sem desconto: {{$encomendaData->total_price + (($catalogo_tshirt * $descontocatalogo)+($customer_tshirt * $descontoown))}}€
-							Desconto: {{($catalogo_tshirt * $descontocatalogo)+($customer_tshirt * $descontoown) }} €
+                            Total s/desconto:{{$encomendaData->total_price + (($catalogo_tshirt * $descontocatalogo)+($customer_tshirt * $descontoown))}}€
+						<br>Desconto: {{($catalogo_tshirt * $descontocatalogo)+($customer_tshirt * $descontoown) }} €
                         <br>Total: {{ $encomendaData->total_price }}€</span>
                     </td>
                 	</tr>
