@@ -21,7 +21,7 @@ class TShirtsController extends Controller
 
     public function __construct()
     {
-        //$this->authorizeResource(TShirts::class, 't_shirt');
+        $this->authorizeResource(TShirts::class, 't_shirt');
     }
 
     public function index(Request $request): View

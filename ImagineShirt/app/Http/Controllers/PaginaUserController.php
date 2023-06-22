@@ -61,9 +61,7 @@ class PaginaUserController extends Controller
         }
     }
 
-    public function edit(){
-
-        $user = Auth::user();
+    public function edit(User $user){
 
         if($user->user_type == 'A'){
             $tipoUser = 'Administrador';
@@ -152,9 +150,7 @@ class PaginaUserController extends Controller
         return redirect()->route('user.edit', $user);
     }
 
-    public function showEncomendas(){
-
-        $user = Auth::user();
+    public function showEncomendas(User $user){
         
         if($user->user_type == 'A'){
 
@@ -183,28 +179,30 @@ class PaginaUserController extends Controller
         }
     }
 
-    public function showUsers(){
+    public function showUsers(User $user){
 
-        $user = Auth::user();
         $utilizadores = User::whereNull('deleted_at')->paginate(15);
 
         return view('administradores.users', compact('user','utilizadores'));
     }
 
-    public function showCategorias(){
+    public function showCategorias(User $user){
 
-        $user = Auth::user();
         $categorias = Categorias::whereNull('deleted_at')->paginate(15);
 
         return view('administradores.categorias', compact('user','categorias'));
     }
 
-    public function showCores(){
+    public function showCores(User $user){
         
-        $user = Auth::user();
         $cores = Cores::whereNull('deleted_at')->paginate(15);
 
         return view('administradores.cores', compact('user','cores'));
+    }
+
+    public function showMinhasTShirts(User $user){
+
+        return view('clientes.minhasTshirts', compact('user'));
     }
 
 }

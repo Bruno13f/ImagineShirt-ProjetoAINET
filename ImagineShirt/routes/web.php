@@ -61,6 +61,11 @@ Route::middleware('adminOrCustomer')->group(function (){
 });
 
 
+Route::middleware('cliente')->group(function (){
+    Route::get('/user/{user}/minhasTShirts', [PaginaUserController::class, 'showMinhasTShirts'])->name('user.gerirMinhasTShirts');
+});
+
+
 Route::middleware('admin')->group(function (){
     // rotas para admin - dashboard etc
     Route::middleware('verified')->group(function (){
