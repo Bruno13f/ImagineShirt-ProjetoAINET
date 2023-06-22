@@ -113,17 +113,7 @@ class PaginaUserController extends Controller
             return $user;
         });
 
-        switch($user->user_type){
-            case 'C': 
-                $tipoUser = "Cliente"; 
-                break;
-            case 'A':
-                $tipoUser = "Administrador";
-                break;
-            case 'E':
-                $tipoUser = "Funcionário";
-                break;
-        }
+        $tipoUser = self::getTipoUser($user);
 
         $htmlMessage = "O $tipoUser $user->name foi alterado com sucesso!";
         
@@ -140,20 +130,13 @@ class PaginaUserController extends Controller
             $user->save();
         }
 
-        switch($user->user_type){
-            case 'C': 
-                $tipoUser = "Cliente"; 
-                break;
-            case 'A':
-                $tipoUser = "Administrador";
-                break;
-        }
+        $tipoUser = self::getTipoUser($user);
 
         $htmlMessage = "A foto do $tipoUser $user->name foi eliminada!";
 
         Alert::success('Eliminada com sucesso!', $htmlMessage);
 
-        return redirect()->route('user.edit', $user);
+        return Auth::user() == $user ? redirect()->route('user', $user) : redirect()->route('user.gerirUsers', Auth::user());
     }
 
     public function showEncomendas(User $user): View{
@@ -213,9 +196,54 @@ class PaginaUserController extends Controller
         return view('clientes.minhasTshirts', compact('user', 't_shirts'));
     }
 
-    public function block (Request $request){
+    public function updateStatusBlock (User $user): RedirectResponse{
 
-        
+        $blocked = $user->blocked;
+        $user->blocked = $user->blocked ? '0' : '1';
+        $user->save();
+
+        $tipoUser = self::getTipoUser($user);
+
+        if ($blocked){
+            $htmlMessage = "A conta do $tipoUser $user->name foi desbloqueada!";
+            Alert::success('Desbloqueado com sucesso!', $htmlMessage);
+        }else{
+            $htmlMessage = "A conta do $tipoUser $user->name foi bloqueada!";
+            Alert::success('Bloqueada com sucesso!', $htmlMessage);
+        }
+
+        return Auth::user() == $user ? redirect()->route('user', $user) : redirect()->route('user.gerirUsers', Auth::user());
     }
 
+    public function destroy_user (User $user): RedirectResponse{
+
+        $user->delete();
+
+        $tipoUser = self::getTipoUser($user);
+
+        $htmlMessage = "A conta do $tipoUser $user->name foi eliminada!";
+
+        Alert::success('Eliminada com sucesso!', $htmlMessage);
+
+        return Auth::user() == $user ? redirect()->route('user', $user) : redirect()->route('user.gerirUsers', Auth::user());
+    }
+
+    // tem de ser sempre a ultima 
+
+    private function getTipoUser(User $user){
+
+        switch($user->user_type){
+            case 'C': 
+                $tipoUser = "Cliente"; 
+                break;
+            case 'A':
+                $tipoUser = "Administrador";
+                break;
+            case 'E':
+                $tipoUser = "Funcionário";
+                break;
+        }
+
+        return $tipoUser;
+    }
 }

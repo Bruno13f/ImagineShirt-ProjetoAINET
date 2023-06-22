@@ -86,7 +86,8 @@ Route::middleware('admin')->group(function (){
         Route::get('/user/{user}/gerirCategorias', [PaginaUserController::class, 'showCategorias'])->name('user.gerirCategorias');
         Route::get('/user/{user}/gerirCores', [PaginaUserController::class, 'showCores'])->name('user.gerirCores');
         
-        Route::put('/user/{user}/block', [PaginaUserController::class, 'block'])->name('user.block');
+        Route::put('/user/{user}/blocked', [PaginaUserController::class, 'updateStatusBlock'])->name('user.updateStatusBlock');
+        Route::delete('/user/{user}/delete', [PaginaUserController::class, 'destroy_user'])->name('user.destroy');
     });
 });
 

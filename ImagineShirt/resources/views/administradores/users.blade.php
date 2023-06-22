@@ -59,11 +59,24 @@
                                         @can('update', $utilizador)
                                             <a href="{{ route('user.edit', $utilizador) }}"><button type="button" class="btn btn-info rounded-pill"><span>Editar</span></button></a>
                                         @endcan
+
                                         @can('block', $utilizador)
-                                            <button type="button" class="btn btn-warning rounded-pill"><span>Bloquear</span></button>
+                                        <form id="form_block_user_{{$utilizador->id}}" novalidate class="needs-validation" method="POST"
+                                        action="{{ route('user.updateStatusBlock', $utilizador) }}" enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+                                            <button type="submit" name="ok" form="form_block_user_{{$utilizador->id}}" class="btn btn-warning rounded-pill mt-2"><span>
+                                                {{ $utilizador->blocked ? 'Desbloquear' : 'Bloquear'}}</span></button>
+                                        </form>
                                         @endcan
+
                                         @can('delete', $utilizador)
-                                            <button type="button" class="btn btn-danger rounded-pill"><span>Eliminar</span></button>
+                                        <form id="form_delete_user_{{$utilizador->id}}" novalidate class="needs-validation" method="POST"
+                                        action="{{ route('user.destroy', $utilizador) }}" enctype="multipart/form-data">
+                                        @csrf
+                                        @method('DELETE')
+                                            <button type="submit" name="ok" form="form_delete_user_{{$utilizador->id}}" class="btn btn-danger rounded-pill mt-2"><span>Eliminar</span></button>
+                                        </form>
                                         @endcan
                                         </td>
                                     </tr>
