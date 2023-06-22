@@ -9,7 +9,7 @@
             </li>
             @endif
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">
+                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab" style="background-color: #D3D3D3">
                     <div class="product__thumb__pic set-bg" data-setbg="{{ empty($t_shirt->customer_id) ? "/storage/tshirt_images/{$t_shirt->image_url}" : 
     route('imagem_user', ['image_url' => $t_shirt->image_url, 'user_id' => $t_shirt->customer_id, 'nome_tshirt' => $t_shirt->name])}}">
                     </div>
@@ -27,7 +27,7 @@
                 </div>
             </div>
             @endif
-            <div class="tab-pane {{$edit ? 'active' : ''}}" id="tabs-2" role="tabpanel">
+            <div class="tab-pane {{$edit ? 'active' : ''}}" id="tabs-2" role="tabpanel" style="background-color: #D3D3D3">
                 <div class="product__details__pic__item">
                     <img src="{{ empty($t_shirt->customer_id) ? "/storage/tshirt_images/{$t_shirt->image_url}" : 
     route('imagem_user', ['image_url' => $t_shirt->image_url, 'user_id' => $t_shirt->customer_id, 'nome_tshirt' => $t_shirt->name])}}" alt="" style="object-fit: contain; max-width: 100%; max-height: 100%;">

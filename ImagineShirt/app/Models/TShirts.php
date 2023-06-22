@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Categorias;
 use Illuminate\Support\Str;
 use App\Models\ItensEncomenda;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TShirts extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $table = 'tshirt_images';
     // pk é id (incrementavel) inteiro - tem created_at e updated_at
 

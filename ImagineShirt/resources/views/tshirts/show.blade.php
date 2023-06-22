@@ -27,11 +27,15 @@
         <div>
             <div class="col md-6 d-flex justify-content-center mb-4">
                 @can('update', $t_shirt)
-                    <a href="{{route('t-shirts.edit', $t_shirt)}}"><button type="button" class="btn btn-success">Editar</button></a>
+                    <a href="{{route('t-shirts.edit', $t_shirt->slug)}}"><button type="button" class="btn btn-success">Editar</button></a>
                 @endcan
                 <div class="ml-4 mr-4"></div>
                 @can('delete', $t_shirt)
-                    <a href="" style = "margin-bottom: 10px"><button type="button" class="btn btn-danger">Eliminar</button></a>
+                    <form id="form_delete_tshirt" action="{{ route('t-shirts.destroy', $t_shirt->slug) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                        <button type="sumbit" class="btn btn-danger">Eliminar</button>
+                    </form>
                 @endcan
             </div>
         </div>

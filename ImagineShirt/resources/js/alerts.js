@@ -22,3 +22,27 @@ if (deleteUserForm) {
         });
     });
 }
+
+const deleteTShirtForm = document.querySelectorAll("#form_delete_tshirt");
+if (deleteTShirtForm) {
+    deleteTShirtForm.forEach(function (deleteForm) {
+        deleteForm.addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+            Swal.fire({
+            title: 'Tem a certeza?',
+            text: "Irá eliminar a tshirt!",
+            showCancelButton: true,
+            confirmButtonColor: '#218838',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, quero eliminar!',
+            cancelButtonText: 'Cancelar',
+            }).then((result) => {
+                if (result.value) {
+                    event.target.submit();
+                }
+            })
+        });
+    });
+}

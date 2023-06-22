@@ -31,7 +31,7 @@
                     <div class="col-lg-8">
                         <div class="product__details__last__option">
                         <form id="form_tshirts" novalidate class="needs-validation" method="POST"
-                        action="{{ route('t-shirts.update', $t_shirt) }}" enctype="multipart/form-data">
+                        action="{{ route('t-shirts.update', $t_shirt->slug) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                             <div class="mt-2">

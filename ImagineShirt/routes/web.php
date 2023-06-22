@@ -63,11 +63,12 @@ Route::middleware('adminOrCustomer')->group(function (){
 Route::middleware('admin')->group(function (){
     // rotas para admin - dashboard etc
     Route::middleware('verified')->group(function (){
-        Route::get('/user/{user}/gerirUsers', [PaginaUserController::class, 'showUsers'])->middleware('verified')->name('user.gerirUsers');
-        Route::get('/user/{user}/gerirCategorias', [PaginaUserController::class, 'showCategorias'])->middleware('verified')->name('user.gerirCategorias');
-        Route::get('/user/{user}/gerirCores', [PaginaUserController::class, 'showCores'])->middleware('verified')->name('user.gerirCores');
-        Route::get('/t-shirts/{t_shirt}/edit', [TShirtsController::class, 'edit'])->middleware('verified')->name('t-shirts.edit');
+        Route::get('/user/{user}/gerirUsers', [PaginaUserController::class, 'showUsers'])->name('user.gerirUsers');
+        Route::get('/user/{user}/gerirCategorias', [PaginaUserController::class, 'showCategorias'])->name('user.gerirCategorias');
+        Route::get('/user/{user}/gerirCores', [PaginaUserController::class, 'showCores'])->name('user.gerirCores');
+        Route::get('/t-shirts/{t_shirt}/edit', [TShirtsController::class, 'edit'])->name('t-shirts.edit');
         Route::put('/t-shirts/{t_shirt}/update', [TShirtsController::class, 'update'])->name('t-shirts.update');
+        Route::delete('/t-shirts/{t_shirt}/delete', [TShirtsController::class, 'destroy'])->name('t-shirts.destroy');
     });
 });
 

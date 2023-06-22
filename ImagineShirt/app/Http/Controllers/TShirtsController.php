@@ -160,7 +160,18 @@ class TShirtsController extends Controller
 
         Alert::success('Editada com sucesso!', $htmlMessage);
 
-        return redirect()->route('t-shirts.show', $t_shirt);
+        return redirect()->route('t-shirts.show', $t_shirt->slug);
 
+    }
+
+    public function destroy(TShirts $t_shirt): RedirectResponse{
+
+        $t_shirt->delete();
+
+        $htmlMessage = "A T-Shirt foi eliminada com sucesso!";
+
+        Alert::success('Eliminada com sucesso!', $htmlMessage);
+
+        return redirect()->route('t-shirts', $t_shirt->slug);
     }
 }
