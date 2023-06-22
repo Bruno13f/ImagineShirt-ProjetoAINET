@@ -24,11 +24,39 @@
     </div>
 </section>
     <!-- Breadcrumb Section End -->
-    <div class="row mb-5 mt-5 justify-content-md-center" >
+<div class="row mb-5 mt-5 justify-content-md-center" >
     <div class="col-10">
         <div class="tab-content">
             <div class="tab-pane fade show active" id="users" role="tabpanel">
-                <div class="card">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Importar Imagem para T-Shirt</h5>
+                            </div>
+                            <div class="card-body justify-content-center">
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="text-center">
+                                                <div class="mt-2">
+                                                    <label for="formFile" class="form-label"></label>
+                                                    <input class="form-control" type="file" id="formFile">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top: 20px">
+                                        <div class="col-md-12 justify-content-center" style = "display:flex">
+                                            <button type="submit" class="btn btn-primary" style="background-color:rgba(230, 51, 52, 0.8); border-color: rgba(230, 51, 52, 0.8)" >Importar</button>   
+                                        </div> 
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-5">
                     <div class="card-header d-flex justify-content-center">
                         <h5 class="card-title mb-0">T-Shirts</h5>
                     </div>
