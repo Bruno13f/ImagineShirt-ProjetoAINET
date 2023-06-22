@@ -60,13 +60,13 @@
                 </div>
                     @if (!is_null($item->customer_id) && $item->qty >= $quantdesconto)
                         @php
-                            $customer_tshirt++;
+                            $customer_tshirt= $customer_tshirt + $item->qty;
                         @endphp
                     @endif
 
                     @if (is_null($item->customer_id) && $item->qty >= $quantdesconto)
                         @php
-                            $catalogo_tshirt++;
+                            $catalogo_tshirt = $catalogo_tshirt + $item->qty;
                         @endphp
                     @endif
                 @endforeach
