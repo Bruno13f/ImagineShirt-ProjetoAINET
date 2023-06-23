@@ -313,7 +313,9 @@ class PaginaUserController extends Controller
             ['label' => 'Funcionários', 'percentage' => $employeePercentage],
         ];
 
-        return view('administradores.estatisticas', compact('user','orderNum','clientCount','totalSumMes','totalSumAno','earningsData','clientData'));
+        $usersNovos = User::whereNull('deleted_at')->orderBy('created_at', 'desc')->take(6)->get();
+
+        return view('administradores.estatisticas', compact('user','orderNum','clientCount','totalSumMes','totalSumAno','earningsData','clientData','usersNovos'));
     }
 
     // tem de ser sempre a ultima 
