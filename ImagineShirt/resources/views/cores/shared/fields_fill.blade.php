@@ -16,7 +16,16 @@
                             @method('PUT')
                         @endif
                         <div class="card-body">
-                            <div class="form-group">
+                            <div class="mt-2">
+                                <label for="formImage" class="form-label">Escolha uma imagem</label>
+                                <input class="form-control @error('image') is-invalid @enderror" name="image" type="file" id="formImage">
+                                @error('image')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group mt-3">
                                 <label for="inputName">Nome</label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="inputName" value = "{{ old('name', $cor->name) }}">
                                 @error('name')

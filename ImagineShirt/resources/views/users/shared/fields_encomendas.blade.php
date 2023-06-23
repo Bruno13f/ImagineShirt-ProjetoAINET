@@ -136,58 +136,60 @@
                                         <th scope="row">{{ $encomenda->id }}</th>
                                         <td>{{ $encomenda->date }}</td>
                                         <td><span class="font-weight-bold">{{ $estado }}</span></td>
-                                        @can('isAdmin')
-                                            <td>
-                                                <span>{{$encomenda->name}}<span>
-                                                <p><small>{{$encomenda->email}}</small></p>
-                                            </td>
-                                            <td>
+                                        @can('changeStatus', $encomenda)
+                                            @can('isAdmin')
+                                                <td>
+                                                    <span>{{$encomenda->name}}<span>
+                                                    <p><small>{{$encomenda->email}}</small></p>
+                                                </td>
+                                                <td>
+                                                    @if ($estado == 'PENDENTE' || $estado == 'PAGO')
+                                                    <form id="form_change_status_{{$encomenda->id}}" novalidate class="needs-validation" method="POST"
+                                                    action="{{ route('encomendas.changeStatus', $encomenda) }}" enctype="multipart/form-data">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                        <input type="hidden" name="status" value="{{$alterarEstado}}">
+                                                        <button type="submit" name="ok" form="form_change_status_{{$encomenda->id}}" class="btn btn-{{$btnAlterar}} rounded-pill"><span>{{$alterarEstado}}</span></button>
+                                                    </form>
+                                                    @endif
+                                                
+                                                    @if($estado != 'ANULADO')
+                                                    <form id="form_cancelar_{{$encomenda->id}}" novalidate class="needs-validation" method="POST"
+                                                    action="{{ route('encomendas.changeStatus', $encomenda) }}" enctype="multipart/form-data">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                        <input type="hidden" name="status" value="canceled">
+                                                        <button type="submit" name="ok" form="form_cancelar_{{$encomenda->id}}" class="btn btn-danger rounded-pill mt-2"><span>Anular</span></button>
+                                                    </form>
+                                                    @else
+                                                        <button type="button" class="btn btn-info rounded-pill"><span>Estado inalterável</span></button>
+                                                    @endif
+                                                </td>
+                                            @endcan
+                                            @can('isFuncionario')
+                                                <td>
+                                                    <span>{{$encomenda->name}}<span>
+                                                    <p><small>{{$encomenda->email}}</small></p>
+                                                </td>
+                                                <td>
                                                 @if ($estado == 'PENDENTE' || $estado == 'PAGO')
-                                                <form id="form_change_status_{{$encomenda->id}}" novalidate class="needs-validation" method="POST"
-                                                action="{{ route('encomendas.changeStatus', $encomenda) }}" enctype="multipart/form-data">
-                                                @csrf
-                                                @method('PATCH')
-                                                    <input type="hidden" name="status" value="{{$alterarEstado}}">
-                                                    <button type="submit" name="ok" form="form_change_status_{{$encomenda->id}}" class="btn btn-{{$btnAlterar}} rounded-pill"><span>{{$alterarEstado}}</span></button>
-                                                </form>
+                                                    <form id="form_change_status_{{$encomenda->id}}" novalidate class="needs-validation" method="POST"
+                                                    action="{{ route('encomendas.changeStatus', $encomenda) }}" enctype="multipart/form-data">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                        <input type="hidden" name="status" value="{{$alterarEstado}}">
+                                                        <button type="submit" name="ok" form="form_change_status_{{$encomenda->id}}" class="btn btn-{{$btnAlterar}} rounded-pill"><span>{{$alterarEstado}}</span></button>
+                                                    </form>
                                                 @endif
-                                            
-                                                @if($estado != 'ANULADO')
-                                                <form id="form_cancelar_{{$encomenda->id}}" novalidate class="needs-validation" method="POST"
-                                                action="{{ route('encomendas.changeStatus', $encomenda) }}" enctype="multipart/form-data">
-                                                @csrf
-                                                @method('PATCH')
-                                                    <input type="hidden" name="status" value="canceled">
-                                                    <button type="submit" name="ok" form="form_cancelar_{{$encomenda->id}}" class="btn btn-danger rounded-pill mt-2"><span>Anular</span></button>
-                                                </form>
-                                                @else
-                                                    <button type="button" class="btn btn-info rounded-pill"><span>Estado inalterável</span></button>
-                                                @endif
-                                            </td>
-                                        @endcan
-                                        @can('isFuncionario')
-                                            <td>
-                                                <span>{{$encomenda->name}}<span>
-                                                <p><small>{{$encomenda->email}}</small></p>
-                                            </td>
-                                            <td>
-                                            @if ($estado == 'PENDENTE' || $estado == 'PAGO')
-                                                <form id="form_change_status_{{$encomenda->id}}" novalidate class="needs-validation" method="POST"
-                                                action="{{ route('encomendas.changeStatus', $encomenda) }}" enctype="multipart/form-data">
-                                                @csrf
-                                                @method('PATCH')
-                                                    <input type="hidden" name="status" value="{{$alterarEstado}}">
-                                                    <button type="submit" name="ok" form="form_change_status_{{$encomenda->id}}" class="btn btn-{{$btnAlterar}} rounded-pill"><span>{{$alterarEstado}}</span></button>
-                                                </form>
-                                            @endif
-                                            </td>
+                                                </td>
+                                            @endcan
                                         @endcan
                                         <td>{{ $encomenda->total_price }} €</td>
                                         <td>
                                         @if($encomenda->status != 'pending')
                                         <a href="{{ route('encomendas.pdf', $encomenda) }}"><button type="button" class="btn btn-info rounded-pill"><span>Descarregar PDF</span></button></a>
                                         @endif
-                                        <a href="{{ route('encomendas.show', $encomenda) }}"><button type="button" class="btn btn-info rounded-pill"><span>Detalhes</span></button></a>
+                                        <a href="{{ route('encomendas.show', $encomenda->id) }}"><button type="button" class="btn btn-info rounded-pill"><span>Detalhes</span></button></a>
                                         </td>
                                     </tr>
                                 @endforeach

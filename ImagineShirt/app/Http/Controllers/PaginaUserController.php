@@ -148,36 +148,6 @@ class PaginaUserController extends Controller
         return Auth::user() == $user ? redirect()->route('user', $user) : redirect()->route('user.gerirUsers', Auth::user());
     }
 
-    public function showEncomendas(User $user): View{
-        
-        if($user->user_type == 'A'){
-
-            $encomendas = Encomendas::select('orders.id','orders.status','orders.date','orders.total_price','users.name','users.email')
-            ->leftJoin('customers','customer_id','=','customers.id')
-            ->leftJoin('users','customers.id','=','users.id')
-            ->orderByDesc('date')->paginate(15);
-            
-            return view('users.shared.fields_encomendas',compact('user','encomendas'));
-        }
-
-        if($user->user_type == 'E'){
-
-            $encomendas = Encomendas::select('orders.id','orders.status','orders.date','orders.total_price','users.name','users.email')
-            ->where('status','=','pending')->orwhere('status','=','paid')->join('customers','orders.customer_id','=','customers.id')
-            ->join('users','customers.id','=','users.id')
-            ->orderByDesc('date')->paginate(15);
-
-            return view('users.shared.fields_encomendas',compact('user','encomendas'));
-        }
-
-        if($user->user_type == 'C'){
-
-            $encomendas = Encomendas::where('customer_id', '=', $user->id)->orderByDesc('date')->paginate(15);
-
-            return view('users.shared.fields_encomendas',compact('user','encomendas'));
-        }
-    }
-
     public function showUsers(User $user): View{
 
         $utilizadores = User::whereNull('deleted_at')->orderByDesc('user_type')->paginate(15);

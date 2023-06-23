@@ -15,7 +15,7 @@ class ItensEncomenda extends Model
     public $timestamps = false;
 
     public function cores(): BelongsTo{
-        return $this->belongsTo(Cores::class, 'color_code', 'code');
+        return $this->belongsTo(Cores::class, 'color_code', 'code')->withTrashed();
     }
 
     public function tshirts(): BelongsTo{

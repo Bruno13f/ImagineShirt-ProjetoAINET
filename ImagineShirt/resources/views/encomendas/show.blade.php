@@ -15,10 +15,11 @@
           <div class="card-header px-4 py-5">
             <div class="row">
               <div class="col md-8">
-                <h5 class="text-muted mb-0 font-weight-bold">Obrigado pela sua encomenda, <span style="color: #e63334;">{{ $encomendaData->name }}</span>!</h5>
+                <h5 class="text-muted mb-0 font-weight-bold">Obrigado pela sua encomenda, <span style="color: #e63334;">{{ $encomenda->clientes->user->name }}</span>!</h5>
               </div>
               <div class="col md-4 d-flex justify-content-end">
-                @if($encomendaData->status != 'pending')
+                <a href="{{ route('encomendas') }}"><button type="button" class="btn rounded-pill mr-2" style="background-color: #e63334;"><span style="color: white;">Voltar</span></button></a>
+                @if($encomenda->status != 'pending')
                 <a href="{{ route('encomendas.recibo', $encomenda) }}"><button type="button" class="btn rounded-pill" style="background-color: #e63334;"><span style="color: white;">Recibo</span></button></a>
                 @endif  
               </div>
@@ -32,21 +33,21 @@
                     $customer_tshirt = 0;
                     $catalogo_tshirt = 0;
                 @endphp
-                @foreach ($itemsData as $item)
+                @foreach ($encomenda->itensEncomenda as $item)
                 <div class="card shadow-0 border mb-4">
                     <div class="card-body">
                     <div class="row">
-                        <div class="col-md-2 d-flex justify-content-center" style="background-color: #{{$item->code_color}}">
-                        <img src="/storage/tshirt_images/{{ $item->image_url }}" class="img-fluid" alt="{{ $item->name }}" style="max-width: 100px; max-height: 100px;">
+                        <div class="col-md-2 d-flex justify-content-center" style="background-color: #{{ $item->color_code}}">
+                        <img src="/storage/tshirt_images/{{ $item->tshirts->image_url }}" class="img-fluid" alt="{{ $item->tshirts->name }}" style="max-width: 100px; max-height: 100px;">
                         </div>
                         <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                        <p class="text-muted mb-0">{{ $item->name }}</p>
+                        <p class="text-muted mb-0">{{ $item->tshirts->name }}</p>
                         </div>
                         <div class="col-md-1 text-center d-flex justify-content-center align-items-center"> 
-                        <span class="text-muted mb-0 mr-2">{{ $item->color_name }}</span>
+                        <span class="text-muted mb-0 mr-2">{{ $item->cores->name }}</span>
                         </div>
                         <div class="col-md-1 text-center d-flex justify-content-center align-items-center "> 
-                        <button class="btn rounded-circle" style="background-color: #{{$item->code_color}}; width: 40px; height: 40px"></button>
+                        <button class="btn rounded-circle" style="background-color: #{{$item->color_code}}; width: 40px; height: 40px"></button>
                         </div>
                         <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
                         <p class="text-muted mb-0 ">Quant: {{ $item->qty }}</p>
@@ -73,37 +74,37 @@
                     @endif
                 @endforeach
                 <div class="d-flex justify-content-between pt-2">
-                    <p class="fw-bold mb-0 h6">Detalhes da encomenda</p>
-                    <p class="text-muted mb-0"><span class="fw-bold me-1">Total sem desconto</span>{{$encomendaData->total_price + (($catalogo_tshirt * $descontos['descontocatalogo'])+($customer_tshirt * $descontos['descontoown']))}}€</p>
+                    <p class="fw-bold mb-0 h6">Detalhes da encomenda {{$encomenda->id}}</p>
+                    <p class="text-muted mb-0"><span class="fw-bold me-1">Total sem desconto</span>{{$encomenda->total_price + (($catalogo_tshirt * $descontos['descontocatalogo'])+($customer_tshirt * $descontos['descontoown']))}}€</p>
                 </div>
                 <div class="d-flex justify-content-between pt-2">
-                    <p class="text-muted mb-0"><span class="fw-bold me-1">NIF cliente:</span>{{ $encomendaData->nif }}</p>
+                    <p class="text-muted mb-0"><span class="fw-bold me-1">NIF cliente:</span>{{ $encomenda->nif }}</p>
                     <p class="text-muted mb-0"><span class="fw-bold me-1">Desconto:</span>{{($catalogo_tshirt * $descontos['descontocatalogo'])+($customer_tshirt * $descontos['descontoown']) }} €</p>
                 </div>
                 <div class="d-flex justify-content-between pt-2">
-                    <p class="text-muted mb-0"><span class="fw-bold me-1">Data:</span> {{ $encomendaData->date }}</p>
-                    <p class="text-muted mb-0"><span class="fw-bold me-1">Total</span>{{ $encomendaData->total_price }} €</p>
+                    <p class="text-muted mb-0"><span class="fw-bold me-1">Data:</span> {{ $encomenda->date }}</p>
+                    <p class="text-muted mb-0"><span class="fw-bold me-1">Total</span>{{ $encomenda->total_price }} €</p>
                 </div>
                 <div class="d-flex justify-content-between pt-2">
-                    <p class="text-muted mb-0"><span class="fw-bold me-1">Status:</span>{{ $encomendaData->status }}</p>
+                    <p class="text-muted mb-0"><span class="fw-bold me-1">Status:</span>{{ $encomenda->status }}</p>
                 </div>
                 <div class="d-flex justify-content-between pt-2">
                     <p class="text-muted mb-0"><span class="fw-bold me-1">Método de Pagamento:</span>
-                        @if ($encomendaData->payment_type == 'MC')
+                        @if ($encomenda->payment_type == 'MC')
                             MasterCard
                         @else
-                            {{ $encomendaData->payment_type }}
+                            {{ $encomenda->payment_type }}
                         @endif
                     </p>
                 </div>
                 <div class="d-flex justify-content-between pt-2">
-                    <p class="text-muted mb-0"><span class="fw-bold me-1">Referencia de Pagamento:</span>{{ $encomendaData->payment_ref }}</p>
+                    <p class="text-muted mb-0"><span class="fw-bold me-1">Referencia de Pagamento:</span>{{ $encomenda->payment_ref }}</p>
                 </div>
                 <div class="d-flex justify-content-between pt-2">
-                    <p class="text-muted mb-0"><span class="fw-bold me-1">Notas:</span>{{ empty($encomendaData->notes) ? 'Sem Notas' : $encomendaData->notes }}</p>
+                    <p class="text-muted mb-0"><span class="fw-bold me-1">Notas:</span>{{ empty($encomenda->notes) ? 'Sem Notas' : $encomenda->notes }}</p>
                 </div>
                 <div class="d-flex justify-content-between pt-2 mb-2">
-                    <p class="text-muted mb-0"><span class="fw-bold me-1">Endereço de envio:</span>{{ $encomendaData->address }}</p>
+                    <p class="text-muted mb-0"><span class="fw-bold me-1">Endereço de envio:</span>{{ $encomenda->address }}</p>
                 </div>
           </div>
         </div>

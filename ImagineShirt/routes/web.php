@@ -81,8 +81,8 @@ Route::middleware('auth')->group(function (){
     // rotas para todos os users
     Route::middleware('verified')->group(function (){
         Route::get('/user/{user}', [PaginaUserController::class, 'index'])->name('user');
-        Route::get('/user/{user}/encomendas', [PaginaUserController::class, 'showEncomendas'])->name('user.encomendas');
         
+        Route::get('/encomendas', [EncomendasController::class, 'index'])->name('encomendas');
         Route::get('/encomendas/{encomenda}/pdf', [EncomendasController::class, 'generatePDF'])->name('encomendas.pdf');
         Route::get('/encomendas/{encomenda}/detalhes', [EncomendasController::class, 'show'])->name('encomendas.show');
         Route::get('/encomendas/{encomenda}/recibo', [EncomendasController::class, 'showRecibo'])->name('encomendas.recibo');

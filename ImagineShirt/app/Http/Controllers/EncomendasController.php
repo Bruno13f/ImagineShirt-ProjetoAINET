@@ -16,7 +16,43 @@ use Auth;
 
 class EncomendasController extends Controller
 {
-    public function generatePDF($encomenda): BinaryFileResponse
+
+    public function __construct()
+    {
+        $this->authorizeResource(User::class, 'encomenda');
+    }
+
+    public function index(): View{
+
+        $user = Auth::user();
+        
+        if($user->user_type == 'A'){
+
+            $encomendas = Encomendas::select('orders.id','orders.status','orders.date','orders.total_price','users.name','users.email')
+            ->leftJoin('customers','customer_id','=','customers.id')
+            ->leftJoin('users','customers.id','=','users.id')
+            ->orderByDesc('date')->paginate(15);
+        
+        }
+
+        if($user->user_type == 'E'){
+
+            $encomendas = Encomendas::select('orders.id','orders.status','orders.date','orders.total_price','users.name','users.email')
+            ->where('status','=','pending')->orwhere('status','=','paid')->join('customers','orders.customer_id','=','customers.id')
+            ->join('users','customers.id','=','users.id')
+            ->orderByDesc('date')->paginate(15);
+
+        }
+
+        if($user->user_type == 'C'){
+
+            $encomendas = Encomendas::where('customer_id', '=', $user->id)->orderByDesc('date')->paginate(15);
+        }
+
+        return view('encomendas.index', compact('encomendas','user'));
+    }
+
+    public function generatePDF(Encomendas $encomenda): BinaryFileResponse
     {
         $encomendaData = self::dadosRecibo($encomenda);
         $itemsData = self::itensEncomenda($encomenda);
@@ -38,7 +74,7 @@ class EncomendasController extends Controller
 
         $dompdf->render();
 
-        $filename = 'encomenda_' . $encomenda . '.pdf';
+        $filename = 'encomenda_' . $encomenda->id . '.pdf';
 
         $pdfContent = $dompdf->output();
 
@@ -48,40 +84,36 @@ class EncomendasController extends Controller
         return response()->download(storage_path('app/' . $pdfPath));
     }
 
-    private function dadosRecibo($encomenda){
+    private function dadosRecibo(Encomendas $encomenda){
         
         $encomendaData = Encomendas::select('orders.id','orders.status','orders.total_price','orders.nif','orders.payment_type','orders.payment_ref','orders.notes','users.name','orders.address','users.email','orders.date')
         ->leftJoin('customers','customer_id','=','customers.id')
         ->leftJoin('users','customers.id','=','users.id')
-        ->findOrFail($encomenda);
+        ->findOrFail($encomenda->id);
 
         return $encomendaData;
     }
 
-    private function itensEncomenda($encomenda){
+    private function itensEncomenda(Encomendas $encomenda){
 
         $itemsData = Encomendas::select('tshirt_images.name','order_items.qty','order_items.size','order_items.unit_price','order_items.sub_total','tshirt_images.customer_id','colors.code as code_color','colors.name as color_name','tshirt_images.image_url')
         ->leftJoin('order_items','orders.id','=','order_items.order_id')
         ->leftJoin('tshirt_images','order_items.tshirt_image_id','=','tshirt_images.id')
         ->leftJoin('colors','order_items.color_code','=','colors.code')
-        ->where('orders.id', $encomenda)
+        ->where('orders.id', $encomenda->id)
         ->get();
 
         return $itemsData;
     }
 
-    public function show($encomenda): View{
-
-        $encomendaData = self::dadosRecibo($encomenda);
-
-        $itemsData = self::itensEncomenda($encomenda);
+    public function show(Encomendas $encomenda): View{
 
         $descontos = self::getPrices();
 
-        return view('encomendas.show', compact('encomenda','encomendaData', 'itemsData', 'descontos'));
+        return view('encomendas.show', compact('encomenda', 'descontos'));
     }
 
-    public function showRecibo($encomenda): View{
+    public function showRecibo(Encomendas $encomenda): View{
 
         $encomendaData = self::dadosRecibo($encomenda);
         $itemsData = self::itensEncomenda($encomenda);
@@ -123,7 +155,7 @@ class EncomendasController extends Controller
 
         Alert::success('Estado da encomenda alterado com sucesso!');
 
-        return redirect()->route('user.encomendas', Auth::user());
+        return redirect()->route('encomendas');
     } 
 
 }

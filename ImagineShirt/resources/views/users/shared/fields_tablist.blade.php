@@ -7,7 +7,7 @@
 </a>
 @endcan
 
-<a class="list-group-item list-group-item-action" href="{{ route('user.encomendas', $user) }}">
+<a class="list-group-item list-group-item-action" href="{{ route('encomendas') }}">
     Encomendas
     <span class="badge badge-primary badge-pill badge-light">{{$numencomendas}}</span>
 </a>
