@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Illuminate\Http\RedirectResponse;
+use RealRashid\SweetAlert\Facades\Alert;
+use Auth;
 
 class EncomendasController extends Controller
 {
@@ -18,16 +20,9 @@ class EncomendasController extends Controller
     {
         $encomendaData = self::dadosRecibo($encomenda);
         $itemsData = self::itensEncomenda($encomenda);
-        $precocatalogo = Precos::select('unit_price_catalog')->first()->unit_price_catalog;
-        $precocatalogodisc = Precos::select('unit_price_catalog_discount')->first()->unit_price_catalog_discount;
-        $precoown = Precos::select('unit_price_own')->first()->unit_price_own;
-        $precoowndisc = Precos::select('unit_price_own_discount')->first()->unit_price_own_discount;
-        $quantdesconto = Precos::select('qty_discount')->first()->qty_discount;
+        $descontos = self::getPrices();
 
-        $descontocatalogo = $precocatalogo - $precocatalogodisc;
-        $descontoown = $precoown - $precoowndisc;
-
-        $html = view('encomendas.pdf', compact('encomendaData', 'itemsData','descontocatalogo','descontoown','quantdesconto'))->render();
+        $html = view('encomendas.pdf', compact('encomendaData', 'itemsData','descontos'))->render();
 
         $dompdf = new Dompdf();
 
@@ -112,13 +107,21 @@ class EncomendasController extends Controller
 
      public function changeStatus(Request $request, Encomendas $encomenda): RedirectResponse {
 
-        dd($request);
-
         switch($request->status){
-            
+            case 'Pagar':
+                $status = 'paid';
+                break;
+            case 'Fechar':
+                $status = 'closed';
+                break;
+            default:
+                $status = $request->status;
         }
 
-        $encomenda->status;
+        $encomenda->status = $status;
+        $encomenda->save();
+
+        Alert::success('Estado da encomenda alterado com sucesso!');
 
         return redirect()->route('user.encomendas', Auth::user());
     } 

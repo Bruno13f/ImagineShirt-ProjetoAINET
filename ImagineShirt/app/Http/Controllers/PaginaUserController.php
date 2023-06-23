@@ -161,7 +161,8 @@ class PaginaUserController extends Controller
 
         if($user->user_type == 'E'){
 
-            $encomendas = Encomendas::where('status','=','pending')->orwhere('status','=','paid')->join('customers','orders.customer_id','=','customers.id')
+            $encomendas = Encomendas::select('orders.id','orders.status','orders.date','orders.total_price','users.name','users.email')
+            ->where('status','=','pending')->orwhere('status','=','paid')->join('customers','orders.customer_id','=','customers.id')
             ->join('users','customers.id','=','users.id')
             ->orderByDesc('date')->paginate(15);
 
