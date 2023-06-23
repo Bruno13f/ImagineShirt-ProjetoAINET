@@ -18,7 +18,9 @@
                 <h5 class="text-muted mb-0 font-weight-bold">Obrigado pela sua encomenda, <span style="color: #e63334;">{{ $encomendaData->name }}</span>!</h5>
               </div>
               <div class="col md-4 d-flex justify-content-end">
+                @if($encomendaData->status != 'pending')
                 <a href="{{ route('encomendas.recibo', $encomenda) }}"><button type="button" class="btn rounded-pill" style="background-color: #e63334;"><span style="color: white;">Recibo</span></button></a>
+                @endif  
               </div>
             </div>
           </div> 

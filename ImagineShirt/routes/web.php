@@ -72,7 +72,6 @@ Route::middleware('auth')->group(function (){
 
         Route::get('tshirt-images-user/{nome_tshirt}-{user_id}/{image_url}',[TShirtsController::class, 'imagemCliente'])->name('imagem_user');
     });
-    
 });
 
 Route::middleware('adminOrCustomer')->group(function (){

@@ -118,8 +118,6 @@ class EncomendasController extends Controller
                 $status = $request->status;
         }
 
-        dd($status);
-
         $encomenda->status = $status;
         $encomenda->save();
 
