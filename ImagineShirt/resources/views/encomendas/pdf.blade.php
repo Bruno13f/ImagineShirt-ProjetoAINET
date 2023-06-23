@@ -91,13 +91,13 @@
 							<td class="right-align">{{ $item->sub_total}}€</td>
                         </tr>
 
-					@if (!is_null($item->customer_id) && $item->qty >= $quantdesconto)
+					@if (!is_null($item->customer_id) && $item->qty >= $descontos['quantdesconto'])
                         @php
                             $customer_tshirt= $customer_tshirt + $item->qty;
                         @endphp
                     @endif
 
-                    @if (is_null($item->customer_id) && $item->qty >= $quantdesconto)
+                    @if (is_null($item->customer_id) && $item->qty >= $descontos['quantdesconto'])
                         @php
                             $catalogo_tshirt = $catalogo_tshirt + $item->qty;
                         @endphp
@@ -109,8 +109,8 @@
 						<td></td>
 						<td></td>
 						<td class="right-align"><span>
-								Total s/ desconto: {{$encomendaData->total_price + (($catalogo_tshirt * $descontocatalogo)+($customer_tshirt * $descontoown))}}€
-							<br>Desconto: {{($catalogo_tshirt * $descontocatalogo)+($customer_tshirt * $descontoown) }} €
+								Total s/ desconto: {{$encomendaData->total_price + (($catalogo_tshirt * $descontos['descontocatalogo'])+($customer_tshirt * $descontos['descontoown']))}}€
+							<br>Desconto: {{($catalogo_tshirt * $descontos['descontocatalogo'])+($customer_tshirt * $descontos['descontoown']) }} €
 							<br>Total: {{ $encomendaData->total_price }}€</span>
 						</td>
                 	</tr>

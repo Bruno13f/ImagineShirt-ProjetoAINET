@@ -12,3 +12,4 @@ import './mixitup.min';
 import './owl.carousel.min';
 import './main';
 import './alerts';
+import './chartjs';

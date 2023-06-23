@@ -204,10 +204,10 @@ class PaginaUserController extends Controller
         return view('clientes.minhasTshirts', compact('user', 't_shirts'));
     }
 
-    public function updateStatusBlock (User $user): RedirectResponse{
+    public function updateStatusBlock (Request $request, User $user): RedirectResponse{
 
         $blocked = $user->blocked;
-        $user->blocked = $user->blocked ? '0' : '1';
+        $user->blocked = $request->blocked;
         $user->save();
 
         $tipoUser = self::getTipoUser($user);

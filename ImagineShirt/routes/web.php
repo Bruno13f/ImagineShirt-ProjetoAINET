@@ -49,12 +49,13 @@ Route::middleware('admin')->group(function (){
         Route::get('/user/{user}/gerirCategorias', [PaginaUserController::class, 'showCategorias'])->name('user.gerirCategorias');
         Route::get('/user/{user}/gerirCores', [PaginaUserController::class, 'showCores'])->name('user.gerirCores');
         
-        Route::put('/user/{user}/blocked', [PaginaUserController::class, 'updateStatusBlock'])->name('user.updateStatusBlock');
+        Route::patch('/user/{user}/blocked', [PaginaUserController::class, 'updateStatusBlock'])->name('user.updateStatusBlock');
         Route::delete('/user/{user}/delete', [PaginaUserController::class, 'destroy_user'])->name('user.destroy');
         Route::get('/user/create', [PaginaUserController::class, 'create'])->name('user.create');
         Route::post('/user/store', [PaginaUserController::class, 'store'])->name('user.store');
-
         Route::get('/user/{user}/estatisticas', [PaginaUserController::class, 'estatisticas'])->name('user.estatisticas');
+
+        
     });
 });
 
@@ -63,9 +64,12 @@ Route::middleware('auth')->group(function (){
     Route::middleware('verified')->group(function (){
         Route::get('/user/{user}', [PaginaUserController::class, 'index'])->name('user');
         Route::get('/user/{user}/encomendas', [PaginaUserController::class, 'showEncomendas'])->name('user.encomendas');
+        
         Route::get('/encomendas/{encomenda}/pdf', [EncomendasController::class, 'generatePDF'])->name('encomendas.pdf');
         Route::get('/encomendas/{encomenda}/detalhes', [EncomendasController::class, 'show'])->name('encomendas.show');
         Route::get('/encomendas/{encomenda}/recibo', [EncomendasController::class, 'showRecibo'])->name('encomendas.recibo');
+        Route::patch('/encomendas/{encomenda}/status', [EncomendasController::class, 'changeStatus'])->name('encomendas.changeStatus');
+
         Route::get('tshirt-images-user/{nome_tshirt}-{user_id}/{image_url}',[TShirtsController::class, 'imagemCliente'])->name('imagem_user');
     });
     

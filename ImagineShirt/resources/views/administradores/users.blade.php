@@ -71,7 +71,8 @@
                                         <form id="form_block_user_{{$utilizador->id}}" novalidate class="needs-validation" method="POST"
                                         action="{{ route('user.updateStatusBlock', $utilizador) }}" enctype="multipart/form-data">
                                         @csrf
-                                        @method('PUT')
+                                        @method('PATCH')
+                                            <input type="hidden" name="blocked" value="{{ $utilizador->blocked ? '0' : '1'}}">
                                             <button type="submit" name="ok" form="form_block_user_{{$utilizador->id}}" class="btn btn-warning rounded-pill mt-2"><span>
                                                 {{ $utilizador->blocked ? 'Desbloquear' : 'Bloquear'}}</span></button>
                                         </form>

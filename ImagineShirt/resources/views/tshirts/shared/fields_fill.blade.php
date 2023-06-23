@@ -78,7 +78,7 @@
                 </div>
                 </form> 
                 <div class="col-md-6 justify-content-center" style = "display:flex">
-                    <a href="{{ route('t-shirts') }}"> 
+                    <a href="{{ Auth::user()->user_type == 'C' ? route('user.gerirMinhasTShirts', Auth::user()) : route('t-shirts') }}"> 
                         <button type="submit" class="btn btn-primary" style="background-color:rgba(230, 51, 52, 0.8); border-color:rgba(230, 51, 52, 0.8)">Cancelar</button>   
                     </a>
                 </div> 

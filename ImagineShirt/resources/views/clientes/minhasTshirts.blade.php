@@ -67,7 +67,7 @@
                             <tbody>
                                 @foreach($t_shirts as $tshirt)
                                     <tr>
-                                        <td><img src="{{ route('imagem_user', ['image_url' => $tshirt->image_url, 'user_id' => $tshirt->customer_id, 'nome_tshirt' => $tshirt->name]) }}" alt="{{ $tshirt->name }}" width="128" height="128"></td>
+                                        <td><img class="tshirtsGerir" src="{{ route('imagem_user', ['image_url' => $tshirt->image_url, 'user_id' => $tshirt->customer_id, 'nome_tshirt' => $tshirt->name]) }}" alt="{{ $tshirt->name }}" ></td>
                                         <td><span class="font-weight-bold text-uppercase">{{$tshirt->name}}</span></td>
                                         <td>{{$tshirt->description}}</td>
                                         <td>{{$tshirt->created_at}}</td>

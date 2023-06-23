@@ -10,6 +10,7 @@ use App\Models\Precos;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Illuminate\Http\RedirectResponse;
 
 class EncomendasController extends Controller
 {
@@ -80,16 +81,9 @@ class EncomendasController extends Controller
 
         $itemsData = self::itensEncomenda($encomenda);
 
-        $precocatalogo = Precos::select('unit_price_catalog')->first()->unit_price_catalog;
-        $precocatalogodisc = Precos::select('unit_price_catalog_discount')->first()->unit_price_catalog_discount;
-        $precoown = Precos::select('unit_price_own')->first()->unit_price_own;
-        $precoowndisc = Precos::select('unit_price_own_discount')->first()->unit_price_own_discount;
-        $quantdesconto = Precos::select('qty_discount')->first()->qty_discount;
+        $descontos = self::getPrices();
 
-        $descontocatalogo = $precocatalogo - $precocatalogodisc;
-        $descontoown = $precoown - $precoowndisc;
-
-        return view('encomendas.show', compact('encomenda','encomendaData','itemsData','descontocatalogo','descontoown','quantdesconto'));
+        return view('encomendas.show', compact('encomenda','encomendaData', 'itemsData', 'descontos'));
     }
 
     public function showRecibo($encomenda): View{
@@ -97,6 +91,13 @@ class EncomendasController extends Controller
         $encomendaData = self::dadosRecibo($encomenda);
         $itemsData = self::itensEncomenda($encomenda);
 
+        $descontos = self::getPrices();
+
+        return view('encomendas.pdf', compact('encomendaData', 'itemsData','descontos'));
+    }
+
+    private function getPrices (){
+
         $precocatalogo = Precos::select('unit_price_catalog')->first()->unit_price_catalog;
         $precocatalogodisc = Precos::select('unit_price_catalog_discount')->first()->unit_price_catalog_discount;
         $precoown = Precos::select('unit_price_own')->first()->unit_price_own;
@@ -106,7 +107,20 @@ class EncomendasController extends Controller
         $descontocatalogo = $precocatalogo - $precocatalogodisc;
         $descontoown = $precoown - $precoowndisc;
 
-        return view('encomendas.pdf', compact('encomendaData', 'itemsData','descontocatalogo','descontoown','quantdesconto'));
+        return compact('descontocatalogo','descontoown','quantdesconto');
     }
+
+     public function changeStatus(Request $request, Encomendas $encomenda): RedirectResponse {
+
+        dd($request);
+
+        switch($request->status){
+            
+        }
+
+        $encomenda->status;
+
+        return redirect()->route('user.encomendas', Auth::user());
+    } 
 
 }

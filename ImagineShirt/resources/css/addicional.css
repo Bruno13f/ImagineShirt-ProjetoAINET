@@ -66,3 +66,8 @@ canvas-container {
     max-height: 300px;
     overflow-y: scroll !important;
 }
+
+.tshirtsGerir{
+    max-width: 128px;
+    max-height: 128px;
+}

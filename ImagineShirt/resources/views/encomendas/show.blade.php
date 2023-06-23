@@ -58,13 +58,13 @@
                     </div>
                     </div>
                 </div>
-                    @if (!is_null($item->customer_id) && $item->qty >= $quantdesconto)
+                    @if (!is_null($item->customer_id) && $item->qty >= $descontos['quantdesconto'])
                         @php
                             $customer_tshirt= $customer_tshirt + $item->qty;
                         @endphp
                     @endif
 
-                    @if (is_null($item->customer_id) && $item->qty >= $quantdesconto)
+                    @if (is_null($item->customer_id) && $item->qty >= $descontos['quantdesconto'])
                         @php
                             $catalogo_tshirt = $catalogo_tshirt + $item->qty;
                         @endphp
@@ -72,11 +72,11 @@
                 @endforeach
                 <div class="d-flex justify-content-between pt-2">
                     <p class="fw-bold mb-0 h6">Detalhes da encomenda</p>
-                    <p class="text-muted mb-0"><span class="fw-bold me-1">Total sem desconto</span>{{$encomendaData->total_price + (($catalogo_tshirt * $descontocatalogo)+($customer_tshirt * $descontoown))}}€</p>
+                    <p class="text-muted mb-0"><span class="fw-bold me-1">Total sem desconto</span>{{$encomendaData->total_price + (($catalogo_tshirt * $descontos['descontocatalogo'])+($customer_tshirt * $descontos['descontoown']))}}€</p>
                 </div>
                 <div class="d-flex justify-content-between pt-2">
                     <p class="text-muted mb-0"><span class="fw-bold me-1">NIF cliente:</span>{{ $encomendaData->nif }}</p>
-                    <p class="text-muted mb-0"><span class="fw-bold me-1">Desconto:</span>{{($catalogo_tshirt * $descontocatalogo)+($customer_tshirt * $descontoown) }} €</p>
+                    <p class="text-muted mb-0"><span class="fw-bold me-1">Desconto:</span>{{($catalogo_tshirt * $descontos['descontocatalogo'])+($customer_tshirt * $descontos['descontoown']) }} €</p>
                 </div>
                 <div class="d-flex justify-content-between pt-2">
                     <p class="text-muted mb-0"><span class="fw-bold me-1">Data:</span> {{ $encomendaData->date }}</p>
