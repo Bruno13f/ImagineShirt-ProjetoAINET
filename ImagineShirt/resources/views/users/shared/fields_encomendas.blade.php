@@ -121,7 +121,13 @@
                                             </td>
                                             <td>
                                                 @if ($estado == 'PENDENTE' || $estado == 'PAGO')
-                                                    <button type="button" class="btn btn-{{$btnAlterar}} rounded-pill"><span>{{$alterarEstado}}</span></button>
+                                                <form id="form_change_status_{{$encomenda->id}}" novalidate class="needs-validation" method="POST"
+                                                action="{{ route('encomendas.changeStatus', $encomenda) }}" enctype="multipart/form-data">
+                                                @csrf
+                                                @method('PATCH')
+                                                    <input type="hidden" name="status" value="{{$alterarEstado}}">
+                                                    <button type="submit" name="ok" form="form_change_status_{{$encomenda->id}}" class="btn btn-{{$btnAlterar}} rounded-pill"><span>{{$alterarEstado}}</span></button>
+                                                </form>
                                                 @endif
                                             </td>
                                         @endcan
