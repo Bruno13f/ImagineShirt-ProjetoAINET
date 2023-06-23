@@ -17,6 +17,14 @@ class PrecosController extends Controller
         $this->authorizeResource(User::class, 'precos');
     }
 
+    public function index(): View{
+
+        $user = Auth::user();
+        $precos = Precos::get()->toArray();
+        
+        return view('precos.index', compact('precos','user'));
+    }
+
     public function edit(Precos $precos): View{
 
         $user = Auth::user();
@@ -35,6 +43,6 @@ class PrecosController extends Controller
         $precos->save();
         
         Alert::success('Editado com sucesso!', 'Os precos foram alterados!');
-        return redirect()->route('user', Auth::user());
+        return redirect()->route('precos');
     }
 }

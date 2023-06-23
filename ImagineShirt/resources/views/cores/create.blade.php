@@ -3,7 +3,7 @@
                                         'active3' => '',
                                         'active4' => '']]) 
 
-@section('titulo',' | Editar Categoria')
+@section('titulo',' | Editar Cor')
 
 @section('main')
 
@@ -17,8 +17,8 @@
                     <div class="breadcrumb__links">
                         <a href="{{ route('root') }}">Página Inicial</a>
                         <a href="{{ route('user', $user) }}">Perfil</a>
-                        <a href="{{ route('categorias') }}">Gerir Categorias</a>
-                        <span style = "font-weight: bold;">Editar Categoria</span>
+                        <a href="{{ route('cores') }}">Gerir Cores</a>
+                        <span style = "font-weight: bold;">Editar Cor</span>
                     </div>
                 </div>
             </div>
@@ -26,6 +26,6 @@
     </div>
 </section>
 
-    @include('categorias.shared.fields_fill', ['allowCreate' => false])  
+    @include('cores.shared.fields_fill', ['allowCreate' => true])
 
 @endsection

@@ -37,14 +37,14 @@
                         <table class="table table-hover table-bordered table-light">
                             <tbody>
                                 <div class="d-flex justify-content-center mb-4">
-                                    <a href="{{route('categoria.create')}}"><button type="button" class="btn btn-success rounded-pill"><span>Criar Categoria</span></button></a></a>
+                                    <a href="{{route('categorias.create')}}"><button type="button" class="btn btn-success rounded-pill"><span>Criar Categoria</span></button></a></a>
                                 </div>
                                 @foreach($categorias as $categoria)
                                     <tr>
                                         <td><span class="fs-5">{{$categoria->name}}</span></td>
                                         <td>
-                                            <a href="{{route('categoria.edit', $categoria)}}"><button type="button" class="btn btn-info rounded-pill"><span>Editar</span></button></a></a>
-                                            <form id="form_delete_category_{{$categoria->id}}" action="{{ route('categoria.destroy', $categoria) }}" method="POST">
+                                            <a href="{{route('categorias.edit', $categoria)}}"><button type="button" class="btn btn-info rounded-pill"><span>Editar</span></button></a></a>
+                                            <form id="form_delete_category_{{$categoria->id}}" action="{{ route('categorias.destroy', $categoria) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                                 <button type="submit" class="btn btn-danger rounded-pill mt-2"><span>Eliminar</span></button></a></a>

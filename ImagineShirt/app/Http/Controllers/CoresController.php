@@ -9,12 +9,42 @@ use Illuminate\Http\RedirectResponse;
 use App\Models\Cores;
 use App\Http\Requests\CorRequest;
 use RealRashid\SweetAlert\Facades\Alert;
+use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Color;
 
 class CoresController extends Controller
 {
     public function __construct()
     {
         $this->authorizeResource(User::class, 'cor');
+    }
+
+    public function index(): View{
+
+        $cores = Cores::whereNull('deleted_at')->orderBy('name')->paginate(15);
+        $user = Auth::user();
+
+        return view('cores.index', compact('cores', 'user'));
+    }
+
+    public function create (): View{
+        
+        $cor = new Cores();
+        $user = Auth::user();
+
+        return view('cores.create', compact('cor', 'user'));
+    }
+
+    public function store(CorRequest $request): RedirectResponse{
+
+        $novaCor = new Cores();
+        $novaCor->name = $request->name;
+        $novaCor->code = $request->code;
+        $novaCor->save();
+
+        Alert::success('Criada com sucesso!', 'A cor foi criada!');
+        return redirect()->route('cores');
     }
 
     public function edit(Cores $cor): View{
@@ -28,15 +58,13 @@ class CoresController extends Controller
 
         if ($request->name == $cor->name && $request->code == $cor->code){
             Alert::info('Cor não foi alterada!', 'Parâmetros da categoria são os mesmos!');
-            return redirect()->route('user.gerirCores', Auth::user());
+            return redirect()->route('cores');
         }
 
-        // NAO FUNCIONA - PERGUNTAR SE E ASSIM - REQUEST FEITO
+        
         if (count($cor->itensEncomenda) != 0){
-            foreach($cor->itensEncomenda as $itemEncomenda){
-                $itemEncomenda->color_code = $request->code;
-                $itemEncomenda->save();
-            }
+            Alert::error('Cor não pode ser alterada!', 'Encomendas feitas com camisolas desta cor!');
+            return redirect()->route('cores');
         }
 
         $cor->name = $request->name;
@@ -44,15 +72,21 @@ class CoresController extends Controller
         $cor->save();
 
         Alert::success('Editada com sucesso!', 'A cor foi alterado!');
-        return redirect()->route('user.gerirCores', Auth::user());
+        return redirect()->route('cores');
     }
 
     public function destroy(Cores $cor): RedirectResponse{
 
         // soft delete - continua-se a poder aceder
-        $cor->delete();
+
+        if (count($cor->itensEncomenda) != 0){
+            $cor->delete();
+        }else{
+            $cor->forceDelete();
+        }
+        
 
         Alert::success('Eliminada com sucesso!', 'A cor foi eliminada!');
-        return redirect()->route('user.gerirCores', Auth::user());
+        return redirect()->route('cores');
     }
 }

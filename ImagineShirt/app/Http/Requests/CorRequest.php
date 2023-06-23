@@ -23,20 +23,31 @@ class CorRequest extends FormRequest
      */
     public function rules(): array
     {
+
         $cor = $this->route('cor');
 
+        $isCreating = $this->method() == 'POST';
+
+        $ruleCode = [
+            'required',
+            'regex:/^([a-fA-F0-9]{6}|[a-fA-F0-9]{3})|([a-zA-Z]+)$/i',
+            'max:15',
+        ];
+
+        if ($isCreating){
+            $ruleCode[] = Rule::unique('colors', 'code');
+        }else{
+            $rulesCode = Rule::unique('colors', 'code')->ignore($cor->code, 'code');
+        }
+
         return [
-            'code' => [
-                'required',
-                'regex:/^([a-f0-9]{6}|[a-f0-9]{3})|([a-zA-Z]+)$/i',
-                'max:15',
-                Rule::unique('colors', 'code')->ignore($cor->code, 'code')
-            ],
+            'code' => $ruleCode,
             'name' => [
                 'required',
                 'string',
                 'max:30',
             ],
+            // 'codeValid' => 'required',
         ];
     }
 
@@ -44,7 +55,7 @@ class CorRequest extends FormRequest
     {
         return [
             'code.required' => 'O código é obrigatório',
-            'code.regex' => 'Código inválido - Tem de ser código hexadecimal ou nome válido de cor',
+            'code.regex' => 'Código inválido - Tem de ser código hexadecimal',
             'code.max' => 'O código não pode ter mais de 15 caracteres',
             'code.unique' => 'O código tem de ser único',
             'name.required' => 'O nome é obrigatório',

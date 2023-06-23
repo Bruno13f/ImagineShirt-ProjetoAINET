@@ -41,14 +41,13 @@ class PaginaUserController extends Controller
 
             $numCategorias = Categorias::whereNull('deleted_at')->count();
 
-            $precos = Precos::get()->toArray();
-
             $numCores = Cores::whereNull('deleted_at')->count();
             
-            return view('administradores.index',compact('user','tipoUser','numencomendas','numutilizadores','numCategorias','precos','numCores'));
+            return view('administradores.index',compact('user','tipoUser','numencomendas','numutilizadores','numCategorias','numCores'));
         }
 
         if($user->user_type == 'E'){
+            
             $tipoUser = 'Funcionário';
 
             $numencomendas = Encomendas::where('status','=','pending')->orwhere('status','=','paid')->count();
@@ -57,6 +56,7 @@ class PaginaUserController extends Controller
         }
 
         if($user->user_type == 'C'){
+
             $tipoUser = 'Cliente';
 
             $numencomendas = Encomendas::where('customer_id', '=', $user->id)->count();
@@ -183,20 +183,6 @@ class PaginaUserController extends Controller
         $utilizadores = User::whereNull('deleted_at')->orderByDesc('user_type')->paginate(15);
 
         return view('administradores.users', compact('user','utilizadores'));
-    }
-
-    public function showCategorias(User $user): View{
-
-        $categorias = Categorias::whereNull('deleted_at')->orderBy('name')->paginate(15);
-
-        return view('administradores.categorias', compact('user','categorias'));
-    }
-
-    public function showCores(User $user): View{
-        
-        $cores = Cores::whereNull('deleted_at')->orderBy('name')->paginate(15);
-
-        return view('administradores.cores', compact('user','cores'));
     }
 
     public function showMinhasTShirts(User $user): View{

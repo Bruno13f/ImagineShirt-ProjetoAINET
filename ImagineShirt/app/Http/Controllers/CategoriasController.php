@@ -17,6 +17,14 @@ class CategoriasController extends Controller
         $this->authorizeResource(User::class, 'categoria');
     }
 
+    public function index(): View{
+
+        $categorias = Categorias::whereNull('deleted_at')->orderBy('name')->paginate(15);
+        $user = Auth::user();
+
+        return view('categorias.index', compact('categorias','user'));
+    }
+
     public function create(): View{
         
         $user = Auth::user();
@@ -33,7 +41,7 @@ class CategoriasController extends Controller
         $novaCategoria->save();
 
         Alert::success('Criada com sucesso!', 'A categoria '.$request->name.' foi criada!');
-        return redirect()->route('user.gerirCategorias', Auth::user());
+        return redirect()->route('categorias');
     }
 
     public function edit(Categorias $categoria): View{
@@ -47,15 +55,14 @@ class CategoriasController extends Controller
         
         if ($request->name == $categoria->name){
             Alert::info('Categoria não foi alterada!', 'O nome da categoria é o mesmo!');
-            return redirect()->route('user.gerirCategorias', Auth::user());
+            return redirect()->route('categorias');
         }
 
         $categoria->name = $request->name;
         $categoria->save();
 
         Alert::success('Editada com sucesso!', 'O nome da categoria foi alterado!');
-        return redirect()->route('user.gerirCategorias', Auth::user());
-        
+        return redirect()->route('categorias');
     }
 
     public function destroy(Categorias $categoria): RedirectResponse{
@@ -64,15 +71,12 @@ class CategoriasController extends Controller
 
         // colocar campo null todas t-shirts com o mesmo id
         if (count($categoria->tshirts) != 0){
-            foreach($categoria->tshirts as $tshirt){
-                $tshirt->category_id = null;
-                $tshirt->save();
-            }
+            $categoria->delete();
+        }else{
+            $categoroia->forceDelete();
         }
 
-        $categoria->delete();
-
         Alert::success('Eliminada com sucesso!', 'A categoria '.$nome.' foi eliminada!');
-        return redirect()->route('user.gerirCategorias', Auth::user());
+        return redirect()->route('categorias');
     }
 }

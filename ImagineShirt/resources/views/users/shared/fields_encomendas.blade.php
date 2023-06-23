@@ -23,7 +23,58 @@
     </div>
 </section>
 
-<div class="row mb-5 mt-5 justify-content-md-center" >
+<div class="row d-flex">
+    <div class="col-1"></div>
+    <div class="col-3 mt-5 mb-0 align-middle">
+        <div class="shop__sidebar__search">
+            <form method="GET" id="pesquisa-form">
+                <input id = "pesquisa" type="text" maxlength="50" name="pesquisa" value = "" placeholder="Pesquisar...">
+                <button type="submit"><span class="icon_search"></span></button>
+            </form>
+        </div>
+    </div>
+    <div class="col-4 mt-5 mb-0 align-middle">
+        <div class="shop__product__option">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="shop__product__option__left">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="shop__product__option__right">
+                        <p>Selecionar: </p>
+                        <select id="selecionar" name="selecionar">
+                            <option value="">Todas</option>
+                            <option value="">Pendente</option>
+                            <option value="">Paga</option>
+                            <option value="">Fechada</option>
+                            <option value="">Anulada</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-3 mt-5 mb-0 align-middle">
+        <div class="shop__product__option">
+            <div class="row d-flex justify-content-end">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="shop__product__option__right">
+                        <p>Ordernar: </p>
+                        <select id="ordenar" name="ordenar">
+                            <option value="">Mais Recente</option>
+                            <option value="">Mais Antigo</option>
+                            <option value="">Paga</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-1"></div>
+</div>
+
+<div class="row mb-5 mt-2 justify-content-md-center" >
     <div class="col-10">
         <div class="tab-content">
             <div class="tab-pane fade show active" id="encomendas" role="tabpanel">

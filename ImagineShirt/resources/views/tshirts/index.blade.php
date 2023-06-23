@@ -73,7 +73,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card">
+                                <!-- <div class="card">
                                     <div class="card-heading">
                                         <a data-toggle="collapse" data-target="#collapseThree">Filtrar Preço</a>
                                     </div>
@@ -87,7 +87,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 @can('createAdmin', App\Models\TShirts::class)
                                 <div class="row">
                                     <div class="col d-flex justify-content-center">

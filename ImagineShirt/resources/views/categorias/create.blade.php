@@ -17,7 +17,7 @@
                     <div class="breadcrumb__links">
                         <a href="{{ route('root') }}">Página Inicial</a>
                         <a href="{{ route('user', $user) }}">Perfil</a>
-                        <a href="{{ route('user.gerirCategorias', $user) }}">Gerir Categorias</a>
+                        <a href="{{ route('categorias') }}">Gerir Categorias</a>
                         <span style = "font-weight: bold;">Criar Categoria</span>
                     </div>
                 </div>

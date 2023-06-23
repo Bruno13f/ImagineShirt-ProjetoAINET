@@ -26,6 +26,9 @@
     <!-- Breadcrumb Section End -->
 <div class="row mb-5 mt-5 justify-content-md-center" >
     <div class="col-6">
+        <div class="d-flex justify-content-center mb-4">
+            <a href="{{route('cores.create')}}"><button type="button" class="btn btn-success rounded-pill btn-lg"><span>Criar Cor</span></button></a></a>
+        </div>
         <div class="tab-content">
             <div class="tab-pane fade show active" id="cores" role="tabpanel">
                 <div class="card">
@@ -49,10 +52,10 @@
                                     <td>
                                         <button class="btn rounded-circle" style="background-color: #{{$cor->code}}; width: 40px; height: 40px"></button>
                                     <td>
-                                        <a href="{{ route('cor.edit', $cor) }}">
+                                        <a href="{{ route('cores.edit', $cor) }}">
                                         <button type="button" class="btn btn-info rounded-pill">Editar</button>
                                         </a>
-                                        <form id="form_delete_cor_{{$cor->code}}" action="{{ route('cor.destroy', $cor) }}" method="POST">
+                                        <form id="form_delete_cor_{{$cor->code}}" action="{{ route('cores.destroy', $cor) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                                 <button type="submit" class="btn btn-danger rounded-pill mt-2"><span>Eliminar</span></button></a></a>

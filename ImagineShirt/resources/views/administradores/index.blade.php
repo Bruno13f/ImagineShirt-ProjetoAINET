@@ -85,47 +85,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="precos" role="tabpanel">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title mb-0">Preços Catálogo</h5>
-                            </div>
-                            <div class="card-body">
-                                <table class="table table-hover table-bordered table-light">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>Preço catálogo</th>
-                                            <th>Preço cliente</th>
-                                            <th>Preço desconto catálogo</th>
-                                            <th>Preço desconto cliente</th>
-                                            <th>Quantidade necessária para desconto</th>
-                                            <th>Ações</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if(count($precos) !== 0)
-                                            <tr>
-                                                <td>{{$precos[0]['unit_price_catalog']}}</td>
-                                                <td>{{$precos[0]['unit_price_own']}}</td>
-                                                <td>{{$precos[0]['unit_price_catalog_discount']}}</td>
-                                                <td>{{$precos[0]['unit_price_own_discount']}}</td>
-                                                <td>{{$precos[0]['qty_discount']}}</td>
-                                                <td>
-                                                    <a href="{{ route('precos.edit', $precos[0]['id']) }}">
-                                                        <button type="button" class="btn btn-info rounded-pill">Editar Preços</button>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        @else
-                                            <tr>
-                                                <td colspan="6">Não há preços definidos</td>
-                                            </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

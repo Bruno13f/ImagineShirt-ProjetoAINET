@@ -49,8 +49,6 @@ Route::middleware('admin')->group(function (){
     // rotas para admin - dashboard etc
     Route::middleware('verified')->group(function (){
         Route::get('/user/{user}/gerirUsers', [PaginaUserController::class, 'showUsers'])->name('user.gerirUsers');
-        Route::get('/user/{user}/gerirCategorias', [PaginaUserController::class, 'showCategorias'])->name('user.gerirCategorias');
-        Route::get('/user/{user}/gerirCores', [PaginaUserController::class, 'showCores'])->name('user.gerirCores');
         
         Route::patch('/user/{user}/blocked', [PaginaUserController::class, 'updateStatusBlock'])->name('user.updateStatusBlock');
         Route::delete('/user/{user}/delete', [PaginaUserController::class, 'destroy_user'])->name('user.destroy');
@@ -58,16 +56,21 @@ Route::middleware('admin')->group(function (){
         Route::post('/user/store', [PaginaUserController::class, 'store'])->name('user.store');
         Route::get('/user/{user}/estatisticas', [PaginaUserController::class, 'estatisticas'])->name('user.estatisticas');
 
-        Route::get('/categoria/create', [CategoriasController::class, 'create'])->name('categoria.create');
-        Route::post('/categoria/store', [CategoriasController::class, 'store'])->name('categoria.store');
-        Route::get('/categoria/{categoria}/edit', [CategoriasController::class, 'edit'])->name('categoria.edit');
-        Route::put('/categoria/{categoria}/update', [CategoriasController::class, 'update'])->name('categoria.update');
-        Route::delete('/categoria/{categoria}/delete', [CategoriasController::class, 'destroy'])->name('categoria.destroy');
+        Route::get('/categorias', [CategoriasController::class, 'index'])->name('categorias');
+        Route::get('/categorias/create', [CategoriasController::class, 'create'])->name('categorias.create');
+        Route::post('/categorias/store', [CategoriasController::class, 'store'])->name('categorias.store');
+        Route::get('/categorias/{categoria}/edit', [CategoriasController::class, 'edit'])->name('categorias.edit');
+        Route::put('/categorias/{categoria}/update', [CategoriasController::class, 'update'])->name('categorias.update');
+        Route::delete('/categorias/{categoria}/delete', [CategoriasController::class, 'destroy'])->name('categorias.destroy');
 
-        Route::get('/cor/{cor}/edit', [CoresController::class, 'edit'])->name('cor.edit');
-        Route::put('/cor/{cor}/update', [CoresController::class, 'update'])->name('cor.update');
-        Route::delete('/cor/{cor}/delete', [CoresController::class, 'destroy'])->name('cor.destroy');
+        Route::get('/cores', [CoresController::class, 'index'])->name('cores');
+        Route::get('/cores/create', [CoresController::class, 'create'])->name('cores.create');
+        Route::post('/cores/store', [CoresController::class, 'store'])->name('cores.store');
+        Route::get('/cores/{cor}/edit', [CoresController::class, 'edit'])->name('cores.edit');
+        Route::put('/cores/{cor}/update', [CoresController::class, 'update'])->name('cores.update');
+        Route::delete('/cores/{cor}/delete', [CoresController::class, 'destroy'])->name('cores.destroy');
 
+        Route::get('/precos', [PrecosController::class, 'index'])->name('precos');
         Route::get('/precos/{precos}/edit', [PrecosController::class, 'edit'])->name('precos.edit');
         Route::put('/precos/{precos}/update', [PrecosController::class, 'update'])->name('precos.update');
         
