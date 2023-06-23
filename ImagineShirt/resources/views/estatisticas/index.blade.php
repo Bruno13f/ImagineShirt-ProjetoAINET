@@ -112,9 +112,10 @@
         </div>
 
         <div class="col-xl-6 col-md-12 mb-4">
-            <div class="card border-warning shadow h-50 py-2">
+            <div class="card border-warning shadow h-30 py-2">
                 <div class="card-body">
-                    <h4 class="card-title d-flex justify-content-center mb-4 text-">Ganhos Último Mês</h5>
+                    <h4 class="card-title d-flex justify-content-center mb-4 text-warning">Encomendas Realizadas no último Ano</h5>
+                    <canvas id="encomendasAno"></canvas>
                 </div>
             </div>
         </div>
@@ -289,6 +290,68 @@ document.addEventListener('DOMContentLoaded', function() {
                         });
                         var currentValue = dataset.data[tooltipItem.index];;
                         return data.labels[tooltipItem.index] + ': ' + currentValue + '%';
+                    }
+                }
+            }
+        }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    var encomendasData = {!! json_encode($encomendasData) !!};
+    var months = encomendasData.map(data => data.month);
+    var numencomendas = encomendasData.map(data => data.numencomendas);
+
+    var ctx2 = document.getElementById('encomendasAno').getContext('2d');
+
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: months,
+            datasets: [{
+                label: 'Numero de encomendas no último ano',
+                data: numencomendas,
+                backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                borderColor: 'rgba(0, 123, 255, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        callback: function(value, index, values) {
+                            return value ;
+                        }
+                    },
+                    gridLines: {
+                        display: false
+                    }
+                }],
+                xAxes: [{
+                    gridLines: {
+                        display: false
+                    }
+                }]
+            },
+            legend: {
+                display: false
+            },
+            layout: {
+                padding: {
+                    top: 10,
+                    bottom: 10,
+                    left: 10,
+                    right: 10
+                }
+            },
+            tooltips: {
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        var value = tooltipItem.yLabel;
+                        return value;
                     }
                 }
             }

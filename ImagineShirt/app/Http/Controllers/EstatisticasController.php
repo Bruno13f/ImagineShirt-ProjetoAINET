@@ -42,6 +42,20 @@ class EstatisticasController extends Controller
         ->orderBy('month')
         ->get();
 
+        $earningsData = Encomendas::selectRaw('DATE_FORMAT(date, "%Y-%m") AS month, SUM(total_price) AS earnings')
+        ->where('date', '>=', Encomendas::raw('DATE_SUB(CURDATE(), INTERVAL 12 MONTH)'))
+        ->whereIn('status', ['closed', 'paid'])
+        ->groupBy('month')
+        ->orderBy('month')
+        ->get();
+
+        $encomendasData = Encomendas::selectRaw('DATE_FORMAT(date, "%Y-%m") AS month, COUNT(id) AS numencomendas')
+        ->where('date', '>=', Encomendas::raw('DATE_SUB(CURDATE(), INTERVAL 12 MONTH)'))
+        ->whereIn('status', ['closed', 'paid'])
+        ->groupBy('month')
+        ->orderBy('month')
+        ->get();
+
         $clientCount = User::where('user_type', 'C')->whereNull('deleted_at')->count();
         $adminCount = User::where('user_type', 'A')->whereNull('deleted_at')->count();
         $employeeCount = User::where('user_type', 'E')->whereNull('deleted_at')->count();
@@ -68,7 +82,7 @@ class EstatisticasController extends Controller
         ->take(5)
         ->get();
 
-        return view('estatisticas.index', compact('user','orderNum','clientCount','totalSumMes','totalSumAno','earningsData','clientData','usersNovos','tshirtsvendidas'));
+        return view('estatisticas.index', compact('user','orderNum','clientCount','totalSumMes','totalSumAno','earningsData','clientData','usersNovos','tshirtsvendidas','encomendasData'));
     }
 
 }
