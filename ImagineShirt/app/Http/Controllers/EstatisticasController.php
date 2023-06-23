@@ -73,16 +73,9 @@ class EstatisticasController extends Controller
 
         $usersNovos = User::whereNull('deleted_at')->orderBy('created_at', 'desc')->take(7)->get();
 
-        $tshirtsvendidas = ItensEncomenda::select('tshirt_images.name','tshirt_images.image_url', 'order_items.tshirt_image_id')
-        ->join('tshirt_images', 'order_items.tshirt_image_id', '=', 'tshirt_images.id')
-        ->whereNull('tshirt_images.deleted_at')
-        ->whereNull('tshirt_images.customer_id')
-        ->groupBy('tshirt_image_id')
-        ->orderByRaw('SUM(qty) DESC')
-        ->take(5)
-        ->get();
+        $ultimasEncomenda = Encomendas::orderBy('date','desc')->take(7)->get(); 
 
-        return view('estatisticas.index', compact('user','orderNum','clientCount','totalSumMes','totalSumAno','earningsData','clientData','usersNovos','tshirtsvendidas','encomendasData'));
+        return view('estatisticas.index', compact('user','orderNum','clientCount','totalSumMes','totalSumAno','earningsData','clientData','ultimasEncomenda','usersNovos','encomendasData'));
     }
 
 }

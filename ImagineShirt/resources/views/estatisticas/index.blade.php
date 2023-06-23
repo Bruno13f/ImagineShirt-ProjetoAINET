@@ -160,17 +160,17 @@
         <div class="col-xl-3 col-md-12 mb-4">
             <div class="card border-info shadow h-100 py-2">
                 <div class="card-body">
-                    <h4 class="card-title d-flex justify-content-center mb-4 text-info">Tshirts Mais Vendidas</h5>
+                    <h4 class="card-title d-flex justify-content-center mb-4 text-info">Ultimas Encomendas</h5>
                 <div class="chart-container d-flex justify-content-center" style="max-height: 1000px; overflow-y: auto;">
                     <table class="smaller-table">
                         <tbody>
-                        @foreach ($tshirtsvendidas as $tshirt)
+                        @foreach ($ultimasEncomenda as $ultimaencomenda)
                             <tr class="d-flex justify-content-center mb-3">
+                                <td class="text-center align-left">
+                                    <span class="font-weight-bold text-uppercase">{{ $ultimaencomenda->id }}<br></span>
+                                </td>
                                 <td class="text-center align-middle">
-                                    <span class="font-weight-bold text-uppercase">{{ $tshirt->name }}<br></span>
-                                    <div class="rounded" style="background-color: #d3d3d3">
-                                        <img src="/storage/tshirt_images/{{ $tshirt->image_url }}" class="img-fluid" alt="{{ $tshirt->name }}" style="max-width: 100px; max-height: 100px;">
-                                    </div>    
+                                    <span class="font-weight-bold text-uppercase">{{ $ultimaencomenda->status }}<br></span>{{ $ultimaencomenda->clientes->user->name }}
                                 </td>
                             </tr>
                         @endforeach
@@ -311,7 +311,7 @@ document.addEventListener('DOMContentLoaded', function() {
             datasets: [{
                 label: 'Numero de encomendas no último ano',
                 data: numencomendas,
-                backgroundColor: 'rgba(252,220,4)',
+                backgroundColor: 'rgba(252,220,4,0.3)',
                 borderColor: 'rgba(256,196,4)',
                 borderWidth: 1
             }]
