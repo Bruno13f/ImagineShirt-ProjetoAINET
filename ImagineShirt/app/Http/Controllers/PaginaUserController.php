@@ -92,7 +92,13 @@ class PaginaUserController extends Controller
         $user = DB::transaction(function () use ($formData, $user, $request) {
 
             $user->name = $formData['name'];
-            // enviar email de confirmação se for diferente - TODO
+
+            // enviar email de confirmação se for diferente 
+
+            if ($user->email != $formData['email']){
+                $user->email_verified_at = null;
+            }
+
             $user->email = $formData['email'];
             
             if (Auth::user()->user_type == 'A'){
@@ -121,6 +127,11 @@ class PaginaUserController extends Controller
 
             return $user;
         });
+
+        
+        if ($user->email_verified_at == null){
+            $user->sendEmailVerificationNotification();
+        }
 
         $tipoUser = self::getTipoUser($user);
 
@@ -163,7 +174,6 @@ class PaginaUserController extends Controller
     }
 
     public function updateStatusBlock (Request $request, User $user): RedirectResponse{
-
         $blocked = $user->blocked;
         $user->blocked = $request->blocked;
         $user->save();
@@ -182,6 +192,11 @@ class PaginaUserController extends Controller
     }
 
     public function destroy_user (User $user): RedirectResponse{
+
+        if($user->cliente != null){
+            // apenas pode dar soft delete a cliente
+            $user->cliente->delete();
+        }
 
         $user->delete();
 
@@ -220,6 +235,8 @@ class PaginaUserController extends Controller
             }
 
             $newUser->save();
+
+            $newUser->sendEmailVerificationNotification();
             return $newUser;
         });
 

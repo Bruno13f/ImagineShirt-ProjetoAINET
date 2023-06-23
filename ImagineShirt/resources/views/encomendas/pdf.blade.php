@@ -19,9 +19,9 @@
 					<img src="{{ asset('img/logo.png') }}" style="width: 100%; max-width: 300px" />
 				</td>
 				<td class="right-align">
-					ID da Encomenda: {{ $encomendaData->id }}<br />
-					Criada a: {{$encomendaData->date}}<br />
-					Status: {{$encomendaData->status}}<br />
+					ID da Encomenda: {{ $encomenda->id }}<br />
+					Criada a: {{$encomenda->date}}<br />
+					Status: {{$encomenda->status}}<br />
 				</td>
 			</tr>
 		</table>
@@ -37,14 +37,14 @@
 					Rua General Norton de Matos<br />
 					Apartado 4133,
 					2411-901 Leiria – Portugal
-					<br>Notas: {{ $encomendaData->notes }}
+					<br>Notas: {{ $encomenda->notes }}
 				</td>
 
 				<td class="right-align">
-					{{ $encomendaData->name }}<br />
-					{{ $encomendaData->address }}<br />
-					NIF: {{ $encomendaData->nif }}<br />
-					Email: {{ $encomendaData->email }}
+					{{ $encomenda->clientes->user->name }}<br />
+					{{ $encomenda->clientes->user->address }}<br />
+					NIF: {{ $encomenda->clientes->user->nif }}<br />
+					Email: {{ $encomenda->clientes->user->email }}
 				</td>
 			</tr>
 		</table>
@@ -57,10 +57,10 @@
 					<td></td>
 					<td></td>
 					<td class="right-align">
-                    @if ($encomendaData->payment_type == 'MC')
+                    @if ($encomenda->payment_type == 'MC')
                         MasterCard
                     @else
-                        {{ $encomendaData->payment_type }}
+                        {{ $encomenda->payment_type }}
                     @endif
                     </td>
 				</tr>
@@ -69,7 +69,7 @@
 					<td>Referência pagamento</td>
 					<td></td>
 					<td></td>
-					<td class="right-align">{{ $encomendaData->payment_ref }}</td>
+					<td class="right-align">{{ $encomenda->payment_ref }}</td>
 				</tr>
 
 				<tr class="heading">
@@ -84,9 +84,9 @@
                     $catalogo_tshirt = 0;
                 @endphp
 
-                    @foreach ($itemsData as $item)
+                    @foreach ($encomenda->itensEncomenda as $item)
                         <tr class="item">
-                            <td>{{ $item->name }}</td>
+                            <td>{{ $item->tshirts->name }}</td>
                             <td>{{ $item->unit_price }}€</td>
 							<td class="right-align">{{ $item->qty }}</td>
 							<td class="right-align">{{ $item->sub_total}}€</td>
@@ -110,9 +110,9 @@
 						<td></td>
 						<td></td>
 						<td class="right-align"><span>
-								Total s/ desconto: {{$encomendaData->total_price + (($catalogo_tshirt * $descontos['descontocatalogo'])+($customer_tshirt * $descontos['descontoown']))}}€
+								Total s/ desconto: {{$encomenda->total_price + (($catalogo_tshirt * $descontos['descontocatalogo'])+($customer_tshirt * $descontos['descontoown']))}}€
 							<br>Desconto: {{($catalogo_tshirt * $descontos['descontocatalogo'])+($customer_tshirt * $descontos['descontoown']) }} €
-							<br>Total: {{ $encomendaData->total_price }}€</span>
+							<br>Total: {{ $encomenda->total_price }}€</span>
 						</td>
                 	</tr>
 			</table>

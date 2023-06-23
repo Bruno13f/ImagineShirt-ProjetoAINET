@@ -139,8 +139,8 @@
                                         @can('changeStatus', $encomenda)
                                             @can('isAdmin')
                                                 <td>
-                                                    <span>{{$encomenda->name}}<span>
-                                                    <p><small>{{$encomenda->email}}</small></p>
+                                                    <span>{{$encomenda->clientes->user->name}}<span>
+                                                    <p><small>{{$encomenda->clientes->user->email}}</small></p>
                                                 </td>
                                                 <td>
                                                     @if ($estado == 'PENDENTE' || $estado == 'PAGO')

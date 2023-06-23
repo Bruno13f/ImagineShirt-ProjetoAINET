@@ -27,21 +27,12 @@ class EncomendasController extends Controller
         $user = Auth::user();
         
         if($user->user_type == 'A'){
-
-            $encomendas = Encomendas::select('orders.id','orders.status','orders.date','orders.total_price','users.name','users.email')
-            ->leftJoin('customers','customer_id','=','customers.id')
-            ->leftJoin('users','customers.id','=','users.id')
-            ->orderByDesc('date')->paginate(15);
-        
+            $encomendas = Encomendas::orderByDesc('date')->paginate(15);
         }
 
         if($user->user_type == 'E'){
-
-            $encomendas = Encomendas::select('orders.id','orders.status','orders.date','orders.total_price','users.name','users.email')
-            ->where('status','=','pending')->orwhere('status','=','paid')->join('customers','orders.customer_id','=','customers.id')
-            ->join('users','customers.id','=','users.id')
+            $encomendas = Encomendas::where('status','=','pending')->orwhere('status','=','paid')
             ->orderByDesc('date')->paginate(15);
-
         }
 
         if($user->user_type == 'C'){
@@ -54,11 +45,10 @@ class EncomendasController extends Controller
 
     public function generatePDF(Encomendas $encomenda): BinaryFileResponse
     {
-        $encomendaData = self::dadosRecibo($encomenda);
-        $itemsData = self::itensEncomenda($encomenda);
+
         $descontos = self::getPrices();
 
-        $html = view('encomendas.pdf', compact('encomendaData', 'itemsData','descontos'))->render();
+        $html = view('encomendas.pdf', compact('encomenda', 'descontos'))->render();
 
         $dompdf = new Dompdf();
 
@@ -84,28 +74,6 @@ class EncomendasController extends Controller
         return response()->download(storage_path('app/' . $pdfPath));
     }
 
-    private function dadosRecibo(Encomendas $encomenda){
-        
-        $encomendaData = Encomendas::select('orders.id','orders.status','orders.total_price','orders.nif','orders.payment_type','orders.payment_ref','orders.notes','users.name','orders.address','users.email','orders.date')
-        ->leftJoin('customers','customer_id','=','customers.id')
-        ->leftJoin('users','customers.id','=','users.id')
-        ->findOrFail($encomenda->id);
-
-        return $encomendaData;
-    }
-
-    private function itensEncomenda(Encomendas $encomenda){
-
-        $itemsData = Encomendas::select('tshirt_images.name','order_items.qty','order_items.size','order_items.unit_price','order_items.sub_total','tshirt_images.customer_id','colors.code as code_color','colors.name as color_name','tshirt_images.image_url')
-        ->leftJoin('order_items','orders.id','=','order_items.order_id')
-        ->leftJoin('tshirt_images','order_items.tshirt_image_id','=','tshirt_images.id')
-        ->leftJoin('colors','order_items.color_code','=','colors.code')
-        ->where('orders.id', $encomenda->id)
-        ->get();
-
-        return $itemsData;
-    }
-
     public function show(Encomendas $encomenda): View{
 
         $descontos = self::getPrices();
@@ -115,12 +83,9 @@ class EncomendasController extends Controller
 
     public function showRecibo(Encomendas $encomenda): View{
 
-        $encomendaData = self::dadosRecibo($encomenda);
-        $itemsData = self::itensEncomenda($encomenda);
-
         $descontos = self::getPrices();
 
-        return view('encomendas.pdf', compact('encomendaData', 'itemsData','descontos'));
+        return view('encomendas.pdf', compact('encomenda', 'descontos'));
     }
 
     private function getPrices (){

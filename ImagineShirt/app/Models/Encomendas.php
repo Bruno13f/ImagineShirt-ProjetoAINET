@@ -27,7 +27,7 @@ class Encomendas extends Model
     ];
 
     public function clientes(): BelongsTo{
-        return $this->belongsTo(Cliente::class, 'customer_id', 'id');
+        return $this->belongsTo(Cliente::class, 'customer_id', 'id')->withTrashed();
     }
 
     public function itensEncomenda(): HasMany{
