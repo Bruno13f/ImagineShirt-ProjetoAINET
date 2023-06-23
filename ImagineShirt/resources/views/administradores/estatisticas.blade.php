@@ -180,7 +180,7 @@
                 data: {
                     labels: months,
                     datasets: [{
-                        label: 'Earnings',
+                        label: 'Ganhos',
                         data: earnings,
                         backgroundColor: 'rgba(0, 123, 255, 0.1)',
                         borderColor: 'rgba(0, 123, 255, 1)',
