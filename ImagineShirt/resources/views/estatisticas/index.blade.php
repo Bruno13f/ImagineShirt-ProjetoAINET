@@ -3,7 +3,7 @@
                                         'active3' => '',
                                         'active4' => '']]) 
 
-@section('titulo',' | Editar Administrador')
+@section('titulo',' | Estatisticas')
 
 @section('main')
 
@@ -114,7 +114,7 @@
         <div class="col-xl-6 col-md-12 mb-4">
             <div class="card border-warning shadow h-50 py-2">
                 <div class="card-body">
-                    <h4 class="card-title d-flex justify-content-center mb-4 text-warning">Ganhos Último Mês</h5>
+                    <h4 class="card-title d-flex justify-content-center mb-4 text-">Ganhos Último Mês</h5>
                 </div>
             </div>
         </div>

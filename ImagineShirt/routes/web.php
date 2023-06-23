@@ -10,6 +10,7 @@ use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\CoresController;
 use App\Http\Controllers\PrecosController;
 use App\Http\Controllers\EncomendasController;
+use App\Http\Controllers\EstatisticasController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Models\TShirts;
 
@@ -54,7 +55,8 @@ Route::middleware('admin')->group(function (){
         Route::delete('/user/{user}/delete', [PaginaUserController::class, 'destroy_user'])->name('user.destroy');
         Route::get('/user/create', [PaginaUserController::class, 'create'])->name('user.create');
         Route::post('/user/store', [PaginaUserController::class, 'store'])->name('user.store');
-        Route::get('/user/{user}/estatisticas', [PaginaUserController::class, 'estatisticas'])->name('user.estatisticas');
+
+        Route::get('/estatisticas', [EstatisticasController::class, 'index'])->name('estatisticas');
 
         Route::get('/categorias', [CategoriasController::class, 'index'])->name('categorias');
         Route::get('/categorias/create', [CategoriasController::class, 'create'])->name('categorias.create');
