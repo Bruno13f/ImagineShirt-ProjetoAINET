@@ -276,7 +276,43 @@ class PaginaUserController extends Controller
 
     public function estatisticas(User $user): View
     {
-        return view('administradores.estatisticas', compact('user'));
+        $totalSumAno = Encomendas::where('date', '>=', Encomendas::raw('DATE_SUB(CURDATE(), INTERVAL 1 YEAR)'))
+        ->whereIn('status', ['closed', 'paid'])
+        ->sum('total_price');
+
+        $totalSumMes = Encomendas::where('date', '>=', Encomendas::raw('DATE_SUB(CURDATE(), INTERVAL 1 MONTH)'))
+        ->whereIn('status', ['closed', 'paid'])
+        ->sum('total_price');
+
+        $clientCount = User::where('user_type', 'C')
+        ->whereNull('deleted_at')
+        ->count();
+
+        $orderNum = Encomendas::whereIn('status', ['closed', 'paid'])->count();
+
+        $earningsData = Encomendas::selectRaw('DATE_FORMAT(date, "%Y-%m") AS month, SUM(total_price) AS earnings')
+        ->where('date', '>=', Encomendas::raw('DATE_SUB(CURDATE(), INTERVAL 12 MONTH)'))
+        ->whereIn('status', ['closed', 'paid'])
+        ->groupBy('month')
+        ->orderBy('month')
+        ->get();
+
+        $clientCount = User::where('user_type', 'C')->whereNull('deleted_at')->count();
+        $adminCount = User::where('user_type', 'A')->whereNull('deleted_at')->count();
+        $employeeCount = User::where('user_type', 'E')->whereNull('deleted_at')->count();
+
+        $totalCount = $clientCount + $adminCount + $employeeCount;
+        $clientPercentage = round(($clientCount / $totalCount) * 100, 2);
+        $adminPercentage = round(($adminCount / $totalCount) * 100, 2);
+        $employeePercentage = round(($employeeCount / $totalCount) * 100, 2);
+
+        $clientData = [
+            ['label' => 'Clients', 'percentage' => $clientPercentage],
+            ['label' => 'Administrators', 'percentage' => $adminPercentage],
+            ['label' => 'Employees', 'percentage' => $employeePercentage],
+        ];
+
+        return view('administradores.estatisticas', compact('user','orderNum','clientCount','totalSumMes','totalSumAno','earningsData','clientData'));
     }
 
     // tem de ser sempre a ultima 

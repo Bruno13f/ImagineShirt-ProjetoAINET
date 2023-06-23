@@ -24,33 +24,32 @@
     </div>
 </section>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
 <div class="container-fluid mt-5">
-<!-- Content Row -->
     <div class="row mr-5 ml-5">
-        <!-- Earnings (Monthly) Card Example -->
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-danger shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                Earnings (Monthly)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                Encomendas</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$orderNum}}</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Earnings (Monthly) Card Example -->
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Earnings (Annual)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                Ganhos (Anual)</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$totalSumAno}} €</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -59,18 +58,16 @@
                 </div>
             </div>
         </div>
-
-        <!-- Earnings (Monthly) Card Example -->
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Tasks
-                            </div>
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Ganhos (Mensal)</div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$totalSumMes}} €</div>
                                 </div>
                             </div>
                         </div>
@@ -82,20 +79,144 @@
             </div>
         </div>
 
-        <!-- Pending Requests Card Example -->
+        <!-- Client Card Example -->
         <div class="col-xl-3 col-md-6 mb-4">
+            <!-- Card content -->
             <div class="card border-warning shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                Pending Requests</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                Clientes</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$clientCount}}</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Pie Chart -->
+        <div class="col-xl-6 col-md-12 mb-4">
+            <!-- Card content -->
+            <div class="card shadow h-100 py-2">
+                <div class="card-body">
+                    <h5 class="card-title">Distribuição de Usuários</h5>
+                    <div style="max-height: 400px; overflow-y: auto;">
+                        <canvas id="userDistributionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            var clientData = {!! json_encode($clientData) !!};
+            var labels = clientData.map(data => data.label);
+            var percentages = clientData.map(data => data.percentage);
+
+            var ctx = document.getElementById('userDistributionChart').getContext('2d');
+
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: percentages,
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(255, 205, 86, 0.6)',
+                            'rgba(255, 99, 132, 0.6)',
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255, 205, 86, 1)',
+                            'rgba(255, 99, 132, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    var label = context.label || '';
+
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed && context.parsed.toFixed) {
+                                        label += context.parsed.toFixed(2) + '%';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
+
+        <!-- Line Chart -->
+        <div class="col-xl-6 col-md-12 mb-4">
+            <!-- Card content -->
+            <div class="card shadow h-100 py-2">
+                <div class="card-body">
+                    <h5 class="card-title">Earnings Over Time</h5>
+                    <div class="chart-container" style="max-height: 400px; overflow-y: auto;">
+                        <canvas id="earningsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            var earningsData = {!! json_encode($earningsData) !!};
+            var months = earningsData.map(data => data.month);
+            var earnings = earningsData.map(data => data.earnings);
+
+            var ctx2 = document.getElementById('earningsChart').getContext('2d');
+
+            new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'Earnings',
+                        data: earnings,
+                        backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                        borderColor: 'rgba(0, 123, 255, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    layout: {
+                        padding: {
+                            top: 10,
+                            bottom: 10,
+                            left: 10,
+                            right: 10
+                        }
+                    }
+                }
+            });
+        </script>
     </div>
 </div>
 
