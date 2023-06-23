@@ -104,7 +104,7 @@
             <div class="card shadow h-100 py-2">
                 <div class="card-body">
                     <h5 class="card-title">Distribuição de Usuários</h5>
-                    <div class="chart-container" style="max-height: 400px; overflow-y: auto;">
+                    <div class="chart-container" style="max-height: 1000px; overflow-y: auto;">
                         <canvas id="userDistributionChart"></canvas>
                     </div>
                 </div>
@@ -138,7 +138,7 @@
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false,
+                maintainAspectRatio: true,
                 scales: {
                     y: {
                         beginAtZero: true
@@ -189,7 +189,7 @@
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false,
+                maintainAspectRatio: true,
                 plugins: {
                     legend: {
                         position: 'right'
