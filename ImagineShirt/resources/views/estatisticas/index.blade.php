@@ -311,8 +311,8 @@ document.addEventListener('DOMContentLoaded', function() {
             datasets: [{
                 label: 'Numero de encomendas no último ano',
                 data: numencomendas,
-                backgroundColor: 'rgba(0, 123, 255, 0.1)',
-                borderColor: 'rgba(0, 123, 255, 1)',
+                backgroundColor: 'rgba(252,220,4)',
+                borderColor: 'rgba(256,196,4)',
                 borderWidth: 1
             }]
         },
