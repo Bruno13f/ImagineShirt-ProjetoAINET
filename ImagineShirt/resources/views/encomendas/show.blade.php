@@ -37,7 +37,7 @@
                 <div class="card shadow-0 border mb-4">
                     <div class="card-body">
                     <div class="row">
-                        <div class="col-md-2 d-flex justify-content-center" style="background-color: #{{ $item->color_code}}">
+                        <div class="col-md-2 d-flex justify-content-center rounded" style="background-color: #{{ $item->color_code}}">
                         <img src="/storage/tshirt_images/{{ $item->tshirts->image_url }}" class="img-fluid" alt="{{ $item->tshirts->name }}" style="max-width: 100px; max-height: 100px;">
                         </div>
                         <div class="col-md-2 text-center d-flex justify-content-center align-items-center">

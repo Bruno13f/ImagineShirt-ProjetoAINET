@@ -88,10 +88,12 @@
                 @forelse ($populares as $popular)
                 <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix">
                     <div class="product__item">
-                        <a href="{{ route('t-shirts.show', $popular)}}">
-                            <div class="product__item__pic set-bg" data-setbg="/storage/tshirt_images/{{ $popular->image_url}}" style = "background-size: contain">
-                            </div>
-                        </a>
+                        <div class="rounded" style="background-color: #D3D3D3">
+                            <a href="{{ route('t-shirts.show', $popular)}}">
+                                <div class="product__item__pic set-bg" data-setbg="/storage/tshirt_images/{{ $popular->image_url}}" style = "background-size: contain">
+                                </div>
+                            </a>
+                        </div>
                         <div class="product__item__text">
                             <h6 style = "font-size: 1.2rem;font-weight: bolder">{{ empty($popular->name) ? 'T-Shirt Sem Nome' : $popular->name }}</h6>
                             <a href="#" class="add-cart" style="font-size: 1.1rem">+ Adicionar ao Carrinho</a>
@@ -108,11 +110,13 @@
                 @forelse ($recentes as $recente)
                 <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix">
                      <div class="product__item">
-                        <a href="{{ route('t-shirts.show', $recente)}}">
-                            <div class="product__item__pic set-bg" data-setbg="/storage/tshirt_images/{{ $recente->image_url}}" style = "background-size: contain">
-                                <span class="label" style = "color: red">Novo</span>
-                            </div>
-                        </a>
+                        <div class="rounded" style="background-color: #D3D3D3">
+                            <a href="{{ route('t-shirts.show', $recente)}}">
+                                <div class="product__item__pic set-bg" data-setbg="/storage/tshirt_images/{{ $recente->image_url}}" style = "background-size: contain">
+                                    <span class="label" style = "color: red">Novo</span>
+                                </div>
+                            </a>
+                        </div>
                         <div class="product__item__text">
                             <h6 style = "font-size: 1.2rem;font-weight: bolder">{{ empty($recente->name) ? 'T-Shirt Sem Nome' : $recente->name }}</h6>
                              <a href="#" class="add-cart" style="font-size: 1.1rem">+ Adicionar ao Carrinho</a>
@@ -129,11 +133,13 @@
                 @forelse ($tshirtsmaisVendidas as $maisVendido)
                 <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix">
                     <div class="product__item">
-                        <a href="{{ route('t-shirts.show', $maisVendido)}}">
-                            <div class="product__item__pic set-bg" data-setbg="/storage/tshirt_images/{{ $maisVendido->image_url}}" style = "background-size: contain">
-                                <span class="label" style = "color: red">Hot</span>
-                            </div>
-                        </a>
+                        <div class="rounded" style="background-color: #D3D3D3">
+                            <a href="{{ route('t-shirts.show', $maisVendido)}}">
+                                <div class="product__item__pic set-bg" data-setbg="/storage/tshirt_images/{{ $maisVendido->image_url}}" style = "background-size: contain">
+                                    <span class="label" style = "color: red">Hot</span>
+                                </div>
+                            </a>
+                        </div>
                         <div class="product__item__text">
                             <h6 style = "font-size: 1.2rem;font-weight: bolder">{{ empty($maisVendido->name) ? 'T-Shirt Sem Nome' : $maisVendido->name }}</h6>
                             <a href="#" class="add-cart" style="font-size: 1.1rem">+ Adicionar ao Carrinho</a>

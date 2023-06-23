@@ -289,11 +289,12 @@ class PaginaUserController extends Controller
 
         $usersNovos = User::whereNull('deleted_at')->orderBy('created_at', 'desc')->take(7)->get();
 
-        $tshirtsvendidas = ItensEncomenda::join('tshirt_images', 'order_items.tshirt_image_id', '=', 'tshirt_images.id')
-        ->select('tshirt_images.name','tshirt_images.image_url', 'order_items.tshirt_image_id', DB::raw('COUNT(*) as numtshirtsvendidas'))
-        ->groupBy('order_items.tshirt_image_id', 'tshirt_images.name')
-        ->whereNull('customer_id')
-        ->orderByDesc('numtshirtsvendidas')
+        $tshirtsvendidas = ItensEncomenda::select('tshirt_images.name','tshirt_images.image_url', 'order_items.tshirt_image_id')
+        ->join('tshirt_images', 'order_items.tshirt_image_id', '=', 'tshirt_images.id')
+        ->whereNull('tshirt_images.deleted_at')
+        ->whereNull('tshirt_images.customer_id')
+        ->groupBy('tshirt_image_id')
+        ->orderByRaw('SUM(qty) DESC')
         ->take(5)
         ->get();
 

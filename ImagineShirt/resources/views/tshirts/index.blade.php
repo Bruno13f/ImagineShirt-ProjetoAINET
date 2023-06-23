@@ -126,9 +126,9 @@
                         <div class="col-lg-4 col-md-6 col-sm-6" style="margin-top: 20px">
                             <div class="product__item">
                                 <a href="{{ route('t-shirts.show', $tshirt->slug)}}">
-                                    <div class="product__item__pic set-bg" data-setbg="
+                                    <div class="product__item__pic set-bg rounded" data-setbg="
                                     {{ empty($tshirt->customer_id) ? "/storage/tshirt_images/{$tshirt->image_url}" : route('imagem_user', ['image_url' => $tshirt->image_url, 'user_id' => $tshirt->customer_id, 'nome_tshirt' => $tshirt->name])}}
-                                    " style = "background-size: contain; background-color: #d9d9d9; border-radius: 15%">   
+                                    " style = "background-size: contain; background-color: #d3d3d3; border-radius: 15%">   
                                     </div>
                                 </a> 
                                 <div class="product__item__text">
