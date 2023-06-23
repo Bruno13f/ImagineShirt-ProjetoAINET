@@ -186,21 +186,21 @@ class PaginaUserController extends Controller
 
     public function showCategorias(User $user): View{
 
-        $categorias = Categorias::whereNull('deleted_at')->paginate(15);
+        $categorias = Categorias::whereNull('deleted_at')->orderBy('name')->paginate(15);
 
         return view('administradores.categorias', compact('user','categorias'));
     }
 
     public function showCores(User $user): View{
         
-        $cores = Cores::whereNull('deleted_at')->paginate(15);
+        $cores = Cores::whereNull('deleted_at')->orderBy('name')->paginate(15);
 
         return view('administradores.cores', compact('user','cores'));
     }
 
     public function showMinhasTShirts(User $user): View{
 
-        $t_shirts = TShirts::whereNull('deleted_at')->where('customer_id', '=', $user->id)->paginate(15);
+        $t_shirts = TShirts::whereNull('deleted_at')->where('customer_id', '=', $user->id)->orderBy('created_at')->paginate(15);
 
         return view('clientes.minhasTshirts', compact('user', 't_shirts'));
     }

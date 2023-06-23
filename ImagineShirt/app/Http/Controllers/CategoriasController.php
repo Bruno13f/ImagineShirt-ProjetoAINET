@@ -51,7 +51,6 @@ class CategoriasController extends Controller
         }
 
         $categoria->name = $request->name;
-        $categoria->timestamps = false;
         $categoria->save();
 
         Alert::success('Editada com sucesso!', 'O nome da categoria foi alterado!');
