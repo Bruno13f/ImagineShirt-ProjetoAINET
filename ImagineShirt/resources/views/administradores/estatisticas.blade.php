@@ -93,7 +93,7 @@
         <div class="col-xl-6 col-md-12 mb-4">
             <div class="card shadow h-100 py-2">
                 <div class="card-body">
-                    <h5 class="card-title">Ganhos último ano</h5>
+                <h4 class="card-title d-flex justify-content-center mb-4">Ganhos Último Ano</h5>
                     <div style="max-height: 400px; overflow-y: auto;">
                         <canvas id="earningsChart"></canvas>
                     </div>
@@ -103,7 +103,7 @@
         <div class="col-xl-6 col-md-12 mb-4">
             <div class="card shadow h-100 py-2">
                 <div class="card-body">
-                    <h5 class="card-title">Distribuição de Usuários</h5>
+                    <h4 class="card-title d-flex justify-content-center mb-4">Distribuição de Usuários</h5>
                     <div class="chart-container" style="max-height: 1000px; overflow-y: auto;">
                         <canvas id="userDistributionChart"></canvas>
                     </div>

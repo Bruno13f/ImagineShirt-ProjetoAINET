@@ -310,7 +310,7 @@ class PaginaUserController extends Controller
         $clientData = [
             ['label' => 'Clientes', 'percentage' => $clientPercentage],
             ['label' => 'Administradores', 'percentage' => $adminPercentage],
-            ['label' => 'Funcionarios', 'percentage' => $employeePercentage],
+            ['label' => 'Funcionários', 'percentage' => $employeePercentage],
         ];
 
         return view('administradores.estatisticas', compact('user','orderNum','clientCount','totalSumMes','totalSumAno','earningsData','clientData'));
