@@ -93,7 +93,7 @@
         <div class="col-xl-6 col-md-12 mb-4">
             <div class="card border-info shadow h-100 py-2">
                 <div class="card-body">
-                <h4 class="card-title d-flex justify-content-center mb-4">Ganhos Último Ano</h5>
+                <h4 class="card-title d-flex justify-content-center mb-4 text-info">Ganhos Último Ano</h5>
                     <div style="max-height: 400px; overflow-y: auto;">
                         <canvas id="earningsChart"></canvas>
                     </div>
@@ -103,7 +103,7 @@
         <div class="col-xl-6 col-md-12 mb-4">
             <div class="card border-info shadow h-100 py-2">
                 <div class="card-body">
-                    <h4 class="card-title d-flex justify-content-center mb-4">Distribuição de Usuários</h5>
+                    <h4 class="card-title d-flex justify-content-center mb-4 text-info">Distribuição de Usuários</h5>
                     <div class="chart-container" style="max-height: 1000px; overflow-y: auto;">
                         <canvas id="userDistributionChart"></canvas>
                     </div>
@@ -113,12 +113,6 @@
         <div class="col-12">
             <div class="container mt-4 table-container">
                 <table class="smaller-table">
-                    <thead>
-                        <tr>
-                            <th>Novos Utilizadores</th>
-                            <th>Nome</th>
-                            <th>Mail</th>
-                        </tr>
                     </thead>
                     <tbody>
                         @foreach ($usersNovos as $user)
@@ -128,7 +122,7 @@
                                         $tipoUser = 'Administrador';
                                         break;
                                     case 'E':
-                                        $tipoUser = 'Funcionario';
+                                        $tipoUser = 'Funcionário';
                                         break;
                                     case 'C':
                                         $tipoUser = 'Cliente';
@@ -137,12 +131,11 @@
                             @endphp
                             <tr>
                                 <td>
-                                    <img src="{{ $user->fullPhotoUrl }}" class="img-fluid" alt="{{ $user->name }}" style="max-width: 100px; max-height: 100px;">
+                                    <img src="{{ $user->fullPhotoUrl }}" class="rounded-circle img-responsive" alt="{{ $user->name }}" style="max-width: 100px; max-height: 100px;">
                                 </td>
-                                <td>
+                                <td class="text-center align-middle">
                                     <span class="font-weight-bold text-uppercase">{{$tipoUser}}</span><br>{{$user->name}}
                                 </td>
-                                <td>{{ $user->email }}</td>
                             </tr>
                         @endforeach
                     </tbody>

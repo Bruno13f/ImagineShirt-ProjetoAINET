@@ -58,7 +58,7 @@
                                 }
                                 @endphp
                                     <tr>
-                                        <td><img id="imagemGestaoUser"src="{{ $utilizador->fullPhotoUrl }}" alt="{{ $utilizador->name }}" width="128" height="128"></td>
+                                        <td><img id="imagemGestaoUser" class="rounded-circle img-responsive" src="{{ $utilizador->fullPhotoUrl }}" alt="{{ $utilizador->name }}" width="128" height="128"></td>
                                         <td><span class="font-weight-bold text-uppercase">{{$tipoUser}}</span><br>{{$utilizador->name}}</td>
                                         <td><span class="font-weight-bold text-uppercase">{{is_null($utilizador->email_verified_at) ? 'Por verificar' : 'Verificado'}}</span><u><br>{{$utilizador->email}}</u></td>
                                         <td>Criação: <br>{{$utilizador->created_at}}</td>
