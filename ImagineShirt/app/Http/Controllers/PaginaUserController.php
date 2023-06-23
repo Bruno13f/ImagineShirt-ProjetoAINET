@@ -307,9 +307,9 @@ class PaginaUserController extends Controller
         $employeePercentage = round(($employeeCount / $totalCount) * 100, 2);
 
         $clientData = [
-            ['label' => 'Clients', 'percentage' => $clientPercentage],
-            ['label' => 'Administrators', 'percentage' => $adminPercentage],
-            ['label' => 'Employees', 'percentage' => $employeePercentage],
+            ['label' => 'Clientes', 'percentage' => $clientPercentage],
+            ['label' => 'Administradores', 'percentage' => $adminPercentage],
+            ['label' => 'Funcionarios', 'percentage' => $employeePercentage],
         ];
 
         return view('administradores.estatisticas', compact('user','orderNum','clientCount','totalSumMes','totalSumAno','earningsData','clientData'));
