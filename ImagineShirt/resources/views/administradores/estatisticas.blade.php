@@ -96,8 +96,65 @@
         <div class="col-xl-6 col-md-12 mb-4">
             <div class="card shadow h-100 py-2">
                 <div class="card-body">
-                    <h5 class="card-title">Distribuição de Usuários</h5>
+                    <h5 class="card-title">Ganhos último ano</h5>
                     <div style="max-height: 400px; overflow-y: auto;">
+                        <canvas id="earningsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            var earningsData = {!! json_encode($earningsData) !!};
+            var months = earningsData.map(data => data.month);
+            var earnings = earningsData.map(data => data.earnings);
+
+            var ctx2 = document.getElementById('earningsChart').getContext('2d');
+
+            new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'Ganhos',
+                        data: earnings,
+                        backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                        borderColor: 'rgba(0, 123, 255, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    layout: {
+                        padding: {
+                            top: 10,
+                            bottom: 10,
+                            left: 10,
+                            right: 10
+                        }
+                    }
+                }
+            });
+        </script>
+
+        
+
+        <div class="col-xl-6 col-md-12 mb-4">
+            <div class="card shadow h-100 py-2">
+                <div class="card-body">
+                    <h5 class="card-title">Distribuição de Usuários</h5>
+                    <div class="chart-container" style="max-height: 400px; overflow-y: auto;">
                         <canvas id="userDistributionChart"></canvas>
                     </div>
                 </div>
@@ -151,61 +208,6 @@
                                     return label;
                                 }
                             }
-                        }
-                    }
-                }
-            });
-        </script>
-
-        <div class="col-xl-6 col-md-12 mb-4">
-            <div class="card shadow h-100 py-2">
-                <div class="card-body">
-                    <h5 class="card-title">Ganhos último ano</h5>
-                    <div class="chart-container" style="max-height: 400px; overflow-y: auto;">
-                        <canvas id="earningsChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <script>
-            var earningsData = {!! json_encode($earningsData) !!};
-            var months = earningsData.map(data => data.month);
-            var earnings = earningsData.map(data => data.earnings);
-
-            var ctx2 = document.getElementById('earningsChart').getContext('2d');
-
-            new Chart(ctx2, {
-                type: 'line',
-                data: {
-                    labels: months,
-                    datasets: [{
-                        label: 'Ganhos',
-                        data: earnings,
-                        backgroundColor: 'rgba(0, 123, 255, 0.1)',
-                        borderColor: 'rgba(0, 123, 255, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    layout: {
-                        padding: {
-                            top: 10,
-                            bottom: 10,
-                            left: 10,
-                            right: 10
                         }
                     }
                 }
