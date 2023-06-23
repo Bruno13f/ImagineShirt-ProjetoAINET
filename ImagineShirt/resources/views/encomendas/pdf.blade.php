@@ -21,6 +21,7 @@
 				<td class="right-align">
 					ID da Encomenda: {{ $encomendaData->id }}<br />
 					Criada a: {{$encomendaData->date}}<br />
+					Status: {{$encomendaData->status}}<br />
 				</td>
 			</tr>
 		</table>

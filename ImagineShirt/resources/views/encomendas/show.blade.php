@@ -83,6 +83,9 @@
                     <p class="text-muted mb-0"><span class="fw-bold me-1">Total</span>{{ $encomendaData->total_price }} €</p>
                 </div>
                 <div class="d-flex justify-content-between pt-2">
+                    <p class="text-muted mb-0"><span class="fw-bold me-1">Status:</span>{{ $encomendaData->status }}</p>
+                </div>
+                <div class="d-flex justify-content-between pt-2">
                     <p class="text-muted mb-0"><span class="fw-bold me-1">Método de Pagamento:</span>
                         @if ($encomendaData->payment_type == 'MC')
                             MasterCard
