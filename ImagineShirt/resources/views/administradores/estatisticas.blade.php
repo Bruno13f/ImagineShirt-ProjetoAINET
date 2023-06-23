@@ -110,8 +110,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-12">
-            <div class="container mt-4 table-container">
+        <div class="col-xl-6 col-md-12 mb-4">
+            <div class="card border-info shadow h-100 py-2">
+                <div class="card-body">
+                    <h4 class="card-title d-flex justify-content-center mb-4 text-info">Últimos usuários registados</h5>
+                    <div class="chart-container" style="max-height: 1000px; overflow-y: auto;">
                 <table class="smaller-table">
                     </thead>
                     <tbody>
@@ -140,6 +143,8 @@
                         @endforeach
                     </tbody>
                 </table>
+                </div>
+                </div>
             </div>
         </div>
 
