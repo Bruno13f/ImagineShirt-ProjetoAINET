@@ -56,7 +56,7 @@ if (deleteAdminUserForms) {
 
             Swal.fire({
             title: 'Tem a certeza?',
-            text: "Irá eliminar a tshirt!",
+            text: "Irá eliminar o user!",
             showCancelButton: true,
             confirmButtonColor: '#218838',
             cancelButtonColor: '#d33',
@@ -71,3 +71,26 @@ if (deleteAdminUserForms) {
     });
 }
 
+const deleteAdminCategoryForms = document.querySelectorAll("[id^='form_delete_category_']");
+if (deleteAdminCategoryForms) {
+    deleteAdminCategoryForms.forEach(function (deleteForm) {
+        deleteForm.addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+            Swal.fire({
+            title: 'Tem a certeza?',
+            text: "Irá eliminar a categoria!",
+            showCancelButton: true,
+            confirmButtonColor: '#218838',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, quero eliminar!',
+            cancelButtonText: 'Cancelar',
+            }).then((result) => {
+                if (result.value) {
+                    event.target.submit();
+                }
+            })
+        });
+    });
+}

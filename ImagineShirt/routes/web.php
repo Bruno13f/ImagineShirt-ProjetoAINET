@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaginaInicialController;
 use App\Http\Controllers\PaginaSobreNosController;
 use App\Http\Controllers\PaginaUserController;
+use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\EncomendasController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Models\TShirts;
@@ -54,6 +55,12 @@ Route::middleware('admin')->group(function (){
         Route::get('/user/create', [PaginaUserController::class, 'create'])->name('user.create');
         Route::post('/user/store', [PaginaUserController::class, 'store'])->name('user.store');
         Route::get('/user/{user}/estatisticas', [PaginaUserController::class, 'estatisticas'])->name('user.estatisticas');
+
+        Route::get('/categoria/create', [CategoriasController::class, 'create'])->name('categoria.create');
+        Route::post('/categoria/store', [CategoriasController::class, 'store'])->name('categoria.store');
+        Route::get('/categoria/{categoria}/edit', [CategoriasController::class, 'edit'])->name('categoria.edit');
+        Route::put('/categoria/{categoria}/update', [CategoriasController::class, 'update'])->name('categoria.update');
+        Route::delete('/categoria/{categoria}/delete', [CategoriasController::class, 'destroy'])->name('categoria.destroy');
 
         
     });
