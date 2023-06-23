@@ -143,11 +143,45 @@
                         @endforeach
                     </tbody>
                 </table>
-                </div>
+                     </div>
                 </div>
             </div>
         </div>
 
+        <div class="col-xl-6 col-md-12 mb-4">
+            <div class="card border-info shadow h-100 py-2">
+                <div class="card-body">
+                    <h4 class="card-title d-flex justify-content-center mb-4 text-info">Tshirts Mais Vendidas</h5>
+                    <div class="chart-container" style="max-height: 1000px; overflow-y: auto;">
+                <table class="smaller-table">
+                    </thead>
+                    <tbody>
+                    @php
+                        $colocacao = 1;
+                    @endphp
+                    @foreach ($tshirtsvendidas as $tshirt)
+                        <tr>
+                            <td>
+                                <h3>{{$colocacao}}º -</he>
+                            </td>
+                            @php
+                            $colocacao++;
+                            @endphp
+                            <td>
+                                <img src="/storage/tshirt_images/{{ $tshirt->image_url }}" class="img-fluid" alt="{{ $tshirt->name }}" style="max-width: 100px; max-height: 100px;">
+                            </td>
+                            <td class="text-center align-middle">
+                                <span class="font-weight-bold text-uppercase">{{ $tshirt->name }}</span><br>{{ $user->name }}
+                            </td>
+                        </tr>
+                    @endforeach
+
+                    </tbody>
+                </table>
+                     </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

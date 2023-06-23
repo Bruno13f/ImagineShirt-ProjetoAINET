@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Encomendas;
+use App\Models\ItensEncomenda;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Hash;
@@ -315,7 +316,15 @@ class PaginaUserController extends Controller
 
         $usersNovos = User::whereNull('deleted_at')->orderBy('created_at', 'desc')->take(6)->get();
 
-        return view('administradores.estatisticas', compact('user','orderNum','clientCount','totalSumMes','totalSumAno','earningsData','clientData','usersNovos'));
+        $tshirtsvendidas = ItensEncomenda::join('tshirt_images', 'order_items.tshirt_image_id', '=', 'tshirt_images.id')
+        ->select('tshirt_images.name','tshirt_images.image_url', 'order_items.tshirt_image_id', DB::raw('COUNT(*) as numtshirtsvendidas'))
+        ->groupBy('order_items.tshirt_image_id', 'tshirt_images.name')
+        ->whereNull('customer_id')
+        ->orderByDesc('numtshirtsvendidas')
+        ->take(6)
+        ->get();
+
+        return view('administradores.estatisticas', compact('user','orderNum','clientCount','totalSumMes','totalSumAno','earningsData','clientData','usersNovos','tshirtsvendidas'));
     }
 
     // tem de ser sempre a ultima 
