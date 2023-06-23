@@ -7,6 +7,8 @@ use App\Http\Controllers\PaginaInicialController;
 use App\Http\Controllers\PaginaSobreNosController;
 use App\Http\Controllers\PaginaUserController;
 use App\Http\Controllers\CategoriasController;
+use App\Http\Controllers\CoresController;
+use App\Http\Controllers\PrecosController;
 use App\Http\Controllers\EncomendasController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Models\TShirts;
@@ -62,6 +64,12 @@ Route::middleware('admin')->group(function (){
         Route::put('/categoria/{categoria}/update', [CategoriasController::class, 'update'])->name('categoria.update');
         Route::delete('/categoria/{categoria}/delete', [CategoriasController::class, 'destroy'])->name('categoria.destroy');
 
+        Route::get('/cor/{cor}/edit', [CoresController::class, 'edit'])->name('cor.edit');
+        Route::put('/cor/{cor}/update', [CoresController::class, 'update'])->name('cor.update');
+        Route::delete('/cor/{cor}/delete', [CoresController::class, 'destroy'])->name('cor.destroy');
+
+        Route::get('/precos/{precos}/edit', [PrecosController::class, 'edit'])->name('precos.edit');
+        Route::put('/precos/{precos}/update', [PrecosController::class, 'update'])->name('precos.update');
         
     });
 });

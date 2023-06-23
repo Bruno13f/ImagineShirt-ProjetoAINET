@@ -111,7 +111,7 @@
                                                 <td>{{$precos[0]['unit_price_own_discount']}}</td>
                                                 <td>{{$precos[0]['qty_discount']}}</td>
                                                 <td>
-                                                    <a href="">
+                                                    <a href="{{ route('precos.edit', $precos[0]['id']) }}">
                                                         <button type="button" class="btn btn-info rounded-pill">Editar Preços</button>
                                                     </a>
                                                 </td>

@@ -5,7 +5,7 @@
                 <div class="tab-pane fade show active" id="account" role="tabpanel">
                     <div class="card" style="margin-top: 20px">
                         <div class="card-header">
-                            <h5 class="card-title mb-0">Criar Categoria</h5>
+                            <h5 class="card-title mb-0">{{ $allowCreate ? 'Criar Categoria' : 'Editar Categoria'}}</h5>
                         </div>
                         <form id="form_categoria" novalidate class="needs-validation" method="POST"
                         action="{{ $allowCreate ? route('categoria.store') : route('categoria.update', $categoria)}}" enctype="multipart/form-data">

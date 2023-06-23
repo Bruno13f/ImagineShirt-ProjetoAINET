@@ -14,7 +14,7 @@ class CategoriasController extends Controller
 {
     public function __construct()
     {
-        //$this->authorizeResource(User::class, 'categoria');
+        $this->authorizeResource(User::class, 'categoria');
     }
 
     public function create(): View{

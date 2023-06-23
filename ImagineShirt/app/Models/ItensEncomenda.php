@@ -12,9 +12,10 @@ class ItensEncomenda extends Model
 {
     use HasFactory;
     protected $table = 'order_items';
+    public $timestamps = false;
 
-    public function cor(): BelongsTo{
-        return $this->belongsTo(Cores::class, 'color_code', 'id');
+    public function cores(): BelongsTo{
+        return $this->belongsTo(Cores::class, 'color_code', 'code');
     }
 
     public function tshirts(): BelongsTo{

@@ -35,9 +35,6 @@
                     <div class="card-body">
                         @if(count($cores) !== 0)
                         <table class="table table-hover table-bordered table-light">
-                            <div class="d-flex justify-content-center mb-4">
-                                <a href=""><button type="button" class="btn btn-success rounded-pill"><span>Criar Cor</span></button></a></a>
-                            </div>
                             <thead class="thead-dark">
                                 <tr>
                                     <th>Nome</th>
@@ -52,12 +49,14 @@
                                     <td>
                                         <button class="btn rounded-circle" style="background-color: #{{$cor->code}}; width: 40px; height: 40px"></button>
                                     <td>
-                                        <a href="">
+                                        <a href="{{ route('cor.edit', $cor) }}">
                                         <button type="button" class="btn btn-info rounded-pill">Editar</button>
                                         </a>
-                                        <a href="">
-                                        <button type="button" class="btn btn-danger rounded-pill">Eliminar</button>
-                                        </a>
+                                        <form id="form_delete_cor_{{$cor->code}}" action="{{ route('cor.destroy', $cor) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                                <button type="submit" class="btn btn-danger rounded-pill mt-2"><span>Eliminar</span></button></a></a>
+                                        </form>
                                     </td>
                                 </tr>
                                 @endforeach

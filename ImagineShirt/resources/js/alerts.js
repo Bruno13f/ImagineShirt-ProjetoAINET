@@ -94,3 +94,27 @@ if (deleteAdminCategoryForms) {
         });
     });
 }
+
+const deleteAdminColorForms = document.querySelectorAll("[id^='form_delete_cor_']");
+if (deleteAdminColorForms) {
+    deleteAdminColorForms.forEach(function (deleteForm) {
+        deleteForm.addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+            Swal.fire({
+            title: 'Tem a certeza?',
+            text: "Irá eliminar a cor!",
+            showCancelButton: true,
+            confirmButtonColor: '#218838',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, quero eliminar!',
+            cancelButtonText: 'Cancelar',
+            }).then((result) => {
+                if (result.value) {
+                    event.target.submit();
+                }
+            })
+        });
+    });
+}
