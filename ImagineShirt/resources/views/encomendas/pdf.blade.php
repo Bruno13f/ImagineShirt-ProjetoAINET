@@ -43,7 +43,7 @@
 				<td class="right-align">
 					{{ $encomenda->clientes->user->name }}<br />
 					{{ $encomenda->clientes->user->address }}<br />
-					NIF: {{ $encomenda->clientes->user->nif }}<br />
+					NIF: {{ $encomenda->clientes->nif }}<br />
 					Email: {{ $encomenda->clientes->user->email }}
 				</td>
 			</tr>

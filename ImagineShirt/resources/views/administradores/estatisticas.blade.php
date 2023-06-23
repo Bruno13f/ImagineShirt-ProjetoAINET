@@ -110,75 +110,72 @@
                 </div>
             </div>
         </div>
+
         <div class="col-xl-6 col-md-12 mb-4">
+            <div class="card border-warning shadow h-50 py-2">
+                <div class="card-body">
+                    <h4 class="card-title d-flex justify-content-center mb-4 text-warning">Ganhos Último Mês</h5>
+                </div>
+            </div>
+        </div>
+    
+        <div class="col-xl-3 col-md-12 mb-4">
             <div class="card border-info shadow h-100 py-2">
                 <div class="card-body">
-                    <h4 class="card-title d-flex justify-content-center mb-4 text-info">Últimos usuários registados</h5>
-                    <div class="chart-container" style="max-height: 1000px; overflow-y: auto;">
-                <table class="smaller-table">
-                    </thead>
-                    <tbody>
-                        @foreach ($usersNovos as $user)
-                            @php    
-                                switch($user->user_type){
-                                    case 'A':
-                                        $tipoUser = 'Administrador';
-                                        break;
-                                    case 'E':
-                                        $tipoUser = 'Funcionário';
-                                        break;
-                                    case 'C':
-                                        $tipoUser = 'Cliente';
-                                        break;
-                                }
-                            @endphp
-                            <tr>
-                                <td>
-                                    <img src="{{ $user->fullPhotoUrl }}" class="rounded-circle img-responsive" alt="{{ $user->name }}" style="max-width: 100px; max-height: 100px;">
-                                </td>
-                                <td class="text-center align-middle">
-                                    <span class="font-weight-bold text-uppercase">{{$tipoUser}}</span><br>{{$user->name}}
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                     </div>
+                    <h4 class="card-title d-flex justify-content-center mb-4 text-info">Últimas Contas Registadas</h5>
+                    <div class="chart-container d-flex justify-content-center" style="overflow-y: auto;">
+                        <table class="smaller-table">
+                            <tbody>
+                                @foreach ($usersNovos as $user)
+                                    @php    
+                                        switch($user->user_type){
+                                            case 'A':
+                                                $tipoUser = 'Administrador';
+                                                break;
+                                            case 'E':
+                                                $tipoUser = 'Funcionário';
+                                                break;
+                                            case 'C':
+                                                $tipoUser = 'Cliente';
+                                                break;
+                                        }
+                                    @endphp
+                                    <tr>
+                                        <td>
+                                            <img src="{{ $user->fullPhotoUrl }}" class="rounded-circle img-responsive" alt="{{ $user->name }}" style="max-width: 100px; max-height: 100px;">
+                                        </td>
+                                        <td class="text-center align-middle">
+                                            <span class="font-weight-bold text-uppercase">{{$tipoUser}}</span><br>{{$user->name}}<br>{{$user->created_at}}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-xl-6 col-md-12 mb-4">
+        <div class="col-xl-3 col-md-12 mb-4">
             <div class="card border-info shadow h-100 py-2">
                 <div class="card-body">
                     <h4 class="card-title d-flex justify-content-center mb-4 text-info">Tshirts Mais Vendidas</h5>
-                    <div class="chart-container" style="max-height: 1000px; overflow-y: auto;">
-                <table class="smaller-table">
-                    </thead>
-                    <tbody>
-                    @php
-                        $colocacao = 1;
-                    @endphp
-                    @foreach ($tshirtsvendidas as $tshirt)
-                        <tr>
-                            <td>
-                                <h3>{{$colocacao}}º -</he>
-                            </td>
-                            @php
-                            $colocacao++;
-                            @endphp
-                            <td>
-                                <img src="/storage/tshirt_images/{{ $tshirt->image_url }}" class="img-fluid" alt="{{ $tshirt->name }}" style="max-width: 100px; max-height: 100px;">
-                            </td>
-                            <td class="text-center align-middle">
-                                <span class="font-weight-bold text-uppercase">{{ $tshirt->name }}</span><br>{{ $user->name }}
-                            </td>
-                        </tr>
-                    @endforeach
+                <div class="chart-container d-flex justify-content-center" style="max-height: 1000px; overflow-y: auto;">
+                    <table class="smaller-table">
+                        <tbody>
+                        @foreach ($tshirtsvendidas as $tshirt)
+                            <tr class="d-flex justify-content-center mb-3">
+                                <td class="text-center align-middle">
+                                    <span class="font-weight-bold text-uppercase">{{ $tshirt->name }}<br></span>
+                                    <div class="rounded" style="background-color: #d3d3d3">
+                                        <img src="/storage/tshirt_images/{{ $tshirt->image_url }}" class="img-fluid" alt="{{ $tshirt->name }}" style="max-width: 100px; max-height: 100px;">
+                                    </div>    
+                                </td>
+                            </tr>
+                        @endforeach
 
-                    </tbody>
-                </table>
-                     </div>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -301,16 +298,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
          
 </script>
-
-<style>
-.smaller-table {
-        font-size: 12px;
-        padding: 5px;
-        border:2px;
-    }
-    .smaller-table th,
-    .smaller-table td {
-        padding: 5px;
-    }
-</style>
 @endsection

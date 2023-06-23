@@ -287,14 +287,14 @@ class PaginaUserController extends Controller
             ['label' => 'Funcionários', 'percentage' => $employeePercentage],
         ];
 
-        $usersNovos = User::whereNull('deleted_at')->orderBy('created_at', 'desc')->take(6)->get();
+        $usersNovos = User::whereNull('deleted_at')->orderBy('created_at', 'desc')->take(7)->get();
 
         $tshirtsvendidas = ItensEncomenda::join('tshirt_images', 'order_items.tshirt_image_id', '=', 'tshirt_images.id')
         ->select('tshirt_images.name','tshirt_images.image_url', 'order_items.tshirt_image_id', DB::raw('COUNT(*) as numtshirtsvendidas'))
         ->groupBy('order_items.tshirt_image_id', 'tshirt_images.name')
         ->whereNull('customer_id')
         ->orderByDesc('numtshirtsvendidas')
-        ->take(6)
+        ->take(5)
         ->get();
 
         return view('administradores.estatisticas', compact('user','orderNum','clientCount','totalSumMes','totalSumAno','earningsData','clientData','usersNovos','tshirtsvendidas'));

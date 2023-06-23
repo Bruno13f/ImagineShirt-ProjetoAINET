@@ -19,7 +19,7 @@ class ItensEncomenda extends Model
     }
 
     public function tshirts(): BelongsTo{
-        return $this->belongsTo(TShirts::class, 'tshirt_image_id', 'id');
+        return $this->belongsTo(TShirts::class, 'tshirt_image_id', 'id')->withTrashed();
     }
 
     public function encomendas(): BelongsTo{
