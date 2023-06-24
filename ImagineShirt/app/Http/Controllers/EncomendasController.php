@@ -30,8 +30,6 @@ class EncomendasController extends Controller
 
         $pesquisaFiltro = $request->pesquisa ?? '';
 
-        $flag = false;
-
         if ($pesquisaFiltro !== ''){
 
             // como customer id = user id faz se logo o join
@@ -41,12 +39,10 @@ class EncomendasController extends Controller
                 $queryEncomendas->where('id','=',$pesquisaFiltro);
 
             }else{
-                $flag = true;
-                $queryEncomendas->select('orders.id as order_id', 'status', 'customer_id', 'total_price', 'orders.created_at as created','users.name as name', 'users.email as email')->join('users','users.id','orders.customer_id')
-                ->where(function ($query) use ($pesquisaFiltro) {
-                    $query->where('users.name', 'LIKE', '%' . $pesquisaFiltro . '%')
-                        ->orWhere('users.email', 'LIKE', '%' . $pesquisaFiltro . '%');
-                });
+
+                $queryEncomendas->join('users','users.id','orders.customer_id')
+                ->where('users.name','LIKE',"%$pesquisaFiltro%")
+                ->orWhere('users.email','LIKE',"%$pesquisaFiltro%");
             }
         }
 
@@ -60,44 +56,24 @@ class EncomendasController extends Controller
 
         if (str_contains($ordenarFiltro,'date')){
             $ordenarArray = preg_split("/[_\s:]/",$ordenarFiltro);
-            $queryEncomendas->orderBy('orders.created_at',$ordenarArray[1]);
+            $queryEncomendas->orderBy('created_at',$ordenarArray[1]);
         }elseif(str_contains($ordenarFiltro,'prec')){
             $ordenarArray = preg_split("/[_\s:]/",$ordenarFiltro);
             $queryEncomendas->orderBy('total_price',$ordenarArray[1]);
         }
 
-        // Devido à consulta pelo nome/email cliente necessário dar select - devido a colunas ambíguas
-
-        if($user->user_type == 'A'){
-
-            if ($flag){
-                $encomendas = $queryEncomendas->paginate(15);
-            }else{
-                $encomendas = $queryEncomendas->select('orders.id as order_id', 'status', 'customer_id', 'total_price', 'orders.created_at as created','users.name as name', 'users.email as email')->join('users','users.id','orders.customer_id')->paginate(15);
-            }
         
+        if($user->user_type == 'A'){
+            $encomendas = $queryEncomendas->paginate(15);
         }
 
         if($user->user_type == 'E'){
-
-            if (!$flag){
-                $queryEncomendas->select('orders.id as order_id', 'status', 'customer_id', 'total_price', 'orders.created_at as created','users.name as name', 'users.email as email')->join('users','users.id','orders.customer_id');
-            }
-
-            $encomendas = $queryEncomendas->whereIn('status', ['pending', 'paid'])->paginate(15);
+            $encomendas = $queryEncomendas->where('status','=','pending')->orwhere('status','=','paid')
+            ->paginate(15);
         }
 
         if($user->user_type == 'C'){
-
-            $queryEncomendas->where('customer_id', '=', $user->id);
-
-            if ($flag){
-                $encomendas = $queryEncomendas->paginate(15);
-            }else{
-                $encomendas = $queryEncomendas->select('orders.id as order_id', 'status', 'customer_id', 'total_price', 'orders.created_at as created','users.name as name', 'users.email as email')->join('users','users.id','orders.customer_id')->paginate(15);
-            }
-
-            
+            $encomendas = $queryEncomendas->where('customer_id', '=', $user->id)->paginate(15);
         }
 
         return view('encomendas.index', compact('encomendas','user','pesquisaFiltro','ordenarFiltro','selecionarFiltro'));

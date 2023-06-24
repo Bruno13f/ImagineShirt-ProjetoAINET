@@ -19,7 +19,7 @@
               </div>
               <div class="col md-4 d-flex justify-content-end">
                 <a href="{{ route('encomendas') }}"><button type="button" class="btn rounded-pill mr-2" style="background-color: #e63334;"><span style="color: white;">Voltar</span></button></a>
-                @if($encomenda->status == 'closed' || $encomenda->status == 'canceled')
+                @if($encomenda->status != 'pending')
                 <a href="{{ route('encomendas.recibo', $encomenda) }}"><button type="button" class="btn rounded-pill" style="background-color: #e63334;"><span style="color: white;">Recibo</span></button></a>
                 @endif  
               </div>

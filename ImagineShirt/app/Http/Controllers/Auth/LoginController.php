@@ -59,7 +59,7 @@ class LoginController extends Controller
     protected function isUserBlocked(array $credentials)
     {
         
-        $user = User::where('email', 'LIKE' ,$credentials['email'])->withTrashed()->first();
+        $user = User::where('email', 'LIKE' ,$credentials['email'])->first();
 
         return ($user->blocked === 1);
     }    
