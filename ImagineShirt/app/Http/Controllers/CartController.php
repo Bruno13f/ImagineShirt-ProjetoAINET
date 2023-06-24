@@ -29,6 +29,8 @@ class CartController extends Controller
 
     public function checkout(){
 
+        $this->authorize('checkout', TShirts::class);
+
         $user = Auth::user();
         $cart = session('cart', []);
 
@@ -93,6 +95,10 @@ class CartController extends Controller
 
     public function updateCart(Request $request): RedirectResponse{
 
+        if (!is_null(Auth::user())){
+            $this->authorize('updateCart', TShirts::class);
+        }
+
         $parametros = $request->all();
 
         // token e metodo
@@ -125,6 +131,8 @@ class CartController extends Controller
     }
 
     public function store(CheckoutRequest $request): RedirectResponse{
+
+        $this->authorize('createOrder', TShirts::class);
 
         $user = $request->user();
         $tipoUser = $user->user_type;
@@ -205,6 +213,8 @@ class CartController extends Controller
             $newOrder->total_price = $precoTotal;
             $newOrder->save();
 
+            $request->session()->forget('cart');
+
             Alert::success('Encomenda criada!','Verifique no seu perfil o estado!');
             return redirect()->route('root');
         }
@@ -212,6 +222,10 @@ class CartController extends Controller
     }
 
     public function removeFromCart(Request $request, TShirts $t_shirt): RedirectResponse{
+
+        if (!is_null(Auth::user())){
+            $this->authorize('removeFromCart', TShirts::class);
+        }
 
         $cart = session('cart', []);
 
@@ -226,6 +240,10 @@ class CartController extends Controller
 
     public function destroy(Request $request): RedirectResponse
     {
+
+        if (!is_null(Auth::user())){
+            $this->authorize('removeCart', TShirts::class);
+        }
 
         $cart = session('cart', []);
 

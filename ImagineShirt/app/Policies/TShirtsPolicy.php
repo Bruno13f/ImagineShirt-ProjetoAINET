@@ -84,5 +84,28 @@ class TShirtsPolicy
         return $user->user_type == 'C';
     }
     
+    public function updateCart(User $user): bool
+    {
+        return $user->user_type == 'C';
+    }
     
+    public function createOrder(User $user): bool
+    {
+        return $user->user_type == 'C';
+    }
+
+    public function removeFromCart(User $user): bool
+    {
+        return $user->user_type == 'C';
+    }
+
+    public function removeCart(User $user): bool
+    {
+        return $user->user_type == 'C';
+    }
+
+    public function checkout(User $user): bool
+    {
+        return $user->user_type == 'C';
+    }
 }
