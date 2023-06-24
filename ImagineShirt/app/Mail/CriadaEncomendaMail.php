@@ -24,13 +24,13 @@ class CriadaEncomendaMail extends Mailable
      * @return $this
      */
     public function build()
-{
-    return $this->view('email.confirmarEncomenda')
-        ->subject('Recibo Encomenda Mail')
+    {
+        return $this->view('email.confirmarEncomenda')
+        ->subject('Encomenda Confirmada')
         ->with([
             'encomenda' => $this->encomenda,
         ]);
-}
+    }
 
 
     /**

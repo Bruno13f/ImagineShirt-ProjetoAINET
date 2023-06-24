@@ -78,7 +78,7 @@ class CartController extends Controller
 
                         $request->session()->put('cart', $cart);
                         Alert::success('T-Shirt adicionada!','Foi adicionada a t-shirt ao carrinho!');
-                        return back();
+                        return redirect()->route('cart.show');
                     }
                 }
             }
@@ -93,7 +93,7 @@ class CartController extends Controller
             
             $request->session()->put('cart', $cart);
             Alert::success('T-Shirt adicionada!','Foi adicionada a t-shirt ao carrinho!');
-            return back();
+            return redirect()->route('cart.show');
             
             
 
@@ -239,7 +239,7 @@ class CartController extends Controller
 
             Mail::to($newOrder->clientes->user->email)->send($email);
 
-            Alert::success('Encomenda criada!','Verifique no seu perfil o estado!');
+            Alert::success('Encomenda criada!','Foi enviado email com informação da encomenda!');
             return redirect()->route('root');
         }
         

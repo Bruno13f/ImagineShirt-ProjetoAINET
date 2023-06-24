@@ -15,6 +15,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\FechadaEncomendaMail;
+use App\Mail\CanceladaEncomendaMail;
 
 class EncomendasController extends Controller
 {
@@ -151,6 +152,11 @@ class EncomendasController extends Controller
                 break;
             default:
                 $status = $request->status;
+        }
+
+        if ($status == 'canceled'){
+            $email = new CanceladaEncomendaMail($encomenda);
+            Mail::to($encomenda->clientes->user->email)->send($email);
         }
 
         $encomenda->status = $status;

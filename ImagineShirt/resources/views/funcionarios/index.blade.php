@@ -57,8 +57,10 @@
                             </div>
                         </div>
                     </div>
+                    @include('users.shared.fields_password')
                 </div>
             </div>
+            
         </div>
     </div>
 

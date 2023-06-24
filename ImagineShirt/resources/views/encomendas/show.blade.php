@@ -19,7 +19,7 @@
               </div>
               <div class="col md-4 d-flex justify-content-end">
                 <a href="{{ route('encomendas') }}"><button type="button" class="btn rounded-pill mr-2" style="background-color: #e63334;"><span style="color: white;">Voltar</span></button></a>
-                @if($encomenda->status == 'closed' || $encomenda->status == 'canceled')
+                @if($encomenda->status != 'pending')
                 <a href="{{ route('encomendas.recibo', $encomenda) }}"><button type="button" class="btn rounded-pill" style="background-color: #e63334;"><span style="color: white;">Recibo</span></button></a>
                 @endif  
               </div>
@@ -34,6 +34,7 @@
                     $catalogo_tshirt = 0;
                 @endphp
                 @foreach ($encomenda->itensEncomenda as $item)
+        
                 <div class="card shadow-0 border mb-4">
                     <div class="card-body">
                     <div class="row">
@@ -74,6 +75,22 @@
                         @endphp
                     @endif
                 @endforeach
+                @php    
+                    switch($encomenda->status){
+                    case 'pending':
+                        $status = 'Pendente';
+                        break;
+                    case 'closed':
+                        $status = 'Fechada';
+                        break;
+                    case 'paid':
+                        $status = 'Paga';
+                        break;
+                    case 'canceled':
+                        $status = 'Cancelada';
+                        break;
+                    }
+                @endphp
                 <div class="d-flex justify-content-between pt-2">
                     <p class="fw-bold mb-0 h6">Detalhes da encomenda {{$encomenda->id}}</p>
                     <p class="text-muted mb-0"><span class="fw-bold me-1">Total sem desconto</span>{{$encomenda->total_price + (($catalogo_tshirt * $descontos['descontocatalogo'])+($customer_tshirt * $descontos['descontoown']))}}€</p>
@@ -87,7 +104,7 @@
                     <p class="text-muted mb-0"><span class="fw-bold me-1">Total</span>{{ $encomenda->total_price }} €</p>
                 </div>
                 <div class="d-flex justify-content-between pt-2">
-                    <p class="text-muted mb-0"><span class="fw-bold me-1">Status:</span>{{ $encomenda->status }}</p>
+                    <p class="text-muted mb-0"><span class="fw-bold me-1">Status:</span>{{ $status }}</p>
                 </div>
                 <div class="d-flex justify-content-between pt-2">
                     <p class="text-muted mb-0"><span class="fw-bold me-1">Método de Pagamento:</span>
@@ -105,7 +122,7 @@
                     <p class="text-muted mb-0"><span class="fw-bold me-1">Notas:</span>{{ empty($encomenda->notes) ? 'Sem Notas' : $encomenda->notes }}</p>
                 </div>
                 <div class="d-flex justify-content-between pt-2 mb-2">
-                    <p class="text-muted mb-0"><span class="fw-bold me-1">Endereço de envio:</span>{{ $encomenda->address }}</p>
+                    <p class="text-muted mb-0"><span class="fw-bold me-1">Morada de envio:</span>{{ $encomenda->address }}</p>
                 </div>
           </div>
         </div>

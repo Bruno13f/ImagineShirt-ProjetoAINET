@@ -137,7 +137,7 @@
                                         @endcan
                                         <td>{{ $encomenda->total_price }} €</td>
                                         <td>
-                                        @if($encomenda->status == 'closed' || $encomenda->status == 'canceled')
+                                        @if($encomenda->status != 'closed')
                                         <a href="{{ route('encomendas.pdf', $encomenda->order_id) }}"><button type="button" class="btn btn-info rounded-pill"><span>Descarregar PDF</span></button></a>
                                         @endif
                                         <a href="{{ route('encomendas.show', $encomenda->order_id) }}"><button type="button" class="btn btn-info rounded-pill"><span>Detalhes</span></button></a>

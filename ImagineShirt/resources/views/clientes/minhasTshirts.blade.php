@@ -3,7 +3,7 @@
                                         'active3' => '',
                                         'active4' => '']]) 
 
-@section('titulo',' | Editar Cliente')
+@section('titulo',' | Próprias T-Shirts')
 
 @section('main')
     <!-- Breadcrumb Section Begin -->
@@ -73,7 +73,11 @@
                                         <td>{{$tshirt->created_at}}</td>
                                         <td>
                                             <a href="{{route('t-shirts.edit', $tshirt)}}"><button type="button" class="btn btn-info rounded-pill"><span>Editar</span></button></a>
-                                            <a href="{{route('t-shirts.destroy', $tshirt->slug)}}"><button type="button" class="btn btn-danger rounded-pill"><span>Eliminar</span></button></a>
+                                            <form id="form_delete_tshirt" action="{{ route('t-shirts.destroy', $tshirt->slug) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" form="form_delete_tshirt" class="btn btn-danger rounded-pill"><span>Eliminar</span></button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

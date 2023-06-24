@@ -220,7 +220,12 @@ class TShirtsController extends Controller
 
         Alert::success('Eliminada com sucesso!', $htmlMessage);
 
-        return redirect()->route('t-shirts', $t_shirt->slug);
+        if (is_null($t_shirt->customer_id)){
+            return redirect()->route('t-shirts', $t_shirt->slug);
+        }else{
+            return redirect()->route('user.gerirMinhasTShirts', Auth::user());
+        }
+  
     }
 
     public function create(): View{

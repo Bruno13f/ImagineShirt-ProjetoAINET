@@ -52,7 +52,7 @@
                                         $tipoUser = 'Administrador';
                                         break;
                                     case 'E':
-                                        $tipoUser = 'Funcionario';
+                                        $tipoUser = 'Funcionário';
                                         break;
                                     case 'C':
                                         $tipoUser = 'Cliente';

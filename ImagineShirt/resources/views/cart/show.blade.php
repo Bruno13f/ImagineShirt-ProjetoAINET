@@ -156,14 +156,8 @@
                         </table>
                     </div>
                     <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-4 d-flex justify-content-start" style="align-items: center">
-                                <button type="button" form="formUpdate" name="ok" class="btn btn-dark btn-square btn-lg rounded-0 d-flex justify-content-center" style="background-color:black"
-                    onclick="document.forms[{{is_null(Auth::user()) ? '0' : '2'}}].submit()">
-                                <span class="carrinhoBtn">Atualizar Carrinho</span>
-                                </button>
-                        </div>
                         <!-- </form> -->
-                        <div class="col-lg-4 col-md-4 col-sm-4 d-flex justify-content-center" style="align-items: center">
+                        <div class="col-lg-6 col-md-4 col-sm-4 d-flex justify-content-center" style="align-items: center">
                             <form id="formDeleteCart" method="POST" action="{{ route('cart.destroy') }}">
                                 @csrf
                                 @method('DELETE')
@@ -172,7 +166,7 @@
                                 </button>
                             </form>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 d-flex justify-content-end" style="align-items: center">
+                        <div class="col-lg-6 col-md-4 col-sm-4 d-flex justify-content-center" style="align-items: center">
                             <a href="{{route('cart.checkout')}}"><button type="submit" form="formStore" name="ok" class="btn btn-dark btn-square btn-lg rounded-0 d-flex justify-content-center" style="background-color:black">
                                 <span class="carrinhoBtn">Confirmar Carrinho</span>
                             </button></a>

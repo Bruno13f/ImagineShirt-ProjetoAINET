@@ -4,7 +4,7 @@
                                         'active4' => '']])
 
 
-@section('titulo',' | T-Shirts')
+@section('titulo',' | Editar T-Shirt')
 
 @section('main')
 

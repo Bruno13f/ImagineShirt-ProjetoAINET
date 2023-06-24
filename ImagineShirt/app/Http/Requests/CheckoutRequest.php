@@ -35,6 +35,9 @@ class CheckoutRequest extends FormRequest
             case 'PAYPAL':
                 $ruleRefPagamento = 'required_with:default_payment_type|email';
                 break;
+            default:
+                $ruleRefPagamento = 'nullable';
+                break;
         }
 
         return [

@@ -74,11 +74,10 @@ class CategoriasController extends Controller
         
         $nome = $categoria->name;
 
-        // colocar campo null todas t-shirts com o mesmo id
         if (count($categoria->tshirts) != 0){
             $categoria->delete();
         }else{
-            $categoroia->forceDelete();
+            $categoria->forceDelete();
         }
 
         Alert::success('Eliminada com sucesso!', 'A categoria '.$nome.' foi eliminada!');

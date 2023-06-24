@@ -18,10 +18,26 @@
 				<td class="title">
 					<img src="{{ asset('img/logo.png') }}" style="width: 100%; max-width: 300px" />
 				</td>
+				@php    
+                    switch($encomenda->status){
+                    case 'pending':
+                        $status = 'Pendente';
+                        break;
+                    case 'closed':
+                        $status = 'Fechada';
+                        break;
+                    case 'paid':
+                        $status = 'Paga';
+                        break;
+                    case 'canceled':
+                        $status = 'Cancelada';
+                        break;
+                    }
+                @endphp
 				<td class="right-align">
 					ID da Encomenda: {{ $encomenda->id }}<br />
 					Criada a: {{$encomenda->date}}<br />
-					Status: {{$encomenda->status}}<br />
+					Status: {{$status}}<br />
 				</td>
 			</tr>
 		</table>

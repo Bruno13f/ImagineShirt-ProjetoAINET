@@ -143,7 +143,7 @@ if (deleteCartForm) {
     });
 }
 
-const deleteCartTshirtForm = document.querySelectorAll("[id^='form_delete_tshirt_']");
+const deleteCartTshirtForm = document.querySelectorAll("[id^='formDeleteTshirt_']");
 if (deleteCartTshirtForm) {
     deleteCartTshirtForm.forEach(function (deleteForm) {
         deleteForm.addEventListener("submit", function (event) {
@@ -176,7 +176,7 @@ if (formpesquisa){
     var url = new URL(window.location.href);
     var pesquisa = form.elements.pesquisa.value;
     // reset pagina
-    url.searchParams.set('page', '1');
+    url.searchParams.set('pagina', '1');
 
     if (pesquisa) {
         url.searchParams.set('pesquisa', pesquisa);

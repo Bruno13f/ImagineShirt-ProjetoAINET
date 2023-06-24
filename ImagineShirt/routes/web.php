@@ -90,6 +90,8 @@ Route::middleware('auth')->group(function (){
         Route::get('/encomendas/{encomenda}/detalhes', [EncomendasController::class, 'show'])->name('encomendas.show');
         Route::get('/encomendas/{encomenda}/recibo', [EncomendasController::class, 'showRecibo'])->name('encomendas.recibo');
         Route::patch('/encomendas/{encomenda}/status', [EncomendasController::class, 'changeStatus'])->name('encomendas.changeStatus');
+        Route::post('/password/change', [ChangePasswordController::class, 'store'])->name('password.change.store');
+        Route::get('/password/change', [ChangePasswordController::class, 'show'])->name('password.change.show');
 
         Route::get('tshirt-images-user/{nome_tshirt}-{user_id}/{image_url}',[TShirtsController::class, 'imagemCliente'])->name('imagem_user');
     });
@@ -102,8 +104,6 @@ Route::middleware('adminOrCustomer')->group(function (){
         Route::get('/user/{user}/edit', [PaginaUserController::class, 'edit'])->name('user.edit');
         Route::put('/user/{user}/update', [PaginaUserController::class, 'update'])->name('user.update');
         Route::delete('/user/{user}/foto', [PaginaUserController::class, 'destroy_foto'])->name('user.foto.destroy');
-        Route::post('/password/change', [ChangePasswordController::class, 'store'])->name('password.change.store');
-        Route::get('/password/change', [ChangePasswordController::class, 'show'])->name('password.change.show');
 
         Route::get('t-shirts/create', [TShirtsController::class, 'create'])->name('t-shirts.create');
         Route::post('/t-shirts/store', [TShirtsController::class, 'store'])->name('t-shirts.store');

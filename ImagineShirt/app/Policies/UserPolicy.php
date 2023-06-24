@@ -17,7 +17,7 @@ class UserPolicy
 
     public function alterarPasse(User $user): bool
     {
-        return $user->user_type == 'A' || $user->user_type == 'C';
+        return $user->user_type == 'A' || $user->user_type == 'C' || $user->user_type == 'E';
     }
 
     public function verPropriasTShirts(User $user): bool

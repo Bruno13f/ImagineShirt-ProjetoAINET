@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Http\Requests\ChangePasswordRequest;
 use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ChangePasswordController extends Controller
 {
@@ -29,6 +30,9 @@ class ChangePasswordController extends Controller
                 break;
             case 'A':
                 $tipoUser = "Administrador";
+                break;
+            case 'E':
+                $tipoUser = "Funcionário";
                 break;
         }
         
