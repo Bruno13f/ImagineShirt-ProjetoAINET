@@ -118,9 +118,14 @@ class CartController extends Controller
 
         foreach($tshirts as $id){
             if (array_key_exists($id, $cart)){
-                $cart[$id]["1"] = $parametros['color_'.$id];
-                $cart[$id]["2"] = $parametros['tamanho_'.$id];
-                $cart[$id]["3"] = $parametros['qty_'.$id];
+
+                if ($parametros['qty_'.$id] == 0){
+                    unset($cart[$id]);
+                }else{
+                    $cart[$id]["1"] = $parametros['color_'.$id];
+                    $cart[$id]["2"] = $parametros['tamanho_'.$id];
+                    $cart[$id]["3"] = $parametros['qty_'.$id];
+                }
             }
         }
 

@@ -22,25 +22,61 @@ class EncomendasController extends Controller
         $this->authorizeResource(User::class, 'encomenda');
     }
 
-    public function index(): View{
+    public function index(Request $request): View{
 
         $user = Auth::user();
+
+        $queryEncomendas = Encomendas::query();
+
+        $pesquisaFiltro = $request->pesquisa ?? '';
+
+        if ($pesquisaFiltro !== ''){
+
+            // como customer id = user id faz se logo o join
+
+            if(preg_match('/^([0-9]+)$/', $pesquisaFiltro)){
+                
+                $queryEncomendas->where('id','=',$pesquisaFiltro);
+
+            }else{
+
+                $queryEncomendas->join('users','users.id','orders.customer_id')
+                ->where('users.name','LIKE',"%$pesquisaFiltro%")
+                ->orWhere('users.email','LIKE',"%$pesquisaFiltro%");
+            }
+        }
+
+        $selecionarFiltro = $request->selecionar ?? 'todas';
+
+        if ($selecionarFiltro != 'todas'){
+            $queryEncomendas->where('status','LIKE',$selecionarFiltro);
+        }
+
+        $ordenarFiltro = $request->ordenar ?? 'date_desc';
+
+        if (str_contains($ordenarFiltro,'date')){
+            $ordenarArray = preg_split("/[_\s:]/",$ordenarFiltro);
+            $queryEncomendas->orderBy('date',$ordenarArray[1]);
+        }elseif(str_contains($ordenarFiltro,'prec')){
+            $ordenarArray = preg_split("/[_\s:]/",$ordenarFiltro);
+            $queryEncomendas->orderBy('total_price',$ordenarArray[1]);
+        }
+
         
         if($user->user_type == 'A'){
-            $encomendas = Encomendas::orderByDesc('date')->paginate(15);
+            $encomendas = $queryEncomendas->paginate(15);
         }
 
         if($user->user_type == 'E'){
-            $encomendas = Encomendas::where('status','=','pending')->orwhere('status','=','paid')
-            ->orderByDesc('date')->paginate(15);
+            $encomendas = $queryEncomendas->where('status','=','pending')->orwhere('status','=','paid')
+            ->paginate(15);
         }
 
         if($user->user_type == 'C'){
-
-            $encomendas = Encomendas::where('customer_id', '=', $user->id)->orderByDesc('date')->paginate(15);
+            $encomendas = $queryEncomendas->where('customer_id', '=', $user->id)->paginate(15);
         }
 
-        return view('encomendas.index', compact('encomendas','user'));
+        return view('encomendas.index', compact('encomendas','user','pesquisaFiltro','ordenarFiltro','selecionarFiltro'));
     }
 
     public function generatePDF(Encomendas $encomenda): BinaryFileResponse

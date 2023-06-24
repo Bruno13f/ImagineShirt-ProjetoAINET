@@ -114,7 +114,6 @@
                                             <option {{ old('ordenar', $ordenarFiltro) == 'rec_asc' ? 'selected' : '' }} value="rec_asc">Mais Antigo</option>
                                             <option {{ old('ordenar', $ordenarFiltro) == 'name_asc' ? 'selected' : '' }} value="name_asc">Nome (Ascendente)</option>
                                             <option {{ old('ordenar', $ordenarFiltro) == 'name_desc' ? 'selected' : '' }} value="name_desc">Nome (Descendente)</option>
-
                                         </select>
                                     </form>
                                 </div>
@@ -177,7 +176,7 @@
         var url = new URL(window.location.href);
         var pesquisa = form.elements.pesquisa.value;
         // reset pagina
-        url.searchParams.set('pagina', '1');
+        url.searchParams.set('page', '1');
 
         if (pesquisa) {
             url.searchParams.set('pesquisa', pesquisa);
@@ -188,6 +187,7 @@
         window.location.href = url.href;
         });
     }
+    
     
 
     function updateQuery (){
