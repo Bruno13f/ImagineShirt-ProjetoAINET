@@ -23,8 +23,10 @@
         </div>
     </div>
 </section>
+
+@include('administradores.shared.fields_filtrar', ['encomendas' => false])
     <!-- Breadcrumb Section End -->
-<div class="row mb-5 mt-4 justify-content-center" >
+<div class="row mb-5 mt-1 justify-content-center" >
     <div class="col-10">
         <div class="tab-content">
             <div class="tab-pane fade show active" id="users" role="tabpanel">
@@ -101,4 +103,17 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    function updateQuery (string){
+        let query = window.location.search;  // parametros url
+        let parametros = new URLSearchParams(query);
+        parametros.delete(string);  // se ja existir delete
+        parametros.append(string, document.getElementById(string).value); // adicionar ordenação
+        document.location.href = "?" + parametros.toString(); // refresh
+    }
+
+</script>
+
 @endsection

@@ -159,11 +159,35 @@ class PaginaUserController extends Controller
         return Auth::user() == $user ? redirect()->route('user', $user) : redirect()->route('user.gerirUsers', Auth::user());
     }
 
-    public function showUsers(User $user): View{
+    public function showUsers(Request $request, User $user): View{
 
-        $utilizadores = User::whereNull('deleted_at')->orderByDesc('user_type')->paginate(15);
+        $queryUsers = User::query();
 
-        return view('administradores.users', compact('user','utilizadores'));
+        $selecionarFiltro = $request->selecionar ?? 'todas';
+
+        if ($selecionarFiltro != 'todos'){
+            $queryUsers->where('user_type',$selecionarFiltro);
+        }
+
+        $ordenarFiltro = $request->ordenar ?? 'date_desc';
+
+        if (str_contains($ordenarFiltro,'date')){
+            $ordenarArray = preg_split("/[_\s:]/",$ordenarFiltro);
+            $queryUsers->orderBy('created_at',$ordenarArray[1]);
+        }
+
+        $pesquisaFiltro = $request->pesquisa ?? '';
+
+        if ($pesquisaFiltro !== ''){
+
+            $queryUsers->where('name','LIKE',"%$pesquisaFiltro%")
+            ->orWhere('email','LIKE',"%$pesquisaFiltro%");
+        }
+
+
+        $utilizadores = $queryUsers->whereNull('deleted_at')->paginate(15);
+
+        return view('administradores.users', compact('user','utilizadores','pesquisaFiltro','selecionarFiltro','ordenarFiltro'));
     }
 
     public function showMinhasTShirts(User $user): View{

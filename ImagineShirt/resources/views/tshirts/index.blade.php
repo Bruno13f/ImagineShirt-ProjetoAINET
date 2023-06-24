@@ -166,30 +166,7 @@
     </section>
     <!-- Shop Section End -->
     <script>
-
-    let formpesquisa =  document.getElementById('pesquisa-form');   
-    if (formpesquisa){
-        document.getElementById('pesquisa-form').addEventListener('submit', function(e) {
-        e.preventDefault(); // Impede o envio do formulário
-
-        var form = this;
-        var url = new URL(window.location.href);
-        var pesquisa = form.elements.pesquisa.value;
-        // reset pagina
-        url.searchParams.set('page', '1');
-
-        if (pesquisa) {
-            url.searchParams.set('pesquisa', pesquisa);
-        } else {
-            url.searchParams.delete('pesquisa');
-        }
-
-        window.location.href = url.href;
-        });
-    }
     
-    
-
     function updateQuery (){
         let query = window.location.search;  // parametros url
         let parametros = new URLSearchParams(query);
