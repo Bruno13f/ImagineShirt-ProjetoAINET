@@ -69,21 +69,26 @@ class CartController extends Controller
 
             $cart = session('cart', []);
 
-            if (array_key_exists($t_shirt->id, $cart) && $cart[$t_shirt->id][2] == $request->size) {
+            if (count($cart) != 0){
+                foreach($cart as $key => $cartItem){
+                    if ($cartItem[0]->id == $t_shirt->id && $cartItem[1] == $request->color_code && $cartItem[2] == $request->size){
+                        $cart[$key][3] += $request->qty;
 
-                Alert::info('T-Shirt com o mesmo tamanho já no carrinho','Não é possivel adicionar a mesma t-shirt com o mesmo tamanho no carrinho');
-                return back();
-
-            } else {
-
-                $itemCart = array($t_shirt,$request->color_code,$request->size,$request->qty);
-
-                $cart[$t_shirt->id] = $itemCart;
-                
-                $request->session()->put('cart', $cart);
-                Alert::success('T-Shirt adicionada!','Foi adicionada a t-shirt ao carrinho!');
-                return back();
+                        $request->session()->put('cart', $cart);
+                        Alert::success('T-Shirt adicionada!','Foi adicionada a t-shirt ao carrinho!');
+                        return back();
+                    }
+                }
             }
+
+            $itemCart = array($t_shirt,$request->color_code,$request->size,$request->qty);
+
+            $cart[] = $itemCart;
+            
+            $request->session()->put('cart', $cart);
+            Alert::success('T-Shirt adicionada!','Foi adicionada a t-shirt ao carrinho!');
+            return back();
+            
             
 
         }catch(\Exception $error){
@@ -107,27 +112,11 @@ class CartController extends Controller
             return back();
         }
 
-        foreach ($parametros as $key => $value) {
-            if (strpos($key, 'qty_') === 0) {
-                $id = substr($key, strlen('qty_'));
-                $tshirts[] = $id;
-            }
-        }
-
         $cart = session('cart', []);
 
-        foreach($tshirts as $id){
-            if (array_key_exists($id, $cart)){
-
-                if ($parametros['qty_'.$id] == 0){
-                    unset($cart[$id]);
-                }else{
-                    $cart[$id]["1"] = $parametros['color_'.$id];
-                    $cart[$id]["2"] = $parametros['tamanho_'.$id];
-                    $cart[$id]["3"] = $parametros['qty_'.$id];
-                }
-            }
-        }
+        $cart[$request->id]["1"] = $request->color_code;
+        $cart[$request->id]["2"] = $request->size;
+        $cart[$request->id]["3"] = $request->qty;
 
         session()->put('cart', $cart);
 
@@ -234,9 +223,7 @@ class CartController extends Controller
 
         $cart = session('cart', []);
 
-        if (array_key_exists($t_shirt->id, $cart)) {
-            unset($cart[$t_shirt->id]);
-        }
+        unset($cart[$request->id]);
 
         $request->session()->put('cart', $cart);
         Alert::success('Removida com sucesso','A t-shirt foi removida do carrinho!');

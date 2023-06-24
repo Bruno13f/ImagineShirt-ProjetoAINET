@@ -32,9 +32,9 @@
             <div class="row">
                 @if(!empty($cart))
                 <div class="col-lg-12">
-                    <form id="formUpdate" method="POST" action="{{ route('cart.update') }}">
+                    <!-- <form id="formUpdate" method="POST" action="{{ route('cart.update') }}">
                     @csrf
-                    @method('PUT')
+                    @method('PUT') -->
                     <div class="shopping__cart__table">
                         <table>
                             <thead>
@@ -52,9 +52,14 @@
                                     $precoTotal = 0;
                                     $num_cliente_disc = 0;
                                     $num_loja_disc = 0;
+                                    $counter = 0;
                                 @endphp
 
                                 @foreach ($cart as $cartItem)
+
+                                <form id="formAddTshirt_{{$cartItem[0]->id}}_{{$cartItem[1]}}_{{$cartItem[2]}}_{{$cartItem[3]}}" method="POST" action="{{ route('cart.update')}}">
+                                @csrf
+                                @method('PUT')
                                 <tr>
                                     <td class="product__cart__item">
                                         <div class="product__cart__item__pic">
@@ -74,13 +79,13 @@
                                     <td class="quantity__item">
                                         <div class="quantity">
                                             <div class="pro-qty-2">
-                                                <input name="qty_{{$cartItem[0]->id}}" id="quantidade_{{$cartItem[0]->id}}" type="text" value="{{$cartItem[3]}}">
+                                                <input name="qty" id="quantidade" type="text" value="{{$cartItem[3]}}">
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <select class="" name="tamanho_{{$cartItem[0]->id}}" id="inputTamanho_{{$cartItem[0]->id}}">
+                                            <select class="" name="size" id="inputSize">
                                                 @foreach($tamanhos as $tamanho)
                                                     <option value="{{$tamanho}}" {{$tamanho == $cartItem[2] ? 'selected' : '' }}>{{$tamanho}}</option>
                                                 @endforeach
@@ -89,16 +94,26 @@
                                     </td>
                                     <td>
                                     <div class="form-group">
-                                        <select class="" name="color_{{$cartItem[0]->id}}" id="inputColor_{{$cartItem[0]->id}}">
+                                        <select class="" name="color_code" id="inputColorCode">
                                             @foreach ($cores as $cor)
                                                 <option value="{{$cor->code}}" {{$cor->code == $cartItem[1] ? 'selected' : '' }}>{{$cor->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     </td>
+                                    <input type="hidden" value="{{$counter}}" name="id">
                                     <td class="cart__price">{{$preco * $cartItem[3]}} €</td>
+                                    <td class="cart__close"><button type="submit" name="ok" form="formAddTshirt_{{$cartItem[0]->id}}_{{$cartItem[1]}}_{{$cartItem[2]}}_{{$cartItem[3]}}" class="btn rounded-pill"><i class="fa fa-refresh" aria-hidden="true"></i></button></td>
+                                    </form>
+                                    <form id="formDeleteTshirt_{{$cartItem[0]->id}}_{{$cartItem[1]}}_{{$cartItem[2]}}_{{$cartItem[3]}}" method="POST" action="{{ route('cart.remove', $cartItem[0]) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" value="{{$counter}}" name="id">
+                                    <td class="cart__close"><button type="submit" name="clear" form="formDeleteTshirt_{{$cartItem[0]->id}}_{{$cartItem[1]}}_{{$cartItem[2]}}_{{$cartItem[3]}}" class="btn rounded-pill"><i class="fa fa-close"></i></button></td>
+                                    </form>
                                 </tr>
                                 @php
+                                    $counter += 1;
                                     $precoTotal += $preco * $cartItem[3];
                                 
                                     if (is_null($cartItem[0]->customer_id) && $cartItem[3] >= $precos[0]['qty_discount']){
@@ -148,7 +163,7 @@
                                 <span class="carrinhoBtn">Atualizar Carrinho</span>
                                 </button>
                         </div>
-                        </form>
+                        <!-- </form> -->
                         <div class="col-lg-4 col-md-4 col-sm-4 d-flex justify-content-center" style="align-items: center">
                             <form id="formDeleteCart" method="POST" action="{{ route('cart.destroy') }}">
                                 @csrf
