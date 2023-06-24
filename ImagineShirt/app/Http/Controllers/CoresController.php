@@ -38,6 +38,7 @@ class CoresController extends Controller
 
     public function store(CorRequest $request): RedirectResponse{
 
+        Storage::putFileAs('public/tshirt_base', $request->image, $request->code.'.jpg');
         $novaCor = new Cores();
         $novaCor->name = $request->name;
         $novaCor->code = $request->code;
@@ -56,16 +57,18 @@ class CoresController extends Controller
 
     public function update(CorRequest $request, Cores $cor): RedirectResponse{
 
-        if ($request->name == $cor->name && $request->code == $cor->code){
+        if ($request->name == $cor->name && $request->code == $cor->code && Storage::exists('public/tshirt_base/'.$request->code.'.jpg')){
             Alert::info('Cor não foi alterada!', 'Parâmetros da categoria são os mesmos!');
             return redirect()->route('cores');
         }
 
-        
         if (count($cor->itensEncomenda) != 0){
             Alert::error('Cor não pode ser alterada!', 'Encomendas feitas com camisolas desta cor!');
             return redirect()->route('cores');
         }
+
+        Storage::delete('public/tshirt_base/'.$cor->code.'.jpg');
+        Storage::putFileAs('public/tshirt_base', $request->image, $request->code.'.jpg');
 
         $cor->name = $request->name;
         $cor->code = $request->code;
@@ -82,6 +85,7 @@ class CoresController extends Controller
         if (count($cor->itensEncomenda) != 0){
             $cor->delete();
         }else{
+            Storage::delete('public/tshirt_base/'.$cor->code.'.jpg');
             $cor->forceDelete();
         }
         

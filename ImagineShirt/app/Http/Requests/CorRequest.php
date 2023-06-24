@@ -36,6 +36,7 @@ class CorRequest extends FormRequest
 
         if ($isCreating){
             $ruleCode[] = Rule::unique('colors', 'code');
+            
         }else{
             $rulesCode = Rule::unique('colors', 'code')->ignore($cor->code, 'code');
         }
@@ -47,6 +48,7 @@ class CorRequest extends FormRequest
                 'string',
                 'max:30',
             ],
+            'image' => 'required|image|max:2048',
             // 'codeValid' => 'required',
         ];
     }
@@ -61,6 +63,9 @@ class CorRequest extends FormRequest
             'name.required' => 'O nome é obrigatório',
             'name.string' => 'Nome inválido',
             'name.max' => 'O nome não pode ter mais de 30 caracteres',
+            'image.required' => 'Imagem é obrigatória',
+            'image.image' => 'O ficheiro tem de ser uma imagem',
+            'image.max' => 'A imagem não pode ter mais de 2MB',
         ];
     }
 }
