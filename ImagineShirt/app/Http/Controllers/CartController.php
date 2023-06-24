@@ -73,8 +73,8 @@ class CartController extends Controller
 
             if (count($cart) != 0){
                 foreach($cart as $key => $cartItem){
-                    if ($cartItem[0]->id == $t_shirt->id && $cartItem[1] == $request->color_code && $cartItem[2] == $request->size){
-                        $cart[$key][3] += $request->qty;
+                    if ($cartItem['tshirt']->id == $t_shirt->id && $cartItem['color_code'] == $request->color_code && $cartItem['size'] == $request->size){
+                        $cart[$key]['qty'] += $request->qty;
 
                         $request->session()->put('cart', $cart);
                         Alert::success('T-Shirt adicionada!','Foi adicionada a t-shirt ao carrinho!');
@@ -83,7 +83,11 @@ class CartController extends Controller
                 }
             }
 
-            $itemCart = array($t_shirt,$request->color_code,$request->size,$request->qty);
+            $itemCart = array(
+                'tshirt' => $t_shirt,
+                'color_code' => $request->color_code,
+                'size' => $request->size,
+                'qty' => $request->qty);
 
             $cart[] = $itemCart;
             
@@ -116,13 +120,33 @@ class CartController extends Controller
 
         $cart = session('cart', []);
 
-        $cart[$request->id]["1"] = $request->color_code;
-        $cart[$request->id]["2"] = $request->size;
-        $cart[$request->id]["3"] = $request->qty;
+        if ($request->qty == 0){
+            unset($cart[$request->id]);
+        }else{
+            $cart[$request->id]['color_code'] = $request->color_code;
+            $cart[$request->id]['size'] = $request->size;
+            $cart[$request->id]['qty'] = $request->qty;
+        }
+
+        if (count($cart) > 1){
+
+            for($i = 0; $i < count($cart); $i++){
+
+                if ($i == $request->id)
+                    continue;
+    
+                if ($cart[$i]['tshirt']->id == $cart[$request->id]['tshirt']->id && $cart[$i]['color_code'] == $request->color_code && $cart[$i]['size'] == $request->size){
+                    $cart[$i]['qty'] += $request->qty;
+    
+                    unset($cart[$request->id]);
+                }
+            }
+        }
+        
 
         session()->put('cart', $cart);
 
-        Alert::success('Carrinho atualizado','Detalhes das t-shirts foram atualizados');
+        Alert::success('Carrinho atualizado','Detalhes da T-Shirt foram atualizados');
         return back();
     }
 
@@ -174,15 +198,15 @@ class CartController extends Controller
                 $newOrderItem = new ItensEncomenda();
 
                 $newOrderItem->order_id = $newOrder->id;
-                $newOrderItem->tshirt_image_id = $cartItem[0]->id;
-                $newOrderItem->color_code = $cartItem[1];
-                $newOrderItem->size = $cartItem[2];
-                $newOrderItem->qty = $cartItem[3];
+                $newOrderItem->tshirt_image_id = $cartItem['tshirt']->id;
+                $newOrderItem->color_code = $cartItem['color_code'];
+                $newOrderItem->size = $cartItem['size'];
+                $newOrderItem->qty = $cartItem['qty'];
 
-                if (is_null($cartItem[0]->customer_id)){
+                if (is_null($cartItem['tshirt']->customer_id)){
 
                     // loja
-                    if ($cartItem[3] >= $precos[0]['qty_discount']){
+                    if ($cartItem['qty'] >= $precos[0]['qty_discount']){
                         $newOrderItem->unit_price = $precos[0]['unit_price_catalog_discount'];
                     }else{
                         $newOrderItem->unit_price = $precos[0]['unit_price_catalog'];
@@ -191,14 +215,14 @@ class CartController extends Controller
                 }else{
 
                     // cliente
-                    if ($cartItem[3] >= $precos[0]['qty_discount']){
+                    if ($cartItem['qty'] >= $precos[0]['qty_discount']){
                         $newOrderItem->unit_price = $precos[0]['unit_price_own_discount'];
                     }else{
                         $newOrderItem->unit_price = $precos[0]['unit_price_own'];
                     }
                 }
 
-                $newOrderItem->sub_total = $newOrderItem->unit_price * $cartItem[3];
+                $newOrderItem->sub_total = $newOrderItem->unit_price * $cartItem['qty'];
 
                 $precoTotal += $newOrderItem->sub_total;
 
@@ -228,7 +252,6 @@ class CartController extends Controller
         }
 
         $cart = session('cart', []);
-
         unset($cart[$request->id]);
 
         $request->session()->put('cart', $cart);

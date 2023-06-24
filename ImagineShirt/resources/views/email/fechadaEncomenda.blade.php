@@ -11,7 +11,7 @@
     <p>Aqui estão os detalhes da encomenda incluindo o PDF (enviado em anexo) com o recibo:</p>
     <ul>
         <li>ID da Encomenda: {{ $encomenda->id }}</li>
-        <li>Status: {{ $encomenda->status }}</li>
+        <li>Status: Fechada</li>
         <li>Preço Total: {{ $encomenda->total_price }} €</li>
         <li>Data de Criação: {{ $encomenda->created_at }}</li>
     </ul>

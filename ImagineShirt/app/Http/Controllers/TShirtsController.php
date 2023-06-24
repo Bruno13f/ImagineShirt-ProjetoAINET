@@ -128,12 +128,16 @@ class TShirtsController extends Controller
         $currentUrl = url()->current();
 
         // DUVIDA
+        //dd(!str_contains($currentUrl, 'encomendas') );
 
-        if (!str_contains($currentUrl, 'encomendas') && Auth::user()->id != $user_id)
-            return redirect()->route('root');
+
+
+        if ( Auth::user()->id == $user_id || Auth::user()->user_type == 'A' || Auth::user()->user_type == 'E')
+            return response($image, 200)->header('Content-Type', $tipo);
         
-        return response($image, 200)->header('Content-Type', $tipo);
-    }
+        return redirect()->route('root');
+    }    
+        
 
     public function edit(TShirts $t_shirt): View{
 

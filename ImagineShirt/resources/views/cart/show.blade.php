@@ -52,26 +52,25 @@
                                     $precoTotal = 0;
                                     $num_cliente_disc = 0;
                                     $num_loja_disc = 0;
-                                    $counter = 0;
                                 @endphp
 
-                                @foreach ($cart as $cartItem)
+                                @foreach ($cart as $key => $cartItem)
 
-                                <form id="formAddTshirt_{{$cartItem[0]->id}}_{{$cartItem[1]}}_{{$cartItem[2]}}_{{$cartItem[3]}}" method="POST" action="{{ route('cart.update')}}">
+                                <form id="formAddTshirt_{{$cartItem['tshirt']->id}}_{{$cartItem['color_code']}}_{{$cartItem['size']}}_{{$cartItem['qty']}}" method="POST" action="{{ route('cart.update')}}">
                                 @csrf
                                 @method('PUT')
                                 <tr>
                                     <td class="product__cart__item">
                                         <div class="product__cart__item__pic">
-                                            <div class="container-tshirt-img-cart" style="background-color:#{{$cartItem[1]}}">
-                                                <img class="imgCartTShirt" src="{{empty($cartItem[0]->customer_id) ? '/storage/tshirt_images/'.$cartItem[0]->image_url : route('imagem_user', ['image_url' => $cartItem[0]->image_url, 'user_id' => $cartItem[0]->customer_id, 'nome_tshirt' => $cartItem[0]->name])}}" 
+                                            <div class="container-tshirt-img-cart" style="background-color:#{{$cartItem['color_code']}}">
+                                                <img class="imgCartTShirt" src="{{empty($cartItem['tshirt']->customer_id) ? '/storage/tshirt_images/'.$cartItem['tshirt']->image_url : route('imagem_user', ['image_url' => $cartItem['tshirt']->image_url, 'user_id' => $cartItem['tshirt']->customer_id, 'nome_tshirt' => $cartItem['tshirt']->name])}}" 
                                                 width="128" height="128" alt="">
                                             </div>
                                         </div>
                                         <div class="product__cart__item__text">
-                                            <h6>{{$cartItem[0]->name}}</h6>
+                                            <h6>{{$cartItem['tshirt']->name}}</h6>
                                             @php
-                                                $preco = empty($cartItem[0]->customer_id) ? $precos[0]['unit_price_catalog'] : $precos[0]['unit_price_own'];
+                                                $preco = empty($cartItem['tshirt']->customer_id) ? $precos[0]['unit_price_catalog'] : $precos[0]['unit_price_own'];
                                             @endphp
                                             <h5>{{$preco}} €</h5>
                                         </div>
@@ -79,7 +78,7 @@
                                     <td class="quantity__item">
                                         <div class="quantity">
                                             <div class="pro-qty-2">
-                                                <input name="qty" id="quantidade" type="text" value="{{$cartItem[3]}}">
+                                                <input name="qty" id="quantidade" type="text" value="{{$cartItem['qty']}}">
                                             </div>
                                         </div>
                                     </td>
@@ -87,7 +86,7 @@
                                         <div class="form-group">
                                             <select class="" name="size" id="inputSize">
                                                 @foreach($tamanhos as $tamanho)
-                                                    <option value="{{$tamanho}}" {{$tamanho == $cartItem[2] ? 'selected' : '' }}>{{$tamanho}}</option>
+                                                    <option value="{{$tamanho}}" {{$tamanho == $cartItem['size'] ? 'selected' : '' }}>{{$tamanho}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -96,32 +95,32 @@
                                     <div class="form-group">
                                         <select class="" name="color_code" id="inputColorCode">
                                             @foreach ($cores as $cor)
-                                                <option value="{{$cor->code}}" {{$cor->code == $cartItem[1] ? 'selected' : '' }}>{{$cor->name}}</option>
+                                                <option value="{{$cor->code}}" {{$cor->code == $cartItem['color_code'] ? 'selected' : '' }}>{{$cor->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     </td>
-                                    <input type="hidden" value="{{$counter}}" name="id">
-                                    <td class="cart__price">{{$preco * $cartItem[3]}} €</td>
-                                    <td class="cart__close"><button type="submit" name="ok" form="formAddTshirt_{{$cartItem[0]->id}}_{{$cartItem[1]}}_{{$cartItem[2]}}_{{$cartItem[3]}}" class="btn rounded-pill"><i class="fa fa-refresh" aria-hidden="true"></i></button></td>
+                                    <input type="hidden" value="{{$key}}" name="id">
+                                    <td class="cart__price">{{$preco * $cartItem['qty']}} €</td>
+                                    <td class="cart__close"><button type="submit" name="ok" form="formAddTshirt_{{$cartItem['tshirt']->id}}_{{$cartItem['color_code']}}_{{$cartItem['size']}}_{{$cartItem['qty']}}" class="btn rounded-pill"><i class="fa fa-refresh" aria-hidden="true"></i></button></td>
                                     </form>
-                                    <form id="formDeleteTshirt_{{$cartItem[0]->id}}_{{$cartItem[1]}}_{{$cartItem[2]}}_{{$cartItem[3]}}" method="POST" action="{{ route('cart.remove', $cartItem[0]) }}">
+                                    <form id="formDeleteTshirt_{{$cartItem['tshirt']->id}}_{{$cartItem['color_code']}}_{{$cartItem['size']}}_{{$cartItem['qty']}}" method="POST" action="{{ route('cart.remove', $cartItem['tshirt']) }}">
                                     @csrf
                                     @method('DELETE')
-                                    <input type="hidden" value="{{$counter}}" name="id">
-                                    <td class="cart__close"><button type="submit" name="clear" form="formDeleteTshirt_{{$cartItem[0]->id}}_{{$cartItem[1]}}_{{$cartItem[2]}}_{{$cartItem[3]}}" class="btn rounded-pill"><i class="fa fa-close"></i></button></td>
+                                    <input type="hidden" value="{{$key}}" name="id">
+                                    <td class="cart__close"><button type="submit" name="clear" form="formDeleteTshirt_{{$cartItem['tshirt']->id}}_{{$cartItem['color_code']}}_{{$cartItem['size']}}_{{$cartItem['qty']}}" class="btn rounded-pill"><i class="fa fa-close"></i></button></td>
                                     </form>
                                 </tr>
                                 @php
-                                    $counter += 1;
-                                    $precoTotal += $preco * $cartItem[3];
+
+                                    $precoTotal += $preco * $cartItem['qty'];
                                 
-                                    if (is_null($cartItem[0]->customer_id) && $cartItem[3] >= $precos[0]['qty_discount']){
-                                        $num_loja_disc += $cartItem[3];
+                                    if (is_null($cartItem['tshirt']->customer_id) && $cartItem['qty'] >= $precos[0]['qty_discount']){
+                                        $num_loja_disc += $cartItem['qty'];
                                     }else
 
-                                    if (!is_null($cartItem[0]->customer_id) && $cartItem[3] >= $precos[0]['qty_discount']){
-                                        $num_cliente_disc += $cartItem[3];
+                                    if (!is_null($cartItem['tshirt']->customer_id) && $cartItem['qty'] >= $precos[0]['qty_discount']){
+                                        $num_cliente_disc += $cartItem['qty'];
                                     }
 
                                 @endphp

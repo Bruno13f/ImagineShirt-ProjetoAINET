@@ -107,19 +107,19 @@
 
                                 @foreach($cart as $cartItem)
                                     @php 
-                                        $preco = empty($cartItem[0]->customer_id) ? $precos[0]['unit_price_catalog'] : $precos[0]['unit_price_own'];
+                                        $preco = empty($cartItem['tshirt']->customer_id) ? $precos[0]['unit_price_catalog'] : $precos[0]['unit_price_own'];
                                         $counter += 1
                                     @endphp
-                                    <li>0{{$counter}}. {{$cartItem[0]->name}}<span>{{$preco * $cartItem[3]}} €</span></li>
+                                    <li>0{{$counter}}. {{$cartItem['tshirt']->name}}<span>{{$preco * $cartItem['qty']}} €</span></li>
                                     @php
-                                        $precoTotal += $preco * $cartItem[3];
+                                        $precoTotal += $preco * $cartItem['qty'];
                                     
-                                        if (is_null($cartItem[0]->customer_id) && $cartItem[3] >= $precos[0]['qty_discount']){
-                                            $num_loja_disc += $cartItem[3];
+                                        if (is_null($cartItem['tshirt']->customer_id) && $cartItem['qty'] >= $precos[0]['qty_discount']){
+                                            $num_loja_disc += $cartItem['qty'];
                                         }else
 
-                                        if (!is_null($cartItem[0]->customer_id) && $cartItem[3] >= $precos[0]['qty_discount']){
-                                            $num_cliente_disc += $cartItem[3];
+                                        if (!is_null($cartItem['tshirt']->customer_id) && $cartItem['qty'] >= $precos[0]['qty_discount']){
+                                            $num_cliente_disc += $cartItem['qty'];
                                         }
                                     @endphp
                                 @endforeach

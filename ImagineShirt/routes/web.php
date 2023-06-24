@@ -115,6 +115,7 @@ Route::middleware('adminOrCustomer')->group(function (){
 
 
 Route::middleware('cliente')->group(function (){
+    
     Route::get('/user/{user}/minhasTShirts', [PaginaUserController::class, 'showMinhasTShirts'])->name('user.gerirMinhasTShirts');
     
     Route::get('cart/checkout', [CartController::class, 'checkout'])->middleware('verified')->name('cart.checkout');
