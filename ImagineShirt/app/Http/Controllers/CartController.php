@@ -69,9 +69,9 @@ class CartController extends Controller
 
             $cart = session('cart', []);
 
-            if (array_key_exists($t_shirt->id, $cart)) {
+            if (array_key_exists($t_shirt->id, $cart) && $cart[$t_shirt->id][2] == $request->size) {
 
-                Alert::info('T-Shirt já no carrinho','Não é possivel adicionar a mesma t-shirt no carrinho');
+                Alert::info('T-Shirt com o mesmo tamanho já no carrinho','Não é possivel adicionar a mesma t-shirt com o mesmo tamanho no carrinho');
                 return back();
 
             } else {

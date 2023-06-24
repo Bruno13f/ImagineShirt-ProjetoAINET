@@ -38,7 +38,8 @@
                     <div class="card-body">
                     <div class="row">
                         <div class="col-md-2 d-flex justify-content-center rounded" style="background-color: #{{ $item->color_code}}">
-                        <img src="/storage/tshirt_images/{{ $item->tshirts->image_url }}" class="img-fluid" alt="{{ $item->tshirts->name }}" style="max-width: 100px; max-height: 100px;">
+                        <img src="{{empty($item->tshirts->customer_id) ? '/storage/tshirt_images/'.$item->tshirts->image_url : route('imagem_user', ['image_url' => $item->tshirts->image_url, 'user_id' => $item->tshirts->customer_id, 'nome_tshirt' => $item->tshirts->name])}}" 
+                        class="img-fluid" alt="{{ $item->tshirts->name }}" style="max-width: 100px; max-height: 100px;">
                         </div>
                         <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
                         <p class="text-muted mb-0">{{ $item->tshirts->name }}</p>

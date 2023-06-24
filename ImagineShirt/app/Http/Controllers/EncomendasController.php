@@ -46,27 +46,9 @@ class EncomendasController extends Controller
     public function generatePDF(Encomendas $encomenda): BinaryFileResponse
     {
 
-        $descontos = self::getPrices();
-
-        $html = view('encomendas.pdf', compact('encomenda', 'descontos'))->render();
-
-        $dompdf = new Dompdf();
-
-        $dompdf->loadHtml($html);
-
-        $dompdf->setPaper('A4', 'portrait');
-
-        $dompdf->set_option('isRemoteEnabled', true);
-        $dompdf->set_option('isHtml5ParserEnabled', true);
-        $dompdf->set_option('enable_css_float', true);
-        $dompdf->set_option('enable_font_subsetting', true);
-        $dompdf->set_option('enable_javascript', true);
-
-        $dompdf->render();
-
+        $pdfContent = self::getPdf($encomenda);
+        
         $filename = 'encomenda_' . $encomenda->id . '.pdf';
-
-        $pdfContent = $dompdf->output();
 
         $pdfPath = 'pdf_receipts/' . $filename;
         Storage::put($pdfPath, $pdfContent);
@@ -88,6 +70,59 @@ class EncomendasController extends Controller
         return view('encomendas.pdf', compact('encomenda', 'descontos'));
     }
 
+     public function changeStatus(Request $request, Encomendas $encomenda): RedirectResponse {
+
+        $htmlMessage = "";
+
+        switch($request->status){
+            case 'Pagar':
+                $status = 'paid';
+                break;
+            case 'Fechar':
+                $encomenda->receipt_url = 'pdf_receipts/encomenda_' . $encomenda->id . '.pdf';
+                $pdfContent = self::getPdf($encomenda);
+                Storage::put($encomenda->receipt_url, $pdfContent);
+                $htmlMessage = 'PDF da encomenda criado!';
+                $status = 'closed';
+                break;
+            default:
+                $status = $request->status;
+        }
+
+        $encomenda->status = $status;
+        $encomenda->save();
+
+        Alert::success('Estado da encomenda alterado com sucesso!',$htmlMessage);
+
+        return redirect()->route('encomendas');
+    } 
+
+    private function getPDF(Encomendas $encomenda): String
+    {
+        $descontos = self::getPrices();
+
+        $html = view('encomendas.pdf', compact('encomenda', 'descontos'))->render();
+
+        $dompdf = new Dompdf();
+
+        $dompdf->loadHtml($html);
+
+        $dompdf->setPaper('A4', 'portrait');
+
+        $dompdf->set_option('isRemoteEnabled', true);
+        $dompdf->set_option('isHtml5ParserEnabled', true);
+        $dompdf->set_option('enable_css_float', true);
+        $dompdf->set_option('enable_font_subsetting', true);
+        $dompdf->set_option('enable_javascript', true);
+
+        $dompdf->render();
+
+        $pdfContent = $dompdf->output();
+
+        return $pdfContent;
+    }
+
+
     private function getPrices (){
 
         $precocatalogo = Precos::select('unit_price_catalog')->first()->unit_price_catalog;
@@ -101,26 +136,6 @@ class EncomendasController extends Controller
 
         return compact('descontocatalogo','descontoown','quantdesconto');
     }
-
-     public function changeStatus(Request $request, Encomendas $encomenda): RedirectResponse {
-
-        switch($request->status){
-            case 'Pagar':
-                $status = 'paid';
-                break;
-            case 'Fechar':
-                $status = 'closed';
-                break;
-            default:
-                $status = $request->status;
-        }
-
-        $encomenda->status = $status;
-        $encomenda->save();
-
-        Alert::success('Estado da encomenda alterado com sucesso!');
-
-        return redirect()->route('encomendas');
-    } 
-
+        
 }
+    

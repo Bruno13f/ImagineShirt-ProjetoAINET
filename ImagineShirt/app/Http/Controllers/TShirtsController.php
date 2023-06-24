@@ -125,7 +125,11 @@ class TShirtsController extends Controller
         $image = file_get_contents($path);
         $tipo = mime_content_type($path);
 
-        if (Auth::user()->id != $user_id)
+        $currentUrl = url()->current();
+
+        // DUVIDA
+
+        if (!str_contains($currentUrl, 'encomendas') && Auth::user()->id != $user_id)
             return redirect()->route('root');
         
         return response($image, 200)->header('Content-Type', $tipo);
