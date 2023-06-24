@@ -165,12 +165,15 @@
                     <table class="smaller-table">
                         <tbody>
                         @foreach ($ultimasEncomenda as $ultimaencomenda)
-                            <tr class="d-flex justify-content-center mb-3">
-                                <td class="text-center align-left">
-                                    <span class="font-weight-bold text-uppercase">{{ $ultimaencomenda->id }}<br></span>
+                            <tr class="d-flex mb-3" style="justify-content: center">
+                                <td class="d-flex text-center mr-2" style="align-items: center">
+                                    <span class="font-weight-bold text-uppercase">ID: {{ $ultimaencomenda->id }}<br></span>
                                 </td>
-                                <td class="text-center align-middle">
-                                    <span class="font-weight-bold text-uppercase">{{ $ultimaencomenda->status }}<br></span>{{ $ultimaencomenda->clientes->user->name }}
+                                <td style="text-align: center !important; "class="text-center align-middle">
+                                    <span class="font-weight-bold text-uppercase">{{ $ultimaencomenda->status }}<br></span>{{ $ultimaencomenda->clientes->user->name }}<br>{{$ultimaencomenda->date}}
+                                </td>
+                                <td class="d-flex text-center mr-2" style="align-items: center">
+                                    <span class="font-weight-bold text-uppercase">{{ $ultimaencomenda->total_price }}€<br></span>
                                 </td>
                             </tr>
                         @endforeach
