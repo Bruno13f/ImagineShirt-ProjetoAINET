@@ -110,7 +110,7 @@ class PaginaUserController extends Controller
             if ($user->user_type === 'C'){
                 $cliente = $user->cliente;
                 $cliente->nif = $formData['nif'];
-                $cliente->address = $formData['name'];
+                $cliente->address = $formData['address'];
                 $cliente->default_payment_type = $formData['default_payment_type'];
                 $cliente->default_payment_ref = $formData['default_payment_ref'];
                 $cliente->save();

@@ -100,7 +100,7 @@ class UserRequest extends FormRequest
             'address.string' => 'Morada inválida',
             'address.max' => 'A morada não pode ter mais de 200 caracteres',
             'default_payment_type.in' => 'O tipo de pagamento selecionado não é válido',
-            'default_payment_ref.required_with' => 'A referência de pagamento é obrigatório',
+            'default_payment_ref.required_with' => 'A referência de pagamento é obrigatória',
             'default_payment_ref.digits' => 'A referência de pagamento deve ter 16 dígitos',
             'default_payment_ref.email' => 'A referência de pagamento deve ter um formato de e-mail válido',
             'userType.required' => 'Tipo de user é obrigatório',

@@ -118,3 +118,51 @@ if (deleteAdminColorForms) {
         });
     });
 }
+
+const deleteCartForm = document.querySelectorAll("#formDeleteCart");
+if (deleteCartForm) {
+    deleteCartForm.forEach(function (deleteForm) {
+        deleteForm.addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+            Swal.fire({
+            title: 'Tem a certeza?',
+            text: "Irá remover as t-shirts do carrinho!",
+            showCancelButton: true,
+            confirmButtonColor: '#218838',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, quero eliminar!',
+            cancelButtonText: 'Cancelar',
+            }).then((result) => {
+                if (result.value) {
+                    event.target.submit();
+                }
+            })
+        });
+    });
+}
+
+const deleteCartTshirtForm = document.querySelectorAll("[id^='form_delete_tshirt_']");
+if (deleteCartTshirtForm) {
+    deleteCartTshirtForm.forEach(function (deleteForm) {
+        deleteForm.addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+            Swal.fire({
+            title: 'Tem a certeza?',
+            text: "Irá remover a t-shirt do carrinho!",
+            showCancelButton: true,
+            confirmButtonColor: '#218838',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, quero eliminar!',
+            cancelButtonText: 'Cancelar',
+            }).then((result) => {
+                if (result.value) {
+                    event.target.submit();
+                }
+            })
+        });
+    });
+}

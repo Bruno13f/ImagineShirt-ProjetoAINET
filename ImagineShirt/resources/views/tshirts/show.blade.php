@@ -48,44 +48,51 @@
                             <div class="rating">
                             </div>
                             <h3>{{$preco[0]}} €<!-- DESCONTO <span>70.00</span>--></h3> 
-                            <div class="product__details__option">
-                                <div class="product__details__option__size">
-                                    <span>Tamanho:</span>
+                            <form id="formAddTshirt" method="POST" action="{{ route('cart.add', $t_shirt) }}">
+                            @csrf
+                            @method('POST')
+                                <div class="product__details__option">
+                                    <div class="product__details__option__size">
+                                        <span>Tamanho:</span>
                                     <label class="radio" for="xsm">xs
-                                        <input type="radio" id="xsm">
+                                        <input value="XS" type="radio" name="size" id="xsm">
                                     </label>
                                     <label class="radio" for="sm">s
-                                        <input type="radio" id="sm">
+                                        <input value="S" type="radio" name="size" id="sm">
                                     </label>
                                     <label class="radio" for="m">m
-                                        <input type="radio" id="m">
+                                        <input value="M" type="radio" name="size" id="m">
                                     </label>
                                     <label class="radio" for="l">l
-                                        <input type="radio" id="l">
+                                        <input value="L" type="radio" name="size" id="l">
                                     </label>
                                     <label class="radio" for="xl">xl
-                                        <input type="radio" id="xl">
+                                        <input value="XL" type="radio" name="size" id="xl">
                                     </label>
-                                </div>
-                            </div>
-                            <div class="product__details__option">
-                                <div class="product__details__option__color" style = "max-width: 550px;">
-                                    <span>Cores:</span>
-                                    @foreach($cores as $cor)
-                                        <label onclick="changeOpacity(this); changeImg(this)" class="cor-label" title="{{$cor->name}}" for="{{$cor->code}}" 
-                                        style="background-color:#{{$cor->code}}; opacity:{{$cor->code === $cores[0]->code ? '1' : '0.4'}}">
-                                            <input type="radio" class ="cor-radio" name="cor" id="{{$cor->code}}">
-                                        </label>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="product__details__cart__option">
-                                <div class="quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" value="1">
                                     </div>
                                 </div>
-                                <a href="#" class="primary-btn">Adicionar ao Carrinho</a>
+                                <div class="product__details__option">
+                                    <div class="product__details__option__color" style="max-width: 550px;">
+                                    <span>Cores:</span>
+                                    @foreach($cores as $cor)
+                                        <label onclick="changeOpacity(this); changeImg(this);" class="cor-label" title="{{$cor->name}}" for="{{$cor->code}}" 
+                                        style="background-color:#{{$cor->code}}; opacity:{{$cor->code === $cores[0]->code ? '1' : '0.4'}}">
+                                            <input value="{{$cor->code}}" type="radio" class="cor-radio" name="color_code" id="{{$cor->code}}"
+                                            {{$cor->code === $cores[0]->code ? 'checked' : ''}}>
+                                        </label>
+                                    @endforeach
+                                    </div>
+                                </div>
+                                <div class="product__details__cart__option">
+                                    <div class="quantity">
+                                    <div class="pro-qty">
+                                        <input type="number" value="0" min="0" max="100" name="qty">
+                                    </div>
+                                    </div>
+                                    <button type="submit" form="formAddTshirt" name="ok" class="btn btn-dark btn-square btn-lg rounded-0" style="background-color:black">
+                                    <span class="carrinhoBtn">Adicionar ao Carrinho</span>
+                                    </button>
+                                </form>
                             </div>
                             <div class="product__details__last__option">
                                 <h5><span>Checkout Seguro</span></h5>
@@ -120,14 +127,21 @@
         </div>
     </section>
     <script>
+
             function changeOpacity(label) {
                 const labels = document.querySelectorAll('.cor-label');
 
                 labels.forEach(l => {
                     if (l === label) {
                         l.style.opacity = 1; // Altera a opacidade da label clicada para 1 (100%)
+                        let idInput = l.htmlFor;
+                        let input = document.getElementById(idInput);
+                        input.checked = true;
                     } else {
                         l.style.opacity = 0.4; // Redefine a opacidade das outras labels para 0.4 (40%)
+                        let idInput = l.htmlFor;
+                        let input = document.getElementById(idInput);
+                        input.checked = false;
                     }
                 });
             }
@@ -137,7 +151,6 @@
                 var shirtImage = document.getElementById('tshirtBase');
                 var path = "/storage/tshirt_base/" + label.htmlFor + ".jpg";
                 shirtImageEsq.style.backgroundImage = `url(${path})`
-                console.log(path)
                 shirtImage.src = path
             }
 

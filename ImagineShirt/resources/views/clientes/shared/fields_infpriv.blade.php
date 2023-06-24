@@ -8,7 +8,7 @@
     }
 @endphp
 <div class="form-group">
-    <label for="inputNif">Nif</label>
+    <label for="inputNif">NIF</label>
     <input type="text" class="form-control @error('nif') is-invalid @enderror" name="nif" id="inputNif" value = "{{ old('nif', $user->cliente->nif )}}" {{ $ro }}>
     @error('nif')
         <div class="invalid-feedback">
@@ -44,7 +44,7 @@
         <select class="@error('default_payment_type') is-invalid @enderror" name="default_payment_type" id="inputMetodoPagamento" {{ $select }}>
             <option {{empty($user->cliente->default_payment_type) ? 'selected' : ''}}></option>
             <option value="PAYPAL" {{ old('default_payment_type', $user->cliente->default_payment_type) === 'PAYPAL' ? 'selected' : ''}}>Paypal</option>
-            <option value="MC" {{ old('default_payment_type', $user->cliente->default_payment_type) === 'MC' ? 'selected' : ''}}>MC</option>
+            <option value="MC" {{ old('default_payment_type', $user->cliente->default_payment_type) === 'MC' ? 'selected' : ''}}>Mastercard</option>
             <option value="VISA" {{ old('default_payment_type', $user->cliente->default_payment_type)  === 'VISA' ? 'selected' : ''}}>Visa</option>
         </select>
         @error('default_payment_type')

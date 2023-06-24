@@ -71,3 +71,21 @@ canvas-container {
     max-width: 128px;
     max-height: 128px;
 }
+
+.carrinhoBtn{
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: white;
+    letter-spacing: 2px;
+}
+
+.container-tshirt-img-cart{
+    max-width: 128px;
+    max-height: 128px;
+    border-radius: 10%;
+}
+
+.imgCartTShirt{
+    object-fit: contain;
+}

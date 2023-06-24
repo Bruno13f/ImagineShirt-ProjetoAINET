@@ -17,6 +17,12 @@ class TShirts extends Model
     protected $table = 'tshirt_images';
     // pk é id (incrementavel) inteiro - tem created_at e updated_at
 
+    protected $fillable = [
+        'name',
+        'description',
+        'image_url',
+    ];
+
     public function categoria(): BelongsTo{
         return $this->belongsTo(Categorias::class, 'category_id', 'id');
     }

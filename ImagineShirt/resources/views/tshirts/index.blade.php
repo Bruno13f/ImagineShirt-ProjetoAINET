@@ -132,9 +132,8 @@
                                     </div>
                                 </a> 
                                 <div class="product__item__text">
-                                    <h6 style = "font-size: 1.2rem;font-weight: bolder">{{ empty($tshirt->name) ? 'T-Shirt Sem Nome' : $tshirt->name }}</h6>
-                                    <a href="#" class="add-cart" style="font-size: 1.1rem">+ Adicionar ao Carrinho</a>
-                                    <p style="opacity: 0.8;">{{ empty($tshirt->description) ? 'Sem Descrição' : $tshirt->description }}</p>
+                                    <h5 style = "font-size: 1.2rem;font-weight: bolder">{{ empty($tshirt->name) ? 'T-Shirt Sem Nome' : $tshirt->name }}</h5>
+                                    <p class="mt-1" style="opacity: 0.8;">{{ empty($tshirt->description) ? 'Sem Descrição' : $tshirt->description }}</p>
                                     <h5>{{$precos['unit_price_catalog']}} €</h5>
                                 </div>
                             </div>
@@ -168,6 +167,7 @@
     </section>
     <!-- Shop Section End -->
     <script>
+
     let formpesquisa =  document.getElementById('pesquisa-form');   
     if (formpesquisa){
         document.getElementById('pesquisa-form').addEventListener('submit', function(e) {

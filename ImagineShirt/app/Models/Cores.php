@@ -17,6 +17,11 @@ class Cores extends Model
     public $incrementing = false;
     public $timestamps = false;
 
+    protected $fillable = [
+        'code',
+        'name',
+    ];
+
     public function itensEncomenda(): HasMany{
         return $this->hasMany(ItensEncomenda::class, 'color_code', 'code');
     }

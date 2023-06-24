@@ -14,15 +14,6 @@
 
     @vite(['resources/sass/app.scss', 'resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- Css Styles 
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
-    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">-->
 </head>
 
 <body>
@@ -52,8 +43,7 @@
             </div>
         </div>
         <div class="offcanvas__nav__option">
-            <a href="#"><img src="{{ asset('img/icon/cart.png') }}" alt=""> <span>0</span></a>
-            <div class="price">0.00€</div>
+            <a href="{{route('cart.show')}}"><img src="{{ asset('img/icon/cart.png') }}" alt=""> <span></span></a>
         </div>
         <div id="mobile-menu-wrap"></div>
     </div>
@@ -107,8 +97,7 @@
                 </div>
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
-                        <a><img src="{{ asset('img/icon/cart.png') }}" alt=""><span>0</span></a>
-                        <div class="price">0.00€</div>
+                        <a href="{{route('cart.show')}}"><img src="{{ asset('img/icon/cart.png') }}" alt=""><span></span></a>
                     @auth
                     <a href="{{ route('user', Auth::user()) }}">
                         <img id="imagemPerfil" src="{{ Auth::user()->fullPhotoUrl }}" class="rounded-circle img-responsive" alt="Imagem Perfil"/>

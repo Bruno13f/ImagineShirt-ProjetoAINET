@@ -11,6 +11,7 @@ use App\Http\Controllers\CoresController;
 use App\Http\Controllers\PrecosController;
 use App\Http\Controllers\EncomendasController;
 use App\Http\Controllers\EstatisticasController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Models\TShirts;
 
@@ -115,7 +116,20 @@ Route::middleware('adminOrCustomer')->group(function (){
 
 Route::middleware('cliente')->group(function (){
     Route::get('/user/{user}/minhasTShirts', [PaginaUserController::class, 'showMinhasTShirts'])->name('user.gerirMinhasTShirts');
+    
+    Route::get('cart/checkout', [CartController::class, 'checkout'])->middleware('verified')->name('cart.checkout');
+    Route::post('cart', [CartController::class, 'store'])->middleware('verified')->name('cart.store');
 });
 
+// adicionar t shirt carrinho todos
+Route::post('cart/{t_shirt}', [CartController::class, 'addToCart'])->name('cart.add');
+// update t shirt carrinho todos
+Route::put('cart/update', [CartController::class, 'updateCart'])->name('cart.update');
+// remover t shirt carrinho todos
+Route::delete('cart/{t_shirt}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+// mostrar carrinho todos
+Route::get('cart', [CartController::class, 'show'])->name('cart.show');
+// remover carrinho todos
+Route::delete('cart', [CartController::class, 'destroy'])->name('cart.destroy');
 
 Auth::routes(['verify' => true]);

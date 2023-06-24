@@ -14,6 +14,16 @@ class ItensEncomenda extends Model
     protected $table = 'order_items';
     public $timestamps = false;
 
+    protected $fillable = [
+        'order_id',
+        'tshirt_image_id',
+        'color_code',
+        'size',
+        'qty',
+        'unit_price',
+        'sub_total',
+    ];
+
     public function cores(): BelongsTo{
         return $this->belongsTo(Cores::class, 'color_code', 'code')->withTrashed();
     }
