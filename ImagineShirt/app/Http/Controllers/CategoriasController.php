@@ -58,6 +58,11 @@ class CategoriasController extends Controller
             return redirect()->route('categorias');
         }
 
+        if (count($categoria->tshirts) != 0){
+            Alert::info('Existem t-shirts com a categoria!', 'A categoria não pode ser editada!');
+            return redirect()->route('categorias');
+        }
+
         $categoria->name = $request->name;
         $categoria->save();
 

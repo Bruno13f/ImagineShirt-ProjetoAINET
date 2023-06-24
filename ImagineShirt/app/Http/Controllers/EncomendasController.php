@@ -56,7 +56,7 @@ class EncomendasController extends Controller
 
         if (str_contains($ordenarFiltro,'date')){
             $ordenarArray = preg_split("/[_\s:]/",$ordenarFiltro);
-            $queryEncomendas->orderBy('date',$ordenarArray[1]);
+            $queryEncomendas->orderBy('created_at',$ordenarArray[1]);
         }elseif(str_contains($ordenarFiltro,'prec')){
             $ordenarArray = preg_split("/[_\s:]/",$ordenarFiltro);
             $queryEncomendas->orderBy('total_price',$ordenarArray[1]);

@@ -85,7 +85,7 @@
                                 
                                     <tr>
                                         <th scope="row">{{ $encomenda->id }}</th>
-                                        <td>{{ $encomenda->date }}</td>
+                                        <td>{{ $encomenda->created_at }}</td>
                                         <td><span class="font-weight-bold">{{ $estado }}</span></td>
                                         @can('changeStatus', $encomenda)
                                             @can('isAdmin')

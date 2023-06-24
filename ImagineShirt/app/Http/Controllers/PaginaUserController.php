@@ -163,7 +163,7 @@ class PaginaUserController extends Controller
 
         $queryUsers = User::query();
 
-        $selecionarFiltro = $request->selecionar ?? 'todas';
+        $selecionarFiltro = $request->selecionar ?? 'todos';
 
         if ($selecionarFiltro != 'todos'){
             $queryUsers->where('user_type',$selecionarFiltro);
