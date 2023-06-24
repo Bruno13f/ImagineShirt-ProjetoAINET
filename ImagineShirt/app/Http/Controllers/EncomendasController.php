@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Illuminate\Http\RedirectResponse;
 use RealRashid\SweetAlert\Facades\Alert;
 use Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\FechadaEncomendaMail;
 
 class EncomendasController extends Controller
 {
@@ -120,6 +122,8 @@ class EncomendasController extends Controller
                 Storage::put($encomenda->receipt_url, $pdfContent);
                 $htmlMessage = 'PDF da encomenda criado!';
                 $status = 'closed';
+                $email = new FechadaEncomendaMail($encomenda);
+                Mail::to($encomenda->clientes->user->email)->send($email);
                 break;
             default:
                 $status = $request->status;
@@ -127,7 +131,7 @@ class EncomendasController extends Controller
 
         $encomenda->status = $status;
         $encomenda->save();
-
+ 
         Alert::success('Estado da encomenda alterado com sucesso!',$htmlMessage);
 
         return redirect()->route('encomendas');

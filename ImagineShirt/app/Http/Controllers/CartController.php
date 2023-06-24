@@ -14,6 +14,8 @@ use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\CheckoutRequest;
 use Carbon\Carbon;
 use Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\CriadaEncomendaMail;
 
 class CartController extends Controller
 {
@@ -208,6 +210,10 @@ class CartController extends Controller
             $newOrder->save();
 
             $request->session()->forget('cart');
+
+            $email = new CriadaEncomendaMail($newOrder);
+
+            Mail::to($newOrder->clientes->user->email)->send($email);
 
             Alert::success('Encomenda criada!','Verifique no seu perfil o estado!');
             return redirect()->route('root');
