@@ -163,6 +163,18 @@ class PaginaUserController extends Controller
 
         $queryUsers = User::query();
 
+        $pesquisaFiltro = $request->pesquisa ?? '';
+
+        if ($pesquisaFiltro !== ''){
+
+            $queryUsers->where(function ($query) use ($pesquisaFiltro) {
+                $query->where('users.name', 'LIKE', '%' . $pesquisaFiltro . '%')
+                    ->orWhere('users.email', 'LIKE', '%' . $pesquisaFiltro . '%');
+            });
+
+
+        }
+
         $selecionarFiltro = $request->selecionar ?? 'todos';
 
         if ($selecionarFiltro != 'todos'){
@@ -174,14 +186,6 @@ class PaginaUserController extends Controller
         if (str_contains($ordenarFiltro,'date')){
             $ordenarArray = preg_split("/[_\s:]/",$ordenarFiltro);
             $queryUsers->orderBy('created_at',$ordenarArray[1]);
-        }
-
-        $pesquisaFiltro = $request->pesquisa ?? '';
-
-        if ($pesquisaFiltro !== ''){
-
-            $queryUsers->where('name','LIKE',"%$pesquisaFiltro%")
-            ->orWhere('email','LIKE',"%$pesquisaFiltro%");
         }
 
 
