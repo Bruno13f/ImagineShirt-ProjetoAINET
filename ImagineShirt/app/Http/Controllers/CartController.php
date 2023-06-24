@@ -46,11 +46,8 @@ class CartController extends Controller
 
         try{
 
-            $tipoUser = $request->user()->user_type;
-
-            if($tipoUser == 'A' || $tipoUser == 'E'){
-                Alert::error('Não tem permissões','Não é cliente/user anóniomo logo não pode adicionar t-shirts ao carrinho');
-                return back();
+            if (!is_null(Auth::user())){
+                $this->authorize('addToCart', TShirts::class);
             }
 
             if ($request->size == null){

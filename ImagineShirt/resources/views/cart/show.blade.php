@@ -144,7 +144,7 @@
                     <div class="row">
                         <div class="col-lg-4 col-md-4 col-sm-4 d-flex justify-content-start" style="align-items: center">
                                 <button type="button" form="formUpdate" name="ok" class="btn btn-dark btn-square btn-lg rounded-0 d-flex justify-content-center" style="background-color:black"
-                                onclick="document.forms[2].submit()">
+                    onclick="document.forms[{{is_null(Auth::user()) ? '0' : '2'}}].submit()">
                                 <span class="carrinhoBtn">Atualizar Carrinho</span>
                                 </button>
                         </div>

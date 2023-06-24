@@ -78,5 +78,11 @@ class TShirtsPolicy
     {
         return $user->user_type == 'A';
     }
+
+    public function addToCart(User $user): bool
+    {
+        return $user->user_type == 'C';
+    }
+    
     
 }

@@ -43,7 +43,12 @@
             </div>
         </div>
         <div class="offcanvas__nav__option">
-            <a href="{{route('cart.show')}}"><img src="{{ asset('img/icon/cart.png') }}" alt=""> <span></span></a>
+            @guest
+                <a href="{{route('cart.show')}}"><img src="{{ asset('img/icon/cart.png') }}" alt=""> <span></span></a>
+            @endguest
+            @can('isCliente')
+                <a href="{{route('cart.show')}}"><img src="{{ asset('img/icon/cart.png') }}" alt=""> <span></span></a>
+            @endcan
         </div>
         <div id="mobile-menu-wrap"></div>
     </div>
@@ -97,7 +102,12 @@
                 </div>
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
-                        <a href="{{route('cart.show')}}"><img src="{{ asset('img/icon/cart.png') }}" alt=""><span></span></a>
+                    @guest
+                        <a href="{{route('cart.show')}}"><img src="{{ asset('img/icon/cart.png') }}" alt=""> <span></span></a>
+                    @endguest
+                    @can('isCliente')
+                        <a href="{{route('cart.show')}}"><img src="{{ asset('img/icon/cart.png') }}" alt=""> <span></span></a>
+                    @endcan
                     @auth
                     <a href="{{ route('user', Auth::user()) }}">
                         <img id="imagemPerfil" src="{{ Auth::user()->fullPhotoUrl }}" class="rounded-circle img-responsive" alt="Imagem Perfil"/>

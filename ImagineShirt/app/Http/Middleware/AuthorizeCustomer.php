@@ -16,13 +16,24 @@ class AuthorizeCustomer
     public function handle(Request $request, Closure $next): Response
     {
         $user = $request->user();
+
         if (empty($user) || $user ->user_type !== 'C') {
-            return $request->expectsJson()
+
+            if (str_contains($request->url(), 'cart')) {
+                return $request->expectsJson()
                 ? abort(403, 'Não é Cliente.')
-                : redirect()->route('root')
+                : redirect()->route('login')
                 ->with('alert-msg', 'Não é Cliente.')
-                ->with('alert-type', 'danger');;
+                ->with('alert-type', 'danger');
+            }
+
+            return $request->expectsJson()
+                    ? abort(403, 'Não é Cliente.')
+                    : redirect()->route('root')
+                    ->with('alert-msg', 'Não é Cliente.')
+                    ->with('alert-type', 'danger');
         }
+
         return $next($request);
     }
 }
