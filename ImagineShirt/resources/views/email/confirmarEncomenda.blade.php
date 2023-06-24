@@ -18,6 +18,6 @@
         <li>Preço Total: {{ $encomenda->total_price }} €</li>
         <li>Data de Criação: {{ $encomenda->created_at }}</li>
     </ul>
-    <p>Obrigado por comprar conosco!</p>
+    <p>Obrigado pela sua encomenda!</p>
 </body>
 </html>

@@ -8,7 +8,7 @@
     <h1>Encomenda fechada</h1>
     <p>Olá, {{$encomenda->clientes->user->name }}</p>
     <p>Esta é uma notificação de que a sua encomenda foi fechada e está dispoível o PDF com os detalhes da mesma.</p>
-    <p>Aqui estão os detalhes da encomenda incluindo o PDF com o recibo:</p>
+    <p>Aqui estão os detalhes da encomenda incluindo o PDF (enviado em anexo) com o recibo:</p>
     <ul>
         <li>ID da Encomenda: {{ $encomenda->id }}</li>
         <li>Status: {{ $encomenda->status }}</li>
