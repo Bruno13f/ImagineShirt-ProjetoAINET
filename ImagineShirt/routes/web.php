@@ -135,6 +135,4 @@ Route::middleware('customerOrAnon')->group(function (){
     Route::delete('cart', [CartController::class, 'destroy'])->name('cart.destroy');
 });
 
-
-
 Auth::routes(['verify' => true]);

@@ -125,7 +125,7 @@
                                                 <td>
                                                 @if ($estado == 'PENDENTE' || $estado == 'PAGO')
                                                     <form id="form_change_status_{{$encomenda->order_id}}" novalidate class="needs-validation" method="POST"
-                                                    action="{{ route('encomendas.changeStatus', $encomenda) }}" enctype="multipart/form-data">
+                                                    action="{{ route('encomendas.changeStatus', $encomenda->order_id) }}" enctype="multipart/form-data">
                                                     @csrf
                                                     @method('PATCH')
                                                         <input type="hidden" name="status" value="{{$alterarEstado}}">
@@ -137,7 +137,7 @@
                                         @endcan
                                         <td>{{ $encomenda->total_price }} €</td>
                                         <td>
-                                        @if($encomenda->status != 'closed')
+                                        @if($encomenda->status != 'pending')
                                         <a href="{{ route('encomendas.pdf', $encomenda->order_id) }}"><button type="button" class="btn btn-info rounded-pill"><span>Descarregar PDF</span></button></a>
                                         @endif
                                         <a href="{{ route('encomendas.show', $encomenda->order_id) }}"><button type="button" class="btn btn-info rounded-pill"><span>Detalhes</span></button></a>
