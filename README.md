@@ -1,4 +1,4 @@
-# ImagineShirt Online Store - Unidade Curricular DAD 
+# ImagineShirt Online Store - Unidade Curricular AINET
 
 Welcome to the ImagineShirt Online Store project repository! This project aims to develop a web-based application using the Laravel Framework for the "ImagineShirt" online store, which specializes in selling printed t-shirts.
 
